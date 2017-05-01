@@ -67,7 +67,7 @@ RUN bundle config git.allow_insecure true
 
 RUN mkdir -p /opt/app/app/assets/webpack /opt/app/public/assets /opt/app/public/webpack
 RUN useradd -m -s /bin/bash app \
-  && mkdir /opt/app /opt/app/client /opt/app/log /opt/app/tmp && chown -R app:app /opt/app
+  && mkdir /opt/app/client /opt/app/log /opt/app/tmp && chown -R app:app /opt/app
 
 WORKDIR /opt/app
 
