@@ -4,7 +4,6 @@ set -xe
 
 if [ "$1" = 'app' ]; then
 
-  export PGPASSWORD=$STRIBE_DB_PASS
   export rakeSecret=$(rake secret)
   echo "===> Configuring Sharetribe for production please wait..."
   sed -e "s#production:#${RAILS_ENV}:#" -e "s#.*adapter:.*#  adapter: mysql2#" -e "s#.*username:.*#  username: ${STRIBE_DB_USER}#" -e "s#.*password:.*#  password: ${STRIBE_DB_PASS}#" -e "s#.*database:.*#  database: ${STRIBE_DB}\n  host: ${STRIBE_DB_HOST}#" < ${STRIBE_DIR}/config/database.yml.pkgr > ${STRIBE_DIR}/config/database.yml
