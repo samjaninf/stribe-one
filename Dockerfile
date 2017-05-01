@@ -65,13 +65,11 @@ RUN apt-get update -y && apt-get dist-upgrade -y && apt-get install -y --no-inst
 RUN gem install bundler
 RUN bundle config git.allow_insecure true
 
+RUN mkdir -p /opt/app/app/assets/webpack /opt/app/public/assets /opt/app/public/webpack
 RUN useradd -m -s /bin/bash app \
   && mkdir /opt/app /opt/app/client /opt/app/log /opt/app/tmp && chown -R app:app /opt/app
 
 WORKDIR /opt/app
-
-RUN mkdir -p app/assets/webpack public/assets public/webpack \
-          && chown -R app:app app/assets/javascripts app/assets/webpack client/app/ public/assets public/webpack
 
 
 COPY sharetribe/Gemfile /opt/app
