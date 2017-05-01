@@ -101,6 +101,6 @@ RUN apt-get autoremove -y && \
     apt-get clean -y&& \
     rm -rf /var/lib/apt/lists/* /var/tmp/*
 
-USER app
+# USER app
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["app"]
