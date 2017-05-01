@@ -8,8 +8,8 @@ if [ "$1" = 'app' ]; then
   echo "===> Configuring Sharetribe for production please wait..."
   sed -e "s#production:#${RAILS_ENV}:#" -e "s#.*adapter:.*#  adapter: mysql2#" -e "s#.*username:.*#  username: ${STRIBE_DB_USER}#" -e "s#.*password:.*#  password: ${STRIBE_DB_PASS}#" -e "s#.*database:.*#  database: ${STRIBE_DB}\n  host: ${STRIBE_DB_HOST}#" < ${STRIBE_DIR}/config/database.yml.pkgr > ${STRIBE_DIR}/config/database.yml
   cd ${STRIBE_DIR}
-  # echo "===> Running db:schema:load..."
-  # bundle exec rake db:schema:load
+  echo "===> Running db:schema:load..."
+  bundle exec rake db:schema:load
   echo "===> Running db:migrate..."
   bundle exec rake db:migrate
   echo "===> Running db:seed..."
