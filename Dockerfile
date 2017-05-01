@@ -60,7 +60,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 
 
 RUN apt-get update -y && apt-get dist-upgrade -y && apt-get install -y --no-install-recommends postgresql-client memcached apt-transport-https libterm-readline-perl-perl locales mc net-tools nginx postfix build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev ca-certificates software-properties-common && \
-  locale-gen en_US.UTF-8 && update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+  locale-gen en_US.UTF-8 && update-locale
 
 RUN gem install bundler
 RUN bundle config git.allow_insecure true
