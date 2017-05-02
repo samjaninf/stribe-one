@@ -16,6 +16,10 @@ if [ "$1" = 'app' ]; then
   bundle exec rake db:migrate
   echo "===> Running db:seed..."
   bundle exec rake db:seed
+  echo "===> Running ts:index..."
+  bundle exec rake ts:index
+  echo "===> Running ts:start..."
+  bundle exec rake ts:start
 
   secret_key_base=$(ruby -r securerandom -e "puts SecureRandom.hex(64)")
   export secret_key_base
