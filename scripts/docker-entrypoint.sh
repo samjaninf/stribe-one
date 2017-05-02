@@ -28,6 +28,9 @@ if [ "$1" = 'app' ]; then
   secret_key_base=$(ruby -r securerandom -e "puts SecureRandom.hex(64)")
   export secret_key_base
 
+  echo "==> npm install ugh..."
+  npm install
+
   # assets precompile
   echo "===> Running assets:precompile..."
   bundle exec rake assets:precompile

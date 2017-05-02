@@ -79,9 +79,6 @@ COPY sharetribe/package.json /opt/app
 COPY sharetribe/client/package.json /opt/app/client/
 COPY sharetribe/client/customloaders/customfileloader /opt/app/client/customloaders/customfileloader
 
-RUN npm install
-RUN npm install -g check-node-version
-
 COPY sharetribe/. /opt/app
 
 # install zammad
