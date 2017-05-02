@@ -58,7 +58,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
 
-RUN apt-get update -y && apt-get dist-upgrade -y && apt-get install -y --no-install-recommends postgresql-client memcached apt-transport-https libterm-readline-perl-perl locales mc net-tools nginx postfix build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev ca-certificates software-properties-common imagemagick mysql-client
+RUN apt-get update -y && apt-get dist-upgrade -y && apt-get install -y --no-install-recommends postgresql-client memcached apt-transport-https libterm-readline-perl-perl locales mc net-tools nginx postfix build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev ca-certificates software-properties-common imagemagick mysql-client libodbc1
 
 RUN gem install bundler
 RUN bundle config git.allow_insecure true
