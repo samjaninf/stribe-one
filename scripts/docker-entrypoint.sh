@@ -20,6 +20,10 @@ if [ "$1" = 'app' ]; then
   bundle exec rake ts:index
   echo "===> Running ts:start..."
   bundle exec rake ts:start
+  echo "===> Running assets:precompile..."
+  bundle exec rake assets:precompile
+  echo "===> Running ts:start..."
+  bundle exec rake ts:start
 
   secret_key_base=$(ruby -r securerandom -e "puts SecureRandom.hex(64)")
   export secret_key_base
@@ -27,6 +31,9 @@ if [ "$1" = 'app' ]; then
   # assets precompile
   echo "===> Running assets:precompile..."
   bundle exec rake assets:precompile
+
+  echo "===> Running jobs:work..."
+  $(bundle exec rake jobs:work)
 
   echo "==> setting hostname now..."
   sed -e "s#.*server_name.*#    server_name ${STRIBE_URL};#" < /stribe.conf.pkgr > /etc/nginx/sites-enabled/stribe.conf
