@@ -13,7 +13,7 @@ if [ "$1" = 'app' ]; then
   export secret_key_base
 
   echo "===> npm install ugh..."
-  exec npm install
+  npm install -g check-node-version
   # echo "===> Running db:schema:load..."
   # bundle exec rake db:schema:load
   echo "===> Running db:structure:load..."
