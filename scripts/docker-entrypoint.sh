@@ -32,7 +32,7 @@ if [ "$1" = 'app' ]; then
   bundle exec rake assets:precompile
 
   echo "===> Running jobs:work..."
-  $(bundle exec rake jobs:work)
+  bundle exec rake jobs:work &
 
   echo "==> setting hostname now..."
   sed -e "s#.*server_name.*#    server_name ${STRIBE_URL};#" < /stribe.conf.pkgr > /etc/nginx/sites-enabled/stribe.conf
