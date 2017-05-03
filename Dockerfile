@@ -80,6 +80,9 @@ COPY sharetribe/client/package.json /opt/app/client/
 COPY sharetribe/client/customloaders/customfileloader /opt/app/client/customloaders/customfileloader
 
 RUN npm install
+WORKDIR /opt/app/client
+RUN npm install
+WORKDIR /opt/app
 
 COPY sharetribe/. /opt/app
 

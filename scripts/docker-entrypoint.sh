@@ -12,10 +12,10 @@ if [ "$1" = 'app' ]; then
   secret_key_base=$(ruby -r securerandom -e "puts SecureRandom.hex(64)")
   export secret_key_base
 
-  echo "===> npm install ugh..."
-  npm install
-  npm install -g webpack
-  npm install -g check-node-version
+  # echo "===> npm install ugh..."
+  # npm install
+  # npm install -g webpack
+  # npm install -g check-node-version
   # echo "===> Running db:schema:load..."
   # bundle exec rake db:schema:load
   echo "===> Running db:structure:load..."
