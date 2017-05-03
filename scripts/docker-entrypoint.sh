@@ -30,14 +30,6 @@ if [ "$1" = 'app' ]; then
   bundle exec rake ts:start
   echo "===> Running assets:precompile..."
   bundle exec rake assets:precompile
-  echo "===> Running ts:start..."
-  bundle exec rake ts:start
-
-
-
-  # assets precompile
-  echo "===> Running assets:precompile..."
-  bundle exec rake assets:precompile
 
   echo "===> Running jobs:work..."
   $(bundle exec rake jobs:work)
