@@ -1,6 +1,6 @@
 class ConfirmationsController < Devise::ConfirmationsController
 
-  skip_filter :cannot_access_if_banned,
+  skip_before_action :cannot_access_if_banned,
               :cannot_access_without_confirmation,
               :ensure_consent_given,
               :ensure_user_belongs_to_community
@@ -45,11 +45,20 @@ class ConfirmationsController < Devise::ConfirmationsController
       end
       flash[:notice] = t("layouts.notifications.additional_email_confirmed")
 
-      if @current_user && @current_user.has_admin_rights?
+      Analytics.record_event(flash, "AccountConfirmed")
+
+      if @current_user && @current_user.has_admin_rights?(@current_community)
         report_to_gtm({event: "admin_email_confirmed"})
         redirect_to admin_getting_started_guide_path and return
       elsif @current_user # normal logged in user
-        redirect_to search_path and return
+        if session[:return_to]
+          redirect_to session[:return_to]
+          session[:return_to] = nil
+        else
+          redirect_to search_path
+        end
+
+        return
       else # no logged in session
         redirect_to login_path and return
       end

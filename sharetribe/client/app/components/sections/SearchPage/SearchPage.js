@@ -10,7 +10,6 @@ import ListingCard from '../../composites/ListingCard/ListingCard';
 import ListingCardPanel from '../../composites/ListingCardPanel/ListingCardPanel';
 import Branding from '../../composites/Branding/Branding';
 import FlashNotification from '../../composites/FlashNotification/FlashNotification';
-import PageSelection from '../../composites/PageSelection/PageSelection';
 import NoResults from '../../composites/NoResults/NoResults';
 
 import css from './SearchPage.css';
@@ -32,12 +31,13 @@ class SearchPage extends Component {
     this.totalPages = Math.ceil(this.props.searchPage.state.get('total') / this.props.searchPage.state.get('pageSize'));
   }
 
-  listingProps(listing, color) {
+  listingProps(listing, color, loggedInUsername) {
     const listingKey = listing.id.toString();
     return {
       key: `card_${listingKey}`,
       color,
       listing,
+      loggedInUserIsAuthor: loggedInUsername === listing.getIn(['author', 'username']),
     };
   }
 
@@ -51,16 +51,17 @@ class SearchPage extends Component {
       },
       [
         r(ListingCardPanel,
-          { className: css.listingContainer },
+          {
+            className: css.listingContainer,
+            currentPage: this.props.searchPage.state.get('page'),
+            totalPages: this.totalPages,
+            location: this.props.marketplace.location,
+            pageParam: 'page',
+          },
           this.listings.map((listing) =>
-            r(ListingCard, this.listingProps(listing, marketplaceColor1))
-        )),
-        r(PageSelection, {
-          currentPage: this.props.searchPage.state.get('page'),
-          totalPages: this.totalPages,
-          location: this.props.marketplace.location,
-          pageParam: 'page',
-        }),
+            r(ListingCard, this.listingProps(listing, marketplaceColor1, this.props.user.loggedInUsername))
+          )
+        ),
       ]);
     const noResults = r(NoResults, {
       className: classNames('SearchPage_main', css.empty),
@@ -105,6 +106,10 @@ SearchPage.propTypes = {
   }),
   routes: routesProp,
   topbar: shape(Topbar.propTypes).isRequired,
+  user: shape({
+    loggedInUsername: string,
+    isAdmin: bool,
+  }),
 };
 
 export default SearchPage;

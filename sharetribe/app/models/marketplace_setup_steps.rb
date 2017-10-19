@@ -10,12 +10,14 @@
 #  paypal                 :boolean          default(FALSE), not null
 #  listing                :boolean          default(FALSE), not null
 #  invitation             :boolean          default(FALSE), not null
+#  stripe                 :boolean          default(FALSE)
+#  payment                :boolean          default(FALSE)
 #
 # Indexes
 #
 #  index_marketplace_setup_steps_on_community_id  (community_id) UNIQUE
 #
 
-class MarketplaceSetupSteps < ActiveRecord::Base
+class MarketplaceSetupSteps < ApplicationRecord
   validates_presence_of(:community_id)
 end

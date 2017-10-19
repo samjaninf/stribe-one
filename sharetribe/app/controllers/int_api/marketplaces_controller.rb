@@ -1,8 +1,8 @@
 class IntApi::MarketplacesController < ApplicationController
 
-  skip_filter :fetch_community, :check_http_auth, :perform_redirect
+  skip_before_action :fetch_community, :check_http_auth, :perform_redirect
 
-  before_filter :set_access_control_headers
+  before_action :set_access_control_headers
 
   NewMarketplaceForm = Form::NewMarketplace
 
@@ -36,6 +36,11 @@ class IntApi::MarketplacesController < ApplicationController
         payment_gateway: :paypal,
         payment_process: :preauthorize,
         active: true)
+      TransactionService::API::Api.settings.provision(
+        community_id: marketplace[:id],
+        payment_gateway: :stripe,
+        payment_process: :preauthorize,
+        active: true)
     end
 
     user = UserService::API::Users.create_user({
@@ -46,17 +51,16 @@ class IntApi::MarketplacesController < ApplicationController
         locale: params[:marketplace_language]},
         marketplace[:id]).data
 
+    base_url = URI(marketplace[:url])
+    url = admin_getting_started_guide_url(host: base_url.host, port: base_url.port)
+
+    # make the marketplace creator be logged in via Auth Token
     auth_token = UserService::API::AuthTokens.create_login_token(user[:id])
-    url = URLUtils.append_query_param(marketplace[:url], "auth", auth_token[:token])
+    url = URLUtils.append_query_param(url, "auth", auth_token[:token])
 
     # Enable specific features for all new trials
     FeatureFlagService::API::Api.features.enable(community_id: marketplace[:id], person_id: user[:id], features: [:topbar_v1])
     FeatureFlagService::API::Api.features.enable(community_id: marketplace[:id], features: [:topbar_v1])
-
-    # Enable Intercom
-    if IntercomHelper.in_admin_intercom_respond_test_group?
-      FeatureFlagService::API::Api.features.enable(community_id: marketplace[:id], features: [:admin_intercom_respond])
-    end
 
     # TODO handle error cases with proper response
 

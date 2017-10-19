@@ -10,9 +10,87 @@ This file follows the best practices from [keepachangelog.com](http://keepachang
 
 ### Added
 
+- Added rack-attack for request throttling [#3078](https://github.com/sharetribe/sharetribe/pull/3078)
+- Stripe integration [#3018](https://github.com/sharetribe/sharetribe/pull/3018)
+- Sending emails from admin to specified subset of users [#3058](https://github.com/sharetribe/sharetribe/pull/3058)
+- Custom Scripts are now also enabled in Custom Landing Page [#3080](https://github.com/sharetribe/sharetribe/pull/3080/files)
+
 ### Changed
 
 ### Deprecated
+
+### Removed
+
+### Fixed
+
+- Outgoing email address is used, if configured, when sending manual emails to users [#3058](https://github.com/sharetribe/sharetribe/pull/3058)
+
+### Security
+
+## [7.1.0] - 2017-09-15
+
+### Added
+
+- Added configuration for trusted proxies [#3040](https://github.com/sharetribe/sharetribe/pull/3040)
+
+### Changed
+
+- Currencies can now be formatted with translations [#3043](https://github.com/sharetribe/sharetribe/pull/3043)
+- Transaction status is now named Completed everywhere instead of Confirmed [#3028](https://github.com/sharetribe/sharetribe/pull/3028)
+- WebTranslateIt API keys were updated [#3029](https://github.com/sharetribe/sharetribe/pull/3029)
+- Force meta tags content to be HTML escaped [#3047](https://github.com/sharetribe/sharetribe/pull/3047)
+- Upgrade to latest ruby 2.3.4 with latest rubygems (2.6.13+) [#3056](https://github.com/sharetribe/sharetribe/pull/3056)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+- Fixed image deletion in Android [3023](https://github.com/sharetribe/sharetribe/pull/3023)
+- Fixed changing the names of custom listing field options [3024](https://github.com/sharetribe/sharetribe/pull/3024)
+- Fixed image ordering usability in Android [3034](https://github.com/sharetribe/sharetribe/pull/3034)
+- Fixed not sending automatic emails to expired and deleted marketplaces [3044](https://github.com/sharetribe/sharetribe/pull/3044)
+- Fixed carousel black box rendering issue [3045](https://github.com/sharetribe/sharetribe/pull/3045)
+- Fixed datepicker issue with per night availability [3046](https://github.com/sharetribe/sharetribe/pull/3046)
+- Fixed listing checkbox layout issue on mobile [3048](https://github.com/sharetribe/sharetribe/pull/3048)
+- Fixed admin layout issue in Safari [3066](https://github.com/sharetribe/sharetribe/pull/3066)
+- Fixed error message layout placement when reviewing without grade [3067](https://github.com/sharetribe/sharetribe/pull/3067)
+- Fixed managing availability of rejected booking dates [3068](https://github.com/sharetribe/sharetribe/pull/3068)
+
+### Security
+
+## [7.0.0] - 2017-08-08
+
+### Changed
+
+- Updated Rails to 5.1.1 and Node to 7.8 [#2976](https://github.com/sharetribe/sharetribe/pull/2976)
+
+## [6.4.0] - 2017-06-09
+
+### Added
+
+- New feature: User can reorder listing images [#2970](https://github.com/sharetribe/sharetribe/pull/2970)
+
+### Changed
+
+- Change instructions how to compile assets. This reduces the JavaScript bundle size drastically. [c613cac](https://github.com/sharetribe/sharetribe/commit/c613cac)
+
+### Fixed
+
+- Fixed transaction button styles. Styles were broken in IE Edge. [#2968](https://github.com/sharetribe/sharetribe/pull/2968)
+- Fixed admin UI language change. [#2969](https://github.com/sharetribe/sharetribe/pull/2969)
+- Fix old mobile browser compatibility by removing dependency to Intl api. [#2979](https://github.com/sharetribe/sharetribe/pull/2979)
+
+### Security
+
+- Fixed cross-community security issues [#2978](https://github.com/sharetribe/sharetribe/pull/2978)
+
+## [6.3.0] - 2017-04-24
+
+### Changed
+
+- Migrate from database session store to cookie-based session store [#2935](https://github.com/sharetribe/sharetribe/pull/2935)
 
 ### Removed
 
@@ -23,8 +101,14 @@ This file follows the best practices from [keepachangelog.com](http://keepachang
 - Fix cropped cover photo in big screens [#2895](https://github.com/sharetribe/sharetribe/pull/2895)
 - Add missing padding to homepage search field in mobile view [#2895](https://github.com/sharetribe/sharetribe/pull/2895)
 - Fix unwanted scrolling in listing page by removing comment text area auto focus [#2917](https://github.com/sharetribe/sharetribe/pull/2917)
+- Fix faulty feature flag dependency handling [#2932](https://github.com/sharetribe/sharetribe/pull/2932)
+- Fix map bug where multiple listings close to each other caused the icon cluster to disapper when zoomed closed enough [#2942](https://github.com/sharetribe/sharetribe/pull/2942)
+- Fix issue [#2885](https://github.com/sharetribe/sharetribe/issues/2885): Landing page always shows Sign up button for private marketplace, even if the user is logged in [#2944](https://github.com/sharetribe/sharetribe/pull/2944)
+- Fix issue with fetching correct node.js release signing keys in Dockerfile [#2964](https://github.com/sharetribe/sharetribe/pull/2964)
 
 ### Security
+
+- Upgrade Nokogiri and rubyzip gems [#2943](https://github.com/sharetribe/sharetribe/pull/2943)
 
 ## [6.2.0] - 2017-03-09
 
@@ -352,7 +436,11 @@ This file follows the best practices from [keepachangelog.com](http://keepachang
 
 For older releases, see [RELEASE_NOTES.md](https://github.com/sharetribe/sharetribe/blob/v5.0.0/RELEASE_NOTES.md).
 
-[Unreleased]: https://github.com/sharetribe/sharetribe/compare/v6.2.0...HEAD
+[Unreleased]: https://github.com/sharetribe/sharetribe/compare/v7.1.0...HEAD
+[7.1.0]: https://github.com/sharetribe/sharetribe/compare/v7.0.0...v7.1.0
+[7.0.0]: https://github.com/sharetribe/sharetribe/compare/v6.4.0...v7.1.0
+[6.4.0]: https://github.com/sharetribe/sharetribe/compare/v6.3.0...v6.4.0
+[6.3.0]: https://github.com/sharetribe/sharetribe/compare/v6.2.0...v6.3.0
 [6.2.0]: https://github.com/sharetribe/sharetribe/compare/v6.1.0...v6.2.0
 [6.1.0]: https://github.com/sharetribe/sharetribe/compare/v6.0.0...v6.1.0
 [6.0.0]: https://github.com/sharetribe/sharetribe/compare/v5.12.0...v6.0.0

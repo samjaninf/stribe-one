@@ -1,7 +1,6 @@
-class Admin::ListingShapesController < ApplicationController
-  before_filter :ensure_is_admin
+class Admin::ListingShapesController < Admin::AdminBaseController
 
-  before_filter :set_url_name
+  before_action :set_url_name
 
   LISTING_SHAPES_NAVI_LINK = "listing_shapes"
 
@@ -10,11 +9,7 @@ class Admin::ListingShapesController < ApplicationController
   def index
     category_count = @current_community.categories.count
     template_label_key_list = ListingShapeTemplates.new(process_summary).label_key_list
-
-    onboarding_popup_locals = OnboardingViewUtils.popup_locals(
-      flash[:show_onboarding_popup],
-      getting_started_guide_admin_community_path(@current_community),
-      Admin::OnboardingWizard.new(@current_community.id).setup_status)
+    make_onboarding_popup
 
     render("index",
            locals: {
@@ -24,7 +19,7 @@ class Admin::ListingShapesController < ApplicationController
              knowledge_base_url: APP_CONFIG.knowledge_base_url,
              category_count: category_count,
              listing_shapes: all_shapes(community_id: @current_community.id, include_categories: true)
-             }.merge(onboarding_popup_locals))
+             })
   end
 
   def new
@@ -34,7 +29,9 @@ class Admin::ListingShapesController < ApplicationController
       return redirect_to action: :index
     end
 
-    render_new_form(template, process_summary, available_locales())
+    render_new_form(form: template,
+                    process_summary: process_summary,
+                    available_locs: available_locales())
   end
 
   def edit
@@ -46,7 +43,10 @@ class Admin::ListingShapesController < ApplicationController
 
     return redirect_to error_not_found_path if shape.nil?
 
-    render_edit_form(params[:url_name], shape, process_summary, available_locales())
+    render_edit_form(url_name: params[:url_name],
+                     form: shape,
+                     process_summary: process_summary,
+                     available_locs: available_locales())
   end
 
   def create
@@ -65,7 +65,10 @@ class Admin::ListingShapesController < ApplicationController
       redirect_to action: :index
     else
       flash.now[:error] = t("admin.listing_shapes.new.create_failure", error_msg: create_result.error_msg)
-      render_new_form(shape, process_summary, available_locales())
+
+      render_new_form(form: shape,
+                      process_summary: process_summary,
+                      available_locs: available_locales())
     end
 
   end
@@ -96,7 +99,11 @@ class Admin::ListingShapesController < ApplicationController
       return redirect_to admin_listing_shapes_path
     else
       flash.now[:error] = t("admin.listing_shapes.edit.update_failure", error_msg: update_result.error_msg)
-      return render_edit_form(params[:url_name], shape, process_summary, available_locales())
+
+      return render_edit_form(url_name: params[:url_name],
+                              form: shape,
+                              process_summary: process_summary,
+                              available_locs: available_locales())
     end
   end
 
@@ -137,7 +144,7 @@ class Admin::ListingShapesController < ApplicationController
       listing_api.shapes.update(community_id: @current_community.id, listing_shape_id: d[:value][:id], opts: opts)
     }
 
-    render nothing: true, status: 200
+    render body: nil, status: 200
   end
 
   def close_listings
@@ -184,12 +191,15 @@ class Admin::ListingShapesController < ApplicationController
     }
   end
 
-  def render_new_form(form, process_summary, available_locs)
-    locals = common_locals(form, 0, process_summary, available_locs)
+  def render_new_form(form:, process_summary:, available_locs:)
+    locals = common_locals(form: form,
+                           count: 0,
+                           process_summary: process_summary,
+                           available_locs: available_locs)
     render("new", locals: locals)
   end
 
-  def render_edit_form(url_name, form, process_summary, available_locs)
+  def render_edit_form(url_name:, form:, process_summary:, available_locs:)
     can_delete_res = can_delete_shape?(url_name, all_shapes(community_id: @current_community.id, include_categories: true))
     cant_delete = !can_delete_res.success
     cant_delete_reason = cant_delete ? can_delete_res.error_msg : nil
@@ -201,7 +211,10 @@ class Admin::ListingShapesController < ApplicationController
         open: true
       }).data
 
-    locals = common_locals(form, count, process_summary, available_locs).merge(
+    locals = common_locals(form: form,
+                           count: count,
+                           process_summary: process_summary,
+                           available_locs: available_locs).merge(
       url_name: url_name,
       name: pick_translation(form[:name]),
       cant_delete: cant_delete,
@@ -210,11 +223,14 @@ class Admin::ListingShapesController < ApplicationController
     render("edit", locals: locals)
   end
 
-  def common_locals(form, count, process_summary, available_locs)
+  def common_locals(form:, count:, process_summary:, available_locs:)
     { selected_left_navi_link: LISTING_SHAPES_NAVI_LINK,
       uneditable_fields: uneditable_fields(process_summary, form[:author_is_seller]),
       shape: FormViewLayer.shape_to_locals(form),
       count: count,
+      harmony_in_use: APP_CONFIG.harmony_api_in_use.to_s == "true",
+      display_knowledge_base_articles: APP_CONFIG.display_knowledge_base_articles.to_s == "true",
+      knowledge_base_url: APP_CONFIG.knowledge_base_url,
       locale_name_mapping: available_locs.map { |name, l| [l, name] }.to_h
     }
   end
@@ -328,7 +344,7 @@ class Admin::ListingShapesController < ApplicationController
     module_function
 
     def params_to_shape(params)
-      form_params = HashUtils.symbolize_keys(params)
+      form_params = HashUtils.symbolize_keys(params.to_unsafe_hash)
 
       parsed_params = form_params.merge(
         units: parse_units_from_params(form_params),

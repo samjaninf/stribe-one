@@ -23,8 +23,12 @@
 #  multicol_index                        (community_id,deleted,sort_priority)
 #
 
-class ListingShape < ActiveRecord::Base
+class ListingShape < ApplicationRecord
 
   has_and_belongs_to_many :categories, -> { order("sort_priority") }, join_table: "category_listing_shapes"
   has_many :listing_units
+
+  scope :exsist, -> { where(deleted: false) }
+  scope :for_listing_form, -> { exsist.includes(:listing_units).order("listing_shapes.sort_priority") }
+
 end

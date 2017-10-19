@@ -23,7 +23,11 @@ module TransactionViewUtils
     [:total, :money],
     [:shipping_price, :money],
     [:total_label, :string],
-    [:unit_type, :symbol])
+    [:unit_type, :symbol],
+    [:sum, :money],
+    [:fee, :money],
+    [:seller_gets, :money]
+  )
 
 
   module_function
@@ -152,17 +156,17 @@ module TransactionViewUtils
 
     message = case state
     when "preauthorized"
-      t("conversations.message.payment_preauthorized", sum: humanized_money_with_symbol(payment_sum))
+      t("conversations.message.payment_preauthorized", sum: MoneyViewUtils.to_humanized(payment_sum))
     when "accepted"
       ActiveSupport::Deprecation.warn("Transaction state 'accepted' is deprecated and will be removed in the future.")
       t("conversations.message.accepted_request")
     when "rejected"
       t("conversations.message.rejected_request")
     when preauthorize_accepted
-      t("conversations.message.received_payment", sum: humanized_money_with_symbol(payment_sum))
+      t("conversations.message.received_payment", sum: MoneyViewUtils.to_humanized(payment_sum))
     when post_pay_accepted
       ActiveSupport::Deprecation.warn("Transaction state 'paid' without previous state is deprecated and will be removed in the future.")
-      t("conversations.message.paid", sum: humanized_money_with_symbol(payment_sum))
+      t("conversations.message.paid", sum: MoneyViewUtils.to_humanized(payment_sum))
     when "canceled"
       t("conversations.message.canceled_request")
     when "confirmed"

@@ -22,6 +22,10 @@ This document describes the landing page structure JSON format.
 
 This guide instructs how to configure your marketplace to use [Harmony](https://www.github.com/sharetribe/harmony) service for availability management.
 
+#### [Scheduled tasks](./scheduled_tasks.md)
+
+This guide shows what scheduled tasks are required to properly run Sharetribe in production.
+
 ## Coding guidelines
 
 Coding guidelines followed in this project.
@@ -74,6 +78,14 @@ This guide shows how to write fast RSpec tests without requiring Rails environme
 #### [Upgrade Facebook SDK version](./upgrade-facebook-sdk-version.md)
 
 This guide shows how upgrade the Facebook SDK version
+
+#### [SessionContextStore](./session-context-store.md)
+
+This document explains what is SessionContextStore, how and when to use it.
+
+#### [Using Fakepal](./using-fakepal.md)
+
+This guide shows how to use "Fakepal", which is a fake PayPal implementation that can be used for development purposes
 
 ## Process documentation
 

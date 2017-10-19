@@ -1,4 +1,6 @@
 # encoding: utf-8
+
+# rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
 
   # Removes whitespaces from HAML expressions
@@ -16,22 +18,22 @@ module ApplicationHelper
     to_time = to_time.to_time if to_time.respond_to?(:to_time)
     distance_in_minutes = (((to_time - from_time).abs)/60).round
     distance_in_seconds = ((to_time - from_time).abs).round
-    case distance_in_minutes
-      when 0..1           then time = (distance_in_seconds < 60) ? t('timestamps.seconds_ago', :count => distance_in_seconds) : t('timestamps.minute_ago', :count => 1)
-      when 2..59          then time = t('timestamps.minutes_ago', :count => distance_in_minutes)
-      when 60..90         then time = t('timestamps.hour_ago', :count => 1)
-      when 90..1440       then time = t('timestamps.hours_ago', :count => (distance_in_minutes.to_f / 60.0).round)
-      when 1440..2160     then time = t('timestamps.day_ago', :count => 1) # 1-1.5 days
-      when 2160..2880     then time = t('timestamps.days_ago', :count => (distance_in_minutes.to_f / 1440.0).round) # 1.5-2 days
-      #else time = from_time.strftime(t('date.formats.default'))
+    time = case distance_in_minutes
+      when 0..1           then (distance_in_seconds < 60) ? t('timestamps.seconds_ago', :count => distance_in_seconds) : t('timestamps.minute_ago', :count => 1)
+      when 2..59          then t('timestamps.minutes_ago', :count => distance_in_minutes)
+      when 60..90         then t('timestamps.hour_ago', :count => 1)
+      when 90..1440       then t('timestamps.hours_ago', :count => (distance_in_minutes.to_f / 60.0).round)
+      when 1440..2160     then t('timestamps.day_ago', :count => 1) # 1-1.5 days
+      when 2160..2880     then t('timestamps.days_ago', :count => (distance_in_minutes.to_f / 1440.0).round) # 1.5-2 days
+      #else from_time.strftime(t('date.formats.default'))
     end
     if distance_in_minutes > 2880
       distance_in_days = (distance_in_minutes/1440.0).round
-      case distance_in_days
-        when 0..30    then time = t('timestamps.days_ago', :count => distance_in_days)
-        when 31..50   then time = t('timestamps.month_ago', :count => 1)
-        when 51..364  then time = t('timestamps.months_ago', :count => (distance_in_days.to_f / 30.0).round)
-        else               time = t('timestamps.years_ago', :count => (distance_in_days.to_f / 365.24).round)
+      time = case distance_in_days
+        when 0..30    then t('timestamps.days_ago', :count => distance_in_days)
+        when 31..50   then t('timestamps.month_ago', :count => 1)
+        when 51..364  then t('timestamps.months_ago', :count => (distance_in_days.to_f / 30.0).round)
+        else               t('timestamps.years_ago', :count => (distance_in_days.to_f / 365.24).round)
       end
     end
 
@@ -182,11 +184,10 @@ module ApplicationHelper
 
   def service_name
     if @current_community
-      service_name = @current_community.name(I18n.locale)
+      @current_community.name(I18n.locale)
     else
-      service_name = APP_CONFIG.global_service_name || "Sharetribe"
+      APP_CONFIG.global_service_name || "Sharetribe"
     end
-    return service_name
   end
 
   def email_not_accepted_message
@@ -311,13 +312,20 @@ module ApplicationHelper
         :name => "getting_started_guide"
       },
       {
-        :id => "admin-support-link",
+        :id => "admin-help-center-link",
         :topic => :general,
-        :text => t("admin.left_hand_navigation.support"),
+        :text => t("admin.left_hand_navigation.help_center"),
         :icon_class => icon_class("help"),
-        :path => "mailto:#{APP_CONFIG.support_email}",
-        :name => "support",
-        :data_uv_trigger => "contact"
+        :path => "#{APP_CONFIG.knowledge_base_url}/?utm_source=marketplaceadminpanel&utm_medium=referral&utm_campaign=leftnavi",
+        :name => "help_center"
+      },
+      {
+        :id => "admin-academy-link",
+        :topic => :general,
+        :text => t("admin.left_hand_navigation.academy"),
+        :icon_class => icon_class("academy"),
+        :path => "https://www.sharetribe.com/academy/guide/?utm_source=marketplaceadminpanel&utm_medium=referral&utm_campaign=leftnavi",
+        :name => "academy"
       }
     ]
 
@@ -436,23 +444,15 @@ module ApplicationHelper
       :name => "listing_shapes"
     }
 
-    if PaypalHelper.paypal_active?(@current_community.id)
+    if PaypalHelper.paypal_active?(@current_community.id) || StripeHelper.stripe_provisioned?(@current_community.id)
       links << {
         :topic => :configure,
-        :text => t("admin.communities.paypal_account.paypal_admin_account"),
+        :text => t("admin.communities.settings.payment_preferences"),
         :icon_class => icon_class("payments"),
-        :path => admin_paypal_preferences_path(),
-        :name => "paypal_account"
+        :path => admin_payment_preferences_path(),
+        :name => "payment_preferences"
       }
     end
-
-    links << {
-      :topic => :configure,
-      :text => t("admin.communities.stripe_payment_gateway.stripe_payment_gateway"),
-      :icon_class => icon_class("payments"),
-      :path => payment_gateways_admin_community_path(@current_community),
-      :name => "payment_gateways"
-    }
 
     links << {
       :topic => :configure,
@@ -522,42 +522,20 @@ module ApplicationHelper
       }
     ]
 
-    payment_type = MarketplaceService::Community::Query.payment_type(@current_community.id)
-    
-    if payment_type.present?
-      path = payment_settings_path(payment_type, @current_user)
-      
+    paypal_ready = PaypalHelper.community_ready_for_payments?(@current_community.id)
+    stripe_ready = StripeHelper.community_ready_for_payments?(@current_community.id)
+
+    if paypal_ready || stripe_ready
       links << {
         :id => "settings-tab-payments",
         :text => t("layouts.settings.payments"),
         :icon_class => icon_class("payments"),
-        :path => path,
+        :path => person_payment_settings_path(@current_user),
         :name => "payments"
       }
-
     end
 
     return links
-  end
-
-  def payment_settings_path(gateway_type, person)
-    if gateway_type == :stripe
-      stripe_account_settings_payment_path(person)
-    end
-  end
-
-  def payment_settings_url(gateway_type, person, url_params)
-    if gateway_type == :stripe
-      stripe_account_settings_payment_url(person, url_params.merge(locale: person.locale))
-    end
-  end
-
-  def display_expiration_notice?
-    ext_service_active = PlanService::API::Api.plans.active?
-    is_admin = Maybe(@current_user).has_admin_rights?.or_else(false)
-    is_expired = Maybe(@current_plan)[:expired].or_else(false)
-
-    ext_service_active && is_admin && is_expired
   end
 
   # returns either "http://" or "https://" based on configuration settings
@@ -636,7 +614,7 @@ module ApplicationHelper
   end
 
   def with_invite_link(&block)
-    if @current_user && (@current_user.has_admin_rights? || @current_community.users_can_invite_new_users)
+    if @current_user && (@current_user.has_admin_rights?(@current_community) || @current_community.users_can_invite_new_users)
       block.call()
     end
   end
@@ -683,4 +661,67 @@ module ApplicationHelper
       content_for :extra_javascript do js end
     end
   end
+
+  def format_local_date(value)
+    format = t("datepicker.format").gsub(/([md])[md]+/, '%\1').gsub(/yyyy/, '%Y')
+    value.present? ? value.strftime(format) : nil
+  end
+
+  def us_states
+    [
+      ['Alabama', 'AL'],
+      ['Alaska', 'AK'],
+      ['Arizona', 'AZ'],
+      ['Arkansas', 'AR'],
+      ['California', 'CA'],
+      ['Colorado', 'CO'],
+      ['Connecticut', 'CT'],
+      ['Delaware', 'DE'],
+      ['District of Columbia', 'DC'],
+      ['Florida', 'FL'],
+      ['Georgia', 'GA'],
+      ['Hawaii', 'HI'],
+      ['Idaho', 'ID'],
+      ['Illinois', 'IL'],
+      ['Indiana', 'IN'],
+      ['Iowa', 'IA'],
+      ['Kansas', 'KS'],
+      ['Kentucky', 'KY'],
+      ['Louisiana', 'LA'],
+      ['Maine', 'ME'],
+      ['Maryland', 'MD'],
+      ['Massachusetts', 'MA'],
+      ['Michigan', 'MI'],
+      ['Minnesota', 'MN'],
+      ['Mississippi', 'MS'],
+      ['Missouri', 'MO'],
+      ['Montana', 'MT'],
+      ['Nebraska', 'NE'],
+      ['Nevada', 'NV'],
+      ['New Hampshire', 'NH'],
+      ['New Jersey', 'NJ'],
+      ['New Mexico', 'NM'],
+      ['New York', 'NY'],
+      ['North Carolina', 'NC'],
+      ['North Dakota', 'ND'],
+      ['Ohio', 'OH'],
+      ['Oklahoma', 'OK'],
+      ['Oregon', 'OR'],
+      ['Pennsylvania', 'PA'],
+      ['Puerto Rico', 'PR'],
+      ['Rhode Island', 'RI'],
+      ['South Carolina', 'SC'],
+      ['South Dakota', 'SD'],
+      ['Tennessee', 'TN'],
+      ['Texas', 'TX'],
+      ['Utah', 'UT'],
+      ['Vermont', 'VT'],
+      ['Virginia', 'VA'],
+      ['Washington', 'WA'],
+      ['West Virginia', 'WV'],
+      ['Wisconsin', 'WI'],
+      ['Wyoming', 'WY']
+    ]
+  end
 end
+# rubocop:enable Metrics/ModuleLength

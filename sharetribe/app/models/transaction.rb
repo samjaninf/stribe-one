@@ -49,7 +49,7 @@
 #  transactions_on_cid_and_deleted           (community_id,deleted)
 #
 
-class Transaction < ActiveRecord::Base
+class Transaction < ApplicationRecord
   attr_accessor :contract_agreed
 
   belongs_to :community
@@ -60,7 +60,6 @@ class Transaction < ActiveRecord::Base
   belongs_to :starter, :class_name => "Person", :foreign_key => "starter_id"
   belongs_to :conversation
   has_many :testimonials
-  has_one :payment, foreign_key: :transaction_id, class_name: "StripePayment", dependent: :destroy
 
   delegate :author, to: :listing
   delegate :title, to: :listing, prefix: true

@@ -1,6 +1,4 @@
-class Admin::GettingStartedGuideController < ApplicationController
-
-  before_filter :ensure_is_admin
+class Admin::GettingStartedGuideController < Admin::AdminBaseController
 
   rescue_from ReactOnRails::PrerenderError do |err|
     Rails.logger.error(err.message)
@@ -28,9 +26,9 @@ class Admin::GettingStartedGuideController < ApplicationController
     render :index, locals: { props: data(page: :filter) }
   end
 
-  def paypal
+  def payment
     @selected_left_navi_link = "getting_started_guide"
-    render :index, locals: { props: data(page: :paypal) }
+    render :index, locals: { props: data(page: :payment) }
   end
 
   def listing
@@ -50,7 +48,7 @@ class Admin::GettingStartedGuideController < ApplicationController
 
     onboarding_status = Admin::OnboardingWizard.new(@current_community.id).setup_status
     additional_info = {
-      paypal: {
+      payment: {
         additional_info: {
           listing_shape_name: listing_shape_name
         }

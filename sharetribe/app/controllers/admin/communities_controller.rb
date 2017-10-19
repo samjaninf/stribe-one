@@ -1,19 +1,13 @@
-class Admin::CommunitiesController < ApplicationController
+class Admin::CommunitiesController < Admin::AdminBaseController
   include CommunitiesHelper
 
-  before_filter :ensure_is_admin
-  before_filter :ensure_white_label_plan, only: [:create_sender_address]
+  before_action :ensure_white_label_plan, only: [:create_sender_address]
 
   def edit_look_and_feel
     @selected_left_navi_link = "tribe_look_and_feel"
     @community = @current_community
-
-    onboarding_popup_locals = OnboardingViewUtils.popup_locals(
-      flash[:show_onboarding_popup],
-      admin_getting_started_guide_path,
-      Admin::OnboardingWizard.new(@current_community.id).setup_status)
-
-    render "edit_look_and_feel", locals: onboarding_popup_locals
+    make_onboarding_popup
+    render "edit_look_and_feel"
   end
 
   def edit_text_instructions
@@ -71,7 +65,7 @@ class Admin::CommunitiesController < ApplicationController
         when Some(:invalid_email)
           t("admin.communities.outgoing_email.invalid_email_error", email: res.data[:email])
         when Some(:invalid_domain)
-          kb_link = view_context.link_to(t("admin.communities.outgoing_email.invalid_email_domain_read_more_link"), "#{APP_CONFIG.knowledge_base_url}/articles/686493", class: "flash-error-link")
+          kb_link = view_context.link_to(t("admin.communities.outgoing_email.invalid_email_domain_read_more_link"), "#{APP_CONFIG.knowledge_base_url}/configuration-and-how-to/how-to-define-your-own-address-as-the-sender-of-all-outgoing-emails", class: "flash-error-link") # rubocop:disable Metrics/LineLength
           t("admin.communities.outgoing_email.invalid_email_domain", email: res.data[:email], domain: res.data[:domain], invalid_email_domain_read_more_link: kb_link).html_safe
         else
           t("admin.communities.outgoing_email.unknown_error")
@@ -124,16 +118,23 @@ class Admin::CommunitiesController < ApplicationController
   def new_layout
     @selected_left_navi_link = "new_layout"
 
-    render :new_layout, locals: { community: @current_community, features: NewLayoutViewUtils.features(@current_community.id, @current_user.id) }
+    features = NewLayoutViewUtils.features(@current_community.id,
+                                           @current_user.id,
+                                           @current_community.private,
+                                           CustomLandingPage::LandingPageStore.enabled?(@current_community.id))
+
+    render :new_layout, locals: { community: @current_community,
+                                  feature_rels: NewLayoutViewUtils::FEATURE_RELS,
+                                  features: features }
   end
 
   def update_new_layout
+    h_params = params.to_unsafe_hash
     @community = @current_community
-
-    enabled_for_user = Maybe(params[:enabled_for_user]).map { |f| NewLayoutViewUtils.enabled_features(f) }.or_else([])
+    enabled_for_user = Maybe(h_params[:enabled_for_user]).map { |f| NewLayoutViewUtils.enabled_features(f) }.or_else([])
     disabled_for_user = NewLayoutViewUtils.resolve_disabled(enabled_for_user)
 
-    enabled_for_community = Maybe(params[:enabled_for_community]).map { |f| NewLayoutViewUtils.enabled_features(f) }.or_else([])
+    enabled_for_community = Maybe(h_params[:enabled_for_community]).map { |f| NewLayoutViewUtils.enabled_features(f) }.or_else([])
     disabled_for_community = NewLayoutViewUtils.resolve_disabled(enabled_for_community)
 
     response = update_feature_flags(community_id: @current_community.id, person_id: @current_user.id,
@@ -169,6 +170,7 @@ class Admin::CommunitiesController < ApplicationController
 
   def update_topbar
     @community = @current_community
+    h_params = params.to_unsafe_hash
 
     menu_links_params = Maybe(params)[:menu_links].permit!.or_else({menu_link_attributes: {}})
 
@@ -182,7 +184,7 @@ class Admin::CommunitiesController < ApplicationController
       })
     end
 
-    translations = params[:post_new_listing_button].map{ |k, v| {locale: k, translation: v}}
+    translations = h_params[:post_new_listing_button].map{ |k, v| {locale: k, translation: v}}
 
     if translations.any?{ |t| t[:translation].blank? }
       flash[:error] = t("admin.communities.topbar.invalid_post_listing_button_label")
@@ -370,52 +372,7 @@ class Admin::CommunitiesController < ApplicationController
 
   end
 
-  def payment_gateways
-    # Redirect if payment gateway in use but it's not stripe
-    return redirect_to edit_details_admin_community_path(@current_community) if @current_community.payment_gateway && !@current_community.stripe_in_use?
-
-    @selected_left_navi_link = "payment_gateways"
-    @community = @current_community
-    @payment_gateway = Maybe(@current_community).payment_gateway.or_else { StripePaymentGateway.new }
-
-    render :stripe_payment_gateway and return
-  end
-
-  def update_payment_gateway
-    # Redirect if payment gateway in use but it's not stripe
-    return redirect_to edit_details_admin_community_path(@current_community) if @current_community.payment_gateway && !@current_community.stripe_in_use?
-
-    stripe_params = payment_gateway_params
-    community_params = params.require(:community).permit(:commission_from_seller)
-
-    unless @current_community.update_attributes(community_params)
-      flash.now[:error] = t("layouts.notifications.community_update_failed")
-      return render :payment_gateways
-    end
-
-    update(@current_community.payment_gateway,
-      stripe_params,
-      payment_gateways_admin_community_path(@current_community),
-      :payment_gateways)
-    TransactionProcess.update_all(process: params[:process]) if params[:process].present?
-    payment_setting = PaymentSettings.where(community_id: @current_community.id).last
-    if payment_setting.present?
-      payment_setting.update_attributes!(commission_from_seller: params[:community][:commission_from_seller].to_i)
-    else
-      payment_setting = PaymentSettings.create(active: true, community_id: @current_community.id, payment_gateway: :stripe, payment_process: :preauthorize, commission_from_seller: params[:community][:commission_from_seller].to_i, minimum_transaction_fee_cents: 100, minimum_price_cents: 100, confirmation_after_days: 7)
-    end
-  end
-
-  def create_payment_gateway
-    @current_community.payment_gateway = StripePaymentGateway.create(payment_gateway_params.merge(community_id: @current_community.id))
-    update_payment_gateway
-  end
-
   private
-
-  def payment_gateway_params
-    params.require(:payment_gateway).permit!
-  end
 
   def enqueue_status_sync!(address)
     Maybe(address)
@@ -456,6 +413,15 @@ class Admin::CommunitiesController < ApplicationController
     p_set = Maybe(payment_settings_api.get(
                    community_id: community_id,
                    payment_gateway: :paypal,
+                   payment_process: :preauthorize))
+            .map {|res| res[:success] ? res[:data] : nil}
+            .or_else(nil)
+
+    payment_settings_api.update(p_set.merge({confirmation_after_days: automatic_confirmation_after_days.to_i})) if p_set
+
+    p_set = Maybe(payment_settings_api.get(
+                   community_id: community_id,
+                   payment_gateway: :stripe,
                    payment_process: :preauthorize))
             .map {|res| res[:success] ? res[:data] : nil}
             .or_else(nil)

@@ -50,7 +50,7 @@
 #  stylesheet_url                             :string(255)
 #  stylesheet_needs_recompile                 :boolean          default(FALSE)
 #  service_logo_style                         :string(255)      default("full-logo")
-#  currency                                   :string(3)
+#  currency                                   :string(3)        not null
 #  facebook_connect_enabled                   :boolean          default(TRUE)
 #  minimum_price_cents                        :integer
 #  hide_expiration_date                       :boolean          default(TRUE)
@@ -89,7 +89,6 @@
 #  small_cover_photo_processing               :boolean
 #  favicon_processing                         :boolean
 #  deleted                                    :boolean
-#  commission_from_seller                     :integer
 #
 # Indexes
 #
@@ -98,10 +97,7 @@
 #  index_communities_on_uuid    (uuid) UNIQUE
 #
 
-class Community < ActiveRecord::Base
-
-  # TODO Rails 4, Remove
-  include ActiveModel::ForbiddenAttributesProtection
+class Community < ApplicationRecord
 
   require 'compass'
   require 'sass/plugin'
@@ -124,7 +120,7 @@ class Community < ActiveRecord::Base
   has_many :transactions
 
   has_many :listings
-  has_one :payment_gateway, class_name: "StripePaymentGateway", :dependent => :destroy
+
   has_one :paypal_account # Admin paypal account
 
   has_many :custom_fields, :dependent => :destroy
@@ -310,9 +306,9 @@ class Community < ActiveRecord::Base
   end
 
   def cache_previous_image_urls
-    return unless changed?
+    return unless has_changes_to_save?
 
-    changes.select { |attribute, values|
+    changes_to_save.select { |attribute, values|
       attachment_name = attribute.chomp("_file_name")
       attribute.end_with?("_file_name") && !send(:"#{attachment_name}_processing") && values[0]
     }.each { |attribute, values|
@@ -390,7 +386,7 @@ class Community < ActiveRecord::Base
   end
 
   def allows_user_to_send_invitations?(user)
-    (users_can_invite_new_users && user.member_of?(self)) || user.has_admin_rights?
+    (users_can_invite_new_users && user.member_of?(self)) || user.has_admin_rights?(self)
   end
 
   def has_customizations?
@@ -445,7 +441,7 @@ class Community < ActiveRecord::Base
   end
 
   def self.find_by_email_ending(email)
-    Community.all.each do |community|
+    Community.all.find_each do |community|
       return community if community.allowed_emails && community.email_allowed?(email)
     end
     return nil
@@ -562,26 +558,14 @@ class Community < ActiveRecord::Base
 
   # is it possible to pay for this listing via the payment system
   def payment_possible_for?(listing)
-    listing.price && listing.price > 0 && stripe_in_use?
+    listing.price && listing.price > 0 && payments_in_use?
   end
 
   # Deprecated
   #
   # There is a method `payment_type` is community service. Use that instead.
   def payments_in_use?
-    payment_gateway.present? && payment_gateway.configured?
-  end
-
-  def stripe_in_use?
-    payment_gateway.present?
-  end
-
-  def stripe_configured?
-    stripe_in_use? && payment_gateway.configured?
-  end
-  
-  def stripe_transfers_enabled?
-    stripe_configured? && payment_gateway.tranfers_enabled?
+    MarketplaceService::Community::Query.payment_type(id).present?
   end
 
   def self.all_with_custom_fb_login
@@ -624,5 +608,6 @@ class Community < ActiveRecord::Base
 
   def initialize_settings
     update_attribute(:settings,{"locales"=>[APP_CONFIG.default_locale]}) if self.settings.blank?
+    true
   end
 end

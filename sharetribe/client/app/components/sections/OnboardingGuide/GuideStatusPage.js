@@ -33,7 +33,7 @@ const GuideStatusPage = (props) => {
     p({ className: css.description },
       t('web.admin.onboarding.guide.status_page.congratulation_p1.content',
         { knowledge_base_link: a(
-          { href: 'http://support.sharetribe.com/knowledgebase/articles/892140',
+          { href: 'https://help.sharetribe.com/configuration-and-how-to/what-to-do-after-the-basic-setup-of-your-marketplace',
             target: '_blank',
             rel: 'noreferrer',
             alt: t('web.admin.onboarding.guide.status_page.congratulation_p1.knowledge_base_alt'),
@@ -43,7 +43,7 @@ const GuideStatusPage = (props) => {
     p({ className: css.description },
       t('web.admin.onboarding.guide.status_page.congratulation_p2.content',
         { marketplace_guide_link: a(
-          { href: 'https://www.sharetribe.com/academy/guide/',
+          { href: 'https://www.sharetribe.com/academy/guide/?utm_source=marketplaceadminpanel&utm_medium=referral&utm_campaign=onboarding',
             target: '_blank',
             rel: 'noreferrer',
             alt: t('web.admin.onboarding.guide.status_page.congratulation_p2.marketplace_guide_alt'),
@@ -54,7 +54,7 @@ const GuideStatusPage = (props) => {
       t('web.admin.onboarding.guide.status_page.congratulation_p3.content',
          { contact_support_link: a(
            { 'data-uv-trigger': 'contact',
-             href: 'mailto:support@sharetribe.com',
+             href: 'mailto:help@sharetribe.com',
              title: t('web.admin.onboarding.guide.status_page.congratulation_p3.contact_support_title'),
            },
            t('web.admin.onboarding.guide.status_page.congratulation_p3.contact_support_link')),
@@ -81,10 +81,10 @@ const GuideStatusPage = (props) => {
       next_link_title: 'web.admin.onboarding.guide.next_step.filter',
       path: routes.admin_getting_started_guide_filter_path(),
     },
-    paypal: {
+    payment: {
       link_title: 'web.admin.onboarding.guide.status_page.paypal',
       next_link_title: 'web.admin.onboarding.guide.next_step.paypal',
-      path: routes.admin_getting_started_guide_paypal_path(),
+      path: routes.admin_getting_started_guide_payment_path(),
     },
     listing: {
       link_title: 'web.admin.onboarding.guide.status_page.listing',
@@ -148,7 +148,7 @@ GuideStatusPage.propTypes = {
     admin_getting_started_guide_slogan_and_description_path: func.isRequired,
     admin_getting_started_guide_cover_photo_path: func.isRequired,
     admin_getting_started_guide_filter_path: func.isRequired,
-    admin_getting_started_guide_paypal_path: func.isRequired,
+    admin_getting_started_guide_payment_path: func.isRequired,
     admin_getting_started_guide_listing_path: func.isRequired,
     admin_getting_started_guide_invitation_path: func.isRequired,
   }).isRequired,
@@ -157,7 +157,7 @@ GuideStatusPage.propTypes = {
       'slogan_and_description',
       'cover_photo',
       'filter',
-      'paypal',
+      'payment',
       'listing',
       'invitation',
       'all_done',

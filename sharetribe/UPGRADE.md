@@ -33,6 +33,58 @@ See instructions how to set application in [maintenance mode in Heroku](https://
 
 ## Unreleased
 
+## Upgrade from 7.0.0 to 7.1.0
+
+Ruby version is updated from 2.3.1 to 2.3.4. The update contains fixes for several security vulnerabilities.
+
+Using [RVM](https://rvm.io/), you can upgrade your local Ruby version like this:
+
+```
+rvm install ruby-2.3.4
+rvm use ruby-2.3.4
+gem install bundler
+bundle install
+```
+
+## Upgrade from 6.4.0 to 7.0.0
+
+Make sure you have node 7.8 installed.
+
+Then follow the [#general-update-instructions].
+
+If foreman causes trouble with an error message:
+
+```
+'method_missing': undefined method 'this'
+```
+
+it's an issue with rubygems. This issue can be solved by updating rubygems with:
+
+```bash
+gem update --system
+```
+
+
+## Upgrade from 6.3.0 to 6.4.0
+
+Nothing special. See the [#general-update-instructions].
+
+## Upgrade from 6.2.0 to 6.3.0
+
+### Migration from database session store to cookie-based session store
+
+This release migrates from database session store to cookie-based session store. The migration is done seamlessly without users being logged out.
+
+Make sure that you are using a cache store that can share cache between processes (such as FileStore, MemCacheStore or Redis) if you are running multiple server processes. The new session implementation caches user session data and if the cache is not shared between all server processes they will get out of sync and actions such as logout will only log out the user from one process but not from all processes. See this [Rails Guides](http://guides.rubyonrails.org/caching_with_rails.html#cache-stores) article to read more about Cache Stores in Rails.
+
+Add a new scheduled task to clean up expired tokens. Run it once per day:
+
+```
+bundle exec rails runner ActiveSessionsHelper.cleanup
+```
+
+To read more, see [Scheduled tasks](docs/scheduled_tasks.md).
+
 ## Upgrade from 6.1.0 to 6.2.0
 
 NPM packages are updated, run `npm install` to get the latest packages.

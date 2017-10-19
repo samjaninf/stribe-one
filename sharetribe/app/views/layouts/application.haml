@@ -22,7 +22,7 @@
       - if(search_mode != :keyword || @view_type.eql?("map"))
         - maps_key = MarketplaceHelper.google_maps_key(@current_community.id)
         - key_param = maps_key ? "&key=#{maps_key}" : ""
-        = javascript_include_tag "https://maps.googleapis.com/maps/api/js?libraries=places#{key_param}"
+        = javascript_include_tag "//maps.googleapis.com/maps/api/js?libraries=places#{key_param}"
       - if(@view_type.eql?("map"))
         = javascript_include_tag "markerclusterer.js"
       - props = topbar_props
@@ -31,8 +31,8 @@
     - else
       = render partial: 'layouts/global_header', locals: header_props()
 
-    - if @display_expiration_notice
-      - if @current_user&.has_admin_rights?
+    - if logged_in? && @display_expiration_notice
+      - if @current_user.has_admin_rights?(@current_community)
         = render partial: "layouts/admin_expiration_notice", locals: {external_plan_service_login_url: admin_plan_path}
       - else
         = render partial: "layouts/expiration_notice", locals: {contact_owner_link: new_user_feedback_path}
@@ -92,7 +92,7 @@
     = javascript_include_tag 'application'
 
     :javascript
-      window.ST.jsonTranslations = #{JSONTranslations.get(I18n.locale)}
+      window.ST.jsonTranslations = #{raw JSONTranslations.get(I18n.locale)}
 
     - if @analytics_event
       :javascript
@@ -100,7 +100,7 @@
     - if @gtm_datalayer
       :javascript
         if(window.ST != null && typeof window.ST.gtmPush === 'function') {
-          window.ST.gtmPush(#{@gtm_datalayer.to_json});
+          window.ST.gtmPush(#{@gtm_datalayer.to_json.html_safe});
         }
 
     :javascript

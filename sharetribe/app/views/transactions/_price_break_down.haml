@@ -7,7 +7,7 @@
         - else
           = t("transactions.initiate.price_per_night")
       %span.initiate-transaction-per-unit-value
-        = humanized_money_with_symbol(listing_price)
+        = MoneyViewUtils.to_humanized(listing_price)
 
     .initiate-transaction-booking-wrapper
       %span.initiate-transaction-booking-label
@@ -18,10 +18,11 @@
       %span.initiate-transaction-booking-value
         = l start_on, format: :long_with_abbr_day_name
         = "-"
-        = l end_on, format: :long_with_abbr_day_name
         - if unit_type == :day
+          = l (end_on - 1.day), format: :long_with_abbr_day_name
           = "(#{pluralize(duration, t("listing_conversations.preauthorize.day"), t("listing_conversations.preauthorize.days"))})"
         - else
+          = l end_on, format: :long_with_abbr_day_name
           = "(#{pluralize(duration, t("listing_conversations.preauthorize.night"), t("listing_conversations.preauthorize.nights"))})"
 
   - elsif quantity.present? && localized_unit_type.present?
@@ -29,7 +30,7 @@
       %span.initiate-transaction-per-unit-label
         = t("transactions.price_per_quantity", unit_type: localized_unit_type)
       %span.initiate-transaction-per-unit-value
-        = humanized_money_with_symbol(listing_price)
+        = MoneyViewUtils.to_humanized(listing_price)
     - if quantity > 1
       .initiate-transaction-quantity-wrapper
         %span.initiate-transaction-quantity-label
@@ -42,14 +43,28 @@
       %span.initiate-transaction-sum-label
         = t("transactions.initiate.subtotal")
       %span.initiate-transaction-sum-value
-        = humanized_money_with_symbol(subtotal)
+        = MoneyViewUtils.to_humanized(subtotal)
 
   - if shipping_price.present?
     .initiate-transaction-shipping-price-wrapper
       %span.initiate-transaction-shipping-price-label
         = t("transactions.initiate.shipping-price")
       %span.initiate-transaction-shipping-price-value
-        = humanized_money_with_symbol(shipping_price)
+        = MoneyViewUtils.to_humanized(shipping_price)
+
+  - if is_author
+    .initiate-transaction-sum-wrapper
+      %span.initiate-transaction-sum-label
+        = t("transactions.total_to_pay")
+      %span.initiate-transaction-sum-value
+        = MoneyViewUtils.to_humanized(total)
+
+    - if fee.present? && fee > 0
+      .initiate-transaction-sum-wrapper
+        %span.initiate-transaction-sum-label
+          = t("conversations.accept.service_fee_label")
+        %span.initiate-transaction-sum-value
+          = "-#{MoneyViewUtils.to_humanized(fee)}"
 
   - if total.present?
     .initiate-transaction-total-wrapper
@@ -59,4 +74,4 @@
         - else
           = t("transactions.total")
       %span.initiate-transaction-total-value
-        = humanized_money_with_symbol(total)
+        = MoneyViewUtils.to_humanized(is_author ? seller_gets : total)

@@ -1,4 +1,10 @@
 es-ES:
+  number:
+    currency:
+      format:
+        separator: ","
+        delimiter: "."
+        format: "%n %u"
   admin:
     categories:
       edit:
@@ -113,7 +119,7 @@ es-ES:
         default_browse_view: "Vista por defecto del buscador"
         default_browse_view_instructions_text: "La vista por defecto del buscador se usa en la página principal para elegir cómo se muestran los resultados por defecto."
         grid: Cuadrícula
-        list: Listado
+        list: Lista
         map: Mapa
         name_display_type: "Tipo de vista"
         name_display_type_instructions_text: "Elige cómo se mostrará el nombre de cada usuario en la web"
@@ -156,14 +162,14 @@ es-ES:
         resend_link: Reenviar
         invalid_email_error: "Formato de correo electrónico para '%{email}' es inválido"
         invalid_email_domain: "La dirección de correo '%{email}' usa un proveedor de correo no soportado por nuestro sistema: '%{domain}'. %{invalid_email_domain_read_more_link}"
-        invalid_email_domain_read_more_link: "Lee el artículo en nuestra base de conocimiento para más información."
+        invalid_email_domain_read_more_link: "Lee el artículo en nuestro centro de ayuda para obtener más información."
         unknown_error: "Algo salió mal"
         white_label_offer: "Configura tu propia dirección de correo electrónico al enviar mensajes y elimina toda mención de Sharetribe de los correos enviados desde tu comunidad al %{upgrade_pro_plan_link}"
         upgrade_plan_link: "suscribirte al plan Pro o un plan superior"
         verification_sent_from: "El correo de verificación se envió desde %{verification_sender_name}."
         follow_the_instructions: "Por favor sigue las instrucciones que te enviamos en el correo para verificar tu dirección."
       getting_started:
-        getting_started: "Guía para comenzar"
+        getting_started: "Empieza aquí"
       available_languages:
         en: Inglés
         en-AU: "Inglés (Australia)"
@@ -206,7 +212,7 @@ es-ES:
         listing_preferences: "Preferencias de los anuncios"
         transaction_preferences: "Preferencias de transacciones"
         show_listing_publishing_date: "Mostrar fecha de publicación del anuncio en la lista de resultados"
-        show_category_in_listing_list: "Mostrar el tipo de anuncio en la vista de listado"
+        show_category_in_listing_list: "Mostrar el tipo de anuncio en el formato de lista"
         listing_comments_in_use: "Todos los usuarios pueden publicar comentarios en los anuncios (visibles para el resto de los usuarios)"
         email_preferences: "Preferencias de correo"
         automatic_newsletters: "Enviar el newsletter diario/semanal a todos los usuarios (excepto si no han aceptado el envío de mensajes automáticos)"
@@ -227,6 +233,7 @@ es-ES:
         last_community_updates: "Por favor ten presente que después de eliminado, tú y los usuarios de tu comunidad aún podrán recibir los últimos emails de actualización de tu comunidad."
         you_will_be_redirected_to: "Después de que elimines tu comunidad serás redirigido a %{destination}. Ya no podrás volver a acceder a tu marketplace."
         delete_this_marketplace: "Eliminar esta comunidad"
+        payment_preferences: "Sistema de pagos"
       manage_members:
         manage_members: "Administrar usuarios"
         email: Email
@@ -244,11 +251,11 @@ es-ES:
         ban_me_error: "No te puedes rechazar a ti mismo."
       new_layout:
         new_layout: "Nuevo diseño"
-        description_roadmap: "En Sharetribe, estamos en el proceso de publicar un nuevo diseño de nuestra plataforma. Durante el periodo de transición, puedes decidir que partes de tu comunidad seguirán utilizando el viejo diseño usando el menú inferior. La mayoría de nuestras nuevas funciones no soportarán el viejo diseño."
-        description_process: "Soporte para el viejo diseño será eliminado en el futuro. El equipo de Sharetribe te notificará antes de que esto suceda. Si tienes alguna pregunta no dudes en contactarnos por medio del %{support_link}."
+        description_roadmap_new: "Cuando hay nuevos componentes de diseño disponibles, puedes elegir entre usar un nuevo componente o continuar usando el viejo. Puedes cambiar la selección en cualquier momento, en esta pagina. Es recomendable siempre usar el componente más nuevo, ya que los componentes viejos podrán ser removidos en el futuro. En caso de que estés usando algún componente que vayamos a remover, te contactaremos por adelantado."
         enabled_for_you: "Habilitar sólo para ti"
         enabled_for_all: "Habilitar para todos"
         new_topbar: "Nueva barra superior (visible en todas las páginas)"
+        searchpage: "Nueva página de búsqueda (requiere de la nueva barra superior)"
       social_media:
         social_media: "Social media"
         twitter_handle: Twitter
@@ -310,13 +317,35 @@ es-ES:
           accepted: Aceptada
           rejected: Rechazada
           paid: Pagada
-          confirmed: Confirmada
+          confirmed: Completa
           canceled: Cancelada
           initiated: "Esperando al pago de PayPal"
           pending_ext: "Esperando al pago de PayPal"
+          none:
+            free: Conversación
+          paypal:
+            free: Conversación
+            pending: Pendiente
+            preauthorized: Preautorizado
+            accepted: Aceptado
+            rejected: Rechazado
+            paid: Pagado
+            confirmed: Confirmado
+            canceled: Cancelado
+            initiated: "Esperando el pago de PayPal"
+            pending_ext: "Esperando el pago de PayPal"
+          stripe:
+            free: Conversación
+            pending: Pendiente
+            preauthorized: Preautorizado
+            accepted: Aceptado
+            rejected: Rechazado
+            paid: Pagado
+            confirmed: Confirmado
+            canceled: Cancelado
+            initiated: "Esperando el pago de Stripe"
+            pending_ext: "Esperando el pago de Stripe"
         not_available: "No disponible"
-      paypal_account:
-        paypal_admin_account: "Sistema de pagos"
     custom_fields:
       edit:
         edit_listing_field: "Editar campo '%{field_name}'"
@@ -373,21 +402,33 @@ es-ES:
     emails:
       new:
         send_email_to_members: "Enviar correo electrónico a los usuarios"
-        send_email_to_members_title: "Enviar correo electrónico a todos los usuarios"
+        send_email_to_members_title: "Enviar correo electrónico a tus usuarios"
+        send_email: Enviar
+        send_email_or: o
+        send_test_email: "Mandar un correo de prueba a tu cuenta"
+        test_sent: "El correo de prueba ha sido enviado"
+        send_email_article_title: "este artículo"
+        send_email_article_text: "Puedes aprender más acerca de los segmentos de usuarios en %{article_link}."
+        recipients:
+          title: "¿A quién le quieres enviar el correo?"
+          options:
+            all_users: "Todos los usuarios"
+            with_listing: "Usuarios que han publicado por lo menos un anuncio"
+            with_listing_no_payment: "Usuarios que han publicado por lo menos un anuncio pero que no han añadido sus detalles de pago"
+            with_payment_no_listing: "Usuarios que han añadido sus detalles de pago pero que no han publicado ningún anuncio"
+            no_listing_no_payment: "Usuarios que no han publicado un anuncio y que no han añadido sus detalles de pago"
         email_subject: Asunto
         email_content: Contenido
         email_content_placeholder: "¿Qué quieres decirle a tus usuarios?"
         email_language: "Idioma de los usuarios que recibirán el correo"
         any_language: "Cualquier idioma"
-        send_email: Enviar
-        message_will_be_sent_only_to_people_with_this_language: "Nota: el correo sólo va a ser enviado a los usuarios que están usando %{service_name} en el idioma que escojas."
+        message_will_be_sent_only_to_people_with_this_language: "El correo sólo va a ser enviado a los usuarios que están usando %{service_name} en el idioma que escojas."
         email_sent: "Mensaje enviado."
     left_hand_navigation:
       general: General
       users_and_transactions: "Usuarios y transacciones"
       configure: Configuración
       emails_title: Emails
-      support: Soporte
       subscription: Subscripción
       preview: "Vista Previa"
     listing_shapes:
@@ -485,20 +526,77 @@ es-ES:
     paypal_accounts:
       marketplace_paypal_integration: "Preferencias del sistema de pagos"
       preferences_updated: "Preferencias del sistema de pagos actualizadas"
-      marketplace_currency_used: "Esta comunidad usa %{currency} como su moneda. Para cambiar la moneda, %{contact_support_link}."
-      contact_support_link_text: "contacta al equipo de soporte de Sharetribe"
+      contact_support_link_text: "contacta al equipo de soporte"
       integration_info_text: "El sistema de pagos de tu comunidad se basa en PayPal. Si quieres permitir a tus usuarios hacer pagos a través de tu comunidad, debes conectar tu cuenta de PayPal. Después de esto, puedes decidir el precio mínimo para las transacciones, así como la comisión y/o cuota por transacción que quieres recibir."
       link_paypal_personal_account_label: "Venderás productos u ofrecerás productos en tu comunidad?"
       link_paypal_personal_account: "Si es así, también necesitará conectar su cuenta PayPal en %{personal_payment_preferences_link}."
+      link_stripe_personal_account: "Si es así, también debes añadir tus detalles de pago en %{personal_payment_preferences_link}"
+      link_paypal_and_stripe_personal_account: "Si es así, también debes conectar tu cuenta de PayPal o Stripe en %{personal_payment_preferences_link}"
       personal_payment_preferences_link_text: "su cuenta personal de la comunidad"
       read_more_about_paypal: "Leer más sobre el sistema de pagos."
-      set_minimum_price_and_fee: "Configura un precio mínimo y una comisión por transacción"
-      minimum_listing_price_label: "Precio mínimo por transacción:"
+      edit_payment_settings: "Modificar la configuración de pagos"
+      supported_currencies_information_text: "El sistema de pagos en línea de Sharetribe soporta 24 divisas distintas. Si tu divisa no aparece en la lista, por favor %{contact_support_link}. Si cambias la divisa de tu comunidad, los anuncios existentes mantendrán la divisa anterior. Necesitas editar esos anuncios para actualizar su precio a la nueva divisa."
+      currency_change_warning_text: "Cuidado: si procedes con el cambio, no olvides pedirle a tus usuarios que actualicen sus anuncios para que la divisa cambie en estos anuncios."
+      marketplace_currency_label: "Divisa de la comunidad:"
+      minimum_listing_price_label: "Precio mínimo por anuncio:"
       transaction_fee_label: "Comisión por transacción:"
-      minimum_transaction_fee_label: "Cuota mínima por transacción"
+      minimum_transaction_fee_label: "Comisión mínima por transacción:"
       save_settings: "Guardar configuración"
-      minimum_listing_price_below_tx_fee: "El tamaño mínimo de transacción tiene que ser mayor o igual a la cuota mínima por transacción: %{minimum_transaction_fee}"
+      minimum_listing_price_below_tx_fee: "El precio mínimo de transacción tiene que ser mayor o igual a la cuota mínima por transacción: %{minimum_transaction_fee}"
       minimum_listing_price_below_min: "El precio mínimo de transacción debe ser superior a la comisión mínima %{minimum_commission}"
+    payment_preferences:
+      title: "Preferencias del sistema de pagos"
+      general_settings: "1. Configuración general"
+      connect_a_payment_provider: "2. Conecta un proveedor de sistema de pagos"
+      contact_support: "contacta al equipo de soporte"
+      no_payments_link_text: aquí
+      your_country: "Tu país:"
+      you_cannot_use_online_payments: ~
+      which_to_choose: "¿Cuál escoger?"
+      you_can_use_stripe_or_paypal: "Puedes usar Stripe, Paypal o ambos como tus proveedores del sistema de pagos. %{choose_link}"
+      you_can_use_stripe_only: "Puedes usar Stripe como proveedor del sistema de pagos. %{read_more_link}"
+      read_more_stripe: "Lee más acerca de pagos con Stripe."
+      you_can_use_paypal_only: "Puedes usar PayPal como proveedor del sistema de pagos. %{read_more_link}"
+      read_more_paypal: "Lee más acerca de pagos con PayPal."
+      read_more_about_paypal_and_stripe: "Lee más acerca de pagos en linea con Stripe y PayPal"
+      general_settings_updated: "Configuración general del sistema de pagos modificada"
+      transaction_fee_settings_updated: "Configuración de la cuota de servicio modificada"
+      choose_popup_text: ~
+      invalid_api_keys: "API keys de Stripe invalidas"
+      missing_api_keys: "Faltan las API keys de Stripe"
+      stripe_verified: ~
+      change_settings: "Cambiar la configuración y las cuotas"
+      configure_stripe: "Configurar Stripe"
+      configure_paypal: "Configurar PayPal"
+      transaction_fee_settings: ~
+      transaction_fee_save: Guardar
+      stripe_fee: "Cuotas de Stripe"
+      stripe_fee_notice: ~
+      fee_should_be_less_than_minimum_price: "La cuota mínima de transacción debe ser menor que el precio mínimo de transacción"
+      stripe_connected:
+        title: "Stripe conectado"
+      paypal_connected:
+        title: "PayPal conectado"
+      stripe_form:
+        add_your_api_keys: "Añado tus API keys de Stripe"
+        how_to_get_these: "¿Cómo obtenerlas?"
+        publishable_key_example: ~
+        secret_key_example: ~
+        save_api_keys: "Guardar las API keys de Stripe"
+        invalid_secret: ~
+        invalid_publishable: ~
+      index:
+        header: "Configuración de pagos disponible"
+        info: ~
+        active: Activo
+        gateway: "Plataforma de pagos"
+        process: Proceso
+        commission: Comisión
+        minimum_price: Precio.min
+        minimum_fee: Cuota.min
+        api_verified: "API verificada?"
+        actions: Acciones
+        payments_not_enabled: "Pagos en línea no están habilitados para tu comunidad"
     transaction_types:
       sell: Venta
       rent: Alquilando
@@ -563,15 +661,27 @@ es-ES:
     username_or_email: "Correo electrónico o nombre de usuario"
     what_is_this: "¿Qué es esto?"
     removed_user: "Usuario eliminado"
+    payment_fee_info:
+      title: ~
+      title_paypal: ~
+      stripe: Stripe
+      paypal: PayPal
+      info: ~
     paypal_fee_info:
       title: "Comisión de procesamiento de pago de PayPal"
       body_text: |-
           PayPal cobra una tarifa de procesamiento de cada pago realizado. Esta tarifa está entre 2% y 5% del precio total de venta, dependiendo de su volumen mensual de ventas y del país de residencia del comprador. En general, las compras domésticas tienen tarifas más bajas que las internacionales, y las mayores ventas mensuales le dan un descuento en estas tarifas.
           Puedes ver las tarifas exactas accediendo a su cuenta de PayPal %{link_to_paypal}. Después de cada compra recibirá un recibo en el que se muestra la tarifa exacta.
-      body_with_shipping_text: |-
-          PayPal cobra una tarifa de procesamiento de cada pago realizado. Esta tarifa está entre 2% y 5% del precio total de venta (incluyendo envío), dependiendo de su volumen mensual de ventas y del país de residencia del comprador. En general, las compras domésticas tienen tarifas más bajas que las internacionales, y las mayores ventas mensuales le dan un descuento en estas tarifas.
-          Puedes ver las tarifas exactas accediendo a su cuenta de PayPal %{link_to_paypal}. Después de cada compra recibirá un recibo en el que se muestra la tarifa exacta.
+      body_text_accept: ~
       link_to_paypal_text: aquí
+    paypal_only_fee_info:
+      title: ~
+      body_text: ~
+      link_to_paypal_text: ~
+    stripe_fee_info:
+      title: ~
+      body_text: ~
+      link_to_stripe_text: ~
   conversations:
     accept:
       details: "Detalles de la orden"
@@ -592,8 +702,12 @@ es-ES:
       you_will_get_label: "Recibirás:"
       total_label: "Total:"
       total_value: "%{seller_gets}*"
+      total_value_paypal: ~
+      total_value_stripe: ~
       paypal_fee_info: "* No incluye <a id='%{fee_info_link_id}' href='#'> los costos de procesamiento de pago de PayPal</a>"
+      payment_fee_info: ~
       shipping_price_label: "Costos de envío:"
+      stripe-fee_label: ~
     confirm:
       confirm_description: "Si tu solicitud se ha cumplido debes confirmarla como completada. Después podrás dar una valoración al otro usuario."
       cancel_description: "Si tu solicitud no se cumplió, puedes marcarla como 'disputada'. Aún así podrás dar una valoración al otro usuario y describir qué pasó."
@@ -762,7 +876,7 @@ es-ES:
       create_own: "¿Quieres crear tu propia comunidad en linea como %{service_name}? %{learn_more}."
       learn_more: "Entérate cómo"
     confirm_reminder:
-      you_have_not_yet_confirmed_or_canceled_request: "Aún no has confirmado o cancelado la solicitud %{request_link}. Si la solicitud se completó, deberías confirmarlo. Después de eso podrás dar una valoración a %{other_party_given_name}."
+      you_have_not_yet_confirmed_or_canceled_request: "Aún no has completado o cancelado la solicitud %{request_link}. Si la solicitud se completó, deberías confirmar esto. Después de eso podrás dar una valoración a %{other_party_given_name}."
       remember_to_confirm_request: "Recuerda confirmar o cancelar una solicitud"
       if_will_not_happen_you_should_cancel: "Si crees que por alguna razón esta solicitud no se va a completar, puedes %{cancel_it_link}."
       cancel_it_link_text: cancelarla
@@ -839,6 +953,31 @@ es-ES:
       price_per_unit_type: "Precio por %{unit_type}"
       quantity: "Cantidad:"
       you_have_received_new_payment: "%{payer_full_name} te ha pagado <b>%{payment_sum}<b> por <b>%{listing_title}</b>. Aquí está tu recibo."
+    payment_receipt_to_seller:
+      payment_gateway_fee: ~
+      shipping_total: ~
+      product: ~
+      price_payer_paid: ~
+      service_fee: ~
+      you_will_get: ~
+      new_payment: ~
+      price_per_unit_type: ~
+      quantity: ~
+      you_have_received_new_payment: ~
+    payment_receipt_to_payer:
+      receipt_of_payment: ~
+      you_have_made_new_payment: ~
+      product: ~
+      price_per_unit_type: ~
+      duration: ~
+      quantity: ~
+      subtotal: ~
+      total: ~
+      price: ~
+      service_fee: ~
+      stripe_gateway_fee: ~
+      paypal_gateway_fee: ~
+      money_will_be_transferred: ~
     paypal_new_payment:
       paypal_gateway_fee: "Tarifa de PayPal:"
       shipping_total: "Costos de envío:"
@@ -852,12 +991,14 @@ es-ES:
       you_have_made_new_payment: "Has pagado <b>%{payment_sum}</b> por <b>%{listing_title}</b> a %{recipient_full_name}. Aquí está el recibo del pago."
       product: "Producto:"
       price_per_unit_type: "Precio por %{unit_type}"
-      duration: "Duración:"
-      quantity: "Cantidad:"
-      subtotal: "Subtotal:"
+      duration: Duración
+      quantity: Cantidad
+      subtotal: Subtotal
       total: Total
       price: Precio
       service_fee: "Cuota de servicio"
+      stripe_gateway_fee: ~
+      paypal_gateway_fee: ~
       money_will_be_transferred: "El dinero será transferido a %{recipient_name} cuando a) hayas marcado la solicitud como completada o b) %{automatic_confirmation_days} días hayan pasado desde que hiciste el pago."
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name} te ha dado una valoración en %{service_name}"
@@ -873,7 +1014,7 @@ es-ES:
       added_listing: "%{name_link} ha añadido un anuncio:"
       update_mail_title: "Novedades de %{title_link}"
       title_link_text: "%{community_name}"
-      intro_paragraph: "Aquí están algunas de los eventos que han ocurrido en %{community_link} durante los últimos %{time_since_last_update}."
+      intro_paragraph: "Aquí están algunos de los eventos que han ocurrido en %{community_link} durante los últimos %{time_since_last_update}."
       intro_paragraph_link_text: "%{community_name}"
       reduce_email_footer_text: "¿Demasiados correos? %{settings_link} o %{unsubscribe_link}."
       settings_link_text: "Edita la configuración de tu correo electrónico aquí"
@@ -890,9 +1031,12 @@ es-ES:
       remember_to_give_feedback_to: "Recordatorio: Recuerda dar una valoración a %{name}"
       you_have_not_given_feedback_yet: "Aún no has dado una valoración a %{name} acerca de la transacción '%{event}'. Recuerda dar una valoración sobre cómo %{given_name} actuó durante la transacción."
     transaction_preauthorized:
-      subject: "%{requester} ha solicitado y autorizado el pago por %{listing_title}"
-      transaction_requested_by_user: "%{requester} ha solicitado y autorizado el pago por \"%{listing_title}\""
+      subject: "%{requester} está interesado en y autorizado el pago por %{listing_title} en %{service_name}"
+      transaction_requested_by_user: "Buenas noticias! %{requester} está interesado en \"%{listing_title}\" y ya ha autorizado el pago por este anuncio."
       you_have_time_to_accept: "Debes aceptar o rechazar la solicitud dentro de %{payment_expires_in}. Si aceptas dentro de este periodo, el pago será procesado. Si no aceptas, la solicitud se rechazará automáticamente y no recibirás el pago."
+      if_you_do_accept: "Si aceptas la transacción durante este tiempo, recibirás el dinero inmediatamente en tu cuenta."
+      if_you_do_accept_stripe: ~
+      if_you_do_not_accept: "Si rechazas la transacción o no aceptas la oferta durante este tiempo, la transacción se cancelará automáticamente, no se le cobrará a %{requester} y no recibirás el pago."
       click_here_to_reply: "Haz clic aquí para responder a la solicitud"
     transaction_preauthorized_reminder:
       subject: "Recuerda aceptar la solicitud de %{requester} sobre el anuncio %{listing_title}"
@@ -917,8 +1061,8 @@ es-ES:
       person_email: "Correo electrónico:"
   error_messages:
     booking:
-      booking_failed_payment_voided: ~
-      double_booking_payment_voided: ~
+      booking_failed_payment_voided: "La reserva falló debido a un error inesperado. Por favor intenta de nuevo más tarde. No se te ha cargado nada."
+      double_booking_payment_voided: "Desafortunadamente las fechas que elegiste no están disponibles. Por favor elige fechas distintas. No se te ha cargado nada."
     onboarding:
       server_rendering: "La guía de inicio no se ha cargado correctamente. Nuestro equipo está trabajando para arreglar el problema lo antes posible."
     listings:
@@ -933,6 +1077,7 @@ es-ES:
     transaction_agreement:
       required_error: "Debes aceptar el acuerdo"
     paypal:
+      transaction_cannot_complete: "La transacción no pudo ser completada. La causa más probable es una falla de autorización por parte de tu banco. Por favor, intenta de nuevo usando un método de pago diferente."
       buyer_cannot_pay_error: "El pago fue rechazado por PayPal. Por favor contacta al servicio al cliente de PayPal para más información: %{customer_service_link}"
       pending_review_error: "El pago se realizó pero fue marcado por PayPal como 'pendiente de revisión'. Cuando PayPal complete esta revisión, el pago será autorizado automáticamente."
       seller_express_checkout_disabled: "El servicio de Express Checkout de PayPal ha sido inhabilitado para la cuenta de PayPal del autor del anuncio. Por favor contacta al autor del anuncio para avisarle que hay un problema con su cuenta de PayPal y recomendarle que contacte al servicio al cliente de PayPal."
@@ -940,8 +1085,10 @@ es-ES:
       cancel_error: "Ha ocurrido un error durante la cancelación. No se ha podido finalizar la cancelación."
       accept_authorization_error: "Ha ocurrido un error al intentar aceptar el pago preautorizado con PayPal. Por favor, inténtalo de nuevo."
       reject_authorization_error: "Ha ocurrido un error al rechazar el pago pre-autorizado de PayPal. Por favor, inténtalo de nuevo."
+    stripe:
+      generic_error: ~
   error_pages:
-    back_to_kassi_front_page: "Volver a la página principal de %{service_name}"
+    back_to_kassi_front_page: "Volver a la página principal"
     error_404:
       if_you_believe: "Si crees que la dirección es correcta y debería funcionar, entonces por favor ayúdanos a encontrar el error haciéndonos saber qué dirección ocasionó el error y qué debería aparecer en la página, a través del siguiente formulario."
       page_can_not_be_found: "Página no encontrada!"
@@ -1122,7 +1269,7 @@ es-ES:
       list: "Mostrar lista"
       map_button: Mapa
       grid_button: "Vista resumida"
-      list_button: "Vista listado"
+      list_button: Lista
       all_listing_types: "Todos los tipos de anuncios"
       all_categories: "Todas las categorías"
     errors:
@@ -1158,7 +1305,7 @@ es-ES:
       join_this_community: "Únete a la comunidad"
       read_more: "Leer más"
       feedback: "Tu mensaje para el equipo de %{service_name}"
-      dont_use_to_contact_support: "Hemos notado que eres administrador de %{service_name}. Esta forma es para que los usuarios de tu comunidad te contacten. Si lo que quieres es contactar el equipo de soporte de Sharetribe, puedes hacerlo por medio del vínculo de Soporte que se encuentra en el panel de administrador."
+      dont_use_to_contact_support: "Hemos notado que eres administrador de %{service_name}. Esta forma es para que los usuarios de tu comunidad te contacten. Si lo que quieres es contactar el equipo de soporte de Sharetribe, puedes hacerlo por medio de la burbuja de Soporte que se encuentra en la parte inferior derecha en el panel de administración."
       feedback_forum: "Foro de sugerencias"
       feedback_handle: "Sugerencia o comentario"
       give_feedback: Contáctanos
@@ -1252,7 +1399,7 @@ es-ES:
       news_item_updated: "Artículo actualizado"
       news_item_deleted: "Artículo eliminado"
       offer_accepted: "Oferta aceptada"
-      offer_confirmed: "Oferta confirmada"
+      offer_confirmed: "Oferta completa"
       offer_closed: "Oferta cerrada"
       listing_created_successfully: "Anuncio publicado con éxito. %{new_listing_link}"
       offer_rejected: "Oferta rechazada"
@@ -1337,6 +1484,8 @@ es-ES:
       notifications: Notificaciones
       profile: "Información de perfil"
       settings: Opciones
+      paypal_payments: ~
+      stripe_payments: ~
       payments: Pagos
   listings:
     bubble_listing_not_visible:
@@ -1370,9 +1519,9 @@ es-ES:
       open_in_google_maps: "Abrir en Google Maps"
     error:
       something_went_wrong: "Algo salió mal. Código de error: %{error_code}"
-      something_went_wrong_plain: ~
-      create_failed_to_connect_to_booking_service: ~
-      update_failed_to_connect_to_booking_service: ~
+      something_went_wrong_plain: "Algo salió mal"
+      create_failed_to_connect_to_booking_service: "Ocurrió un error al crear el anuncio: la conexión con el servicio de disponibilidad falló. Por favor inténtalo de nuevo."
+      update_failed_to_connect_to_booking_service: "Ocurrió un error al actualizar el anuncio: la conexión con el servicio de disponibilidad falló. Por favor inténtalo de nuevo."
     follow_links:
       follow: "Recibir correos cuando haya nuevos comentarios"
       unfollow: "Dejar de recibir correos cuando haya nuevos comentarios"
@@ -1431,9 +1580,13 @@ es-ES:
         mass: "pieza, kg, l, m2, ..."
         time: "hora, día, mes, ..."
         long_time: "semana, mes, ..."
-        after_service_fee_you_will_get: "Después de la comisión de servicio de %{service_name} y los costos de procesamiento de pago, recibirás %{sum_with_currency}"
+        after_service_fee_you_will_get: "Después de la comisión de %{service_name} y los costos de procesamiento de pago, recibirás %{sum_with_currency}"
         no_service_fee_you_will_get_paypal_text: "La %{paypal_fee_info_link} será deducida del precio."
-        after_service_fee_you_will_get_paypal_text: "La comisión de servicio de %{service_name} (%{sum_with_currency}) y la %{paypal_fee_info_link} serán deducidas del precio, cuando haya una transacción."
+        no_service_fee_you_will_get_payment_text: ~
+        after_service_fee_you_will_get_payment_text: ~
+        after_service_fee_you_will_get_paypal_text: "La comisión de %{service_name} (%{sum_with_currency}) y la %{paypal_fee_info_link} serán deducidas del precio."
+        after_service_fee_you_will_get_stripe_text: ~
+        payment_fee_info_link_text: ~
         paypal_fee_info_link_text: "comisión de procesamiento de pago de PayPal"
         delivery: "Método de envío"
         shipping: Envío
@@ -1496,7 +1649,6 @@ es-ES:
       request_type: "Tipo de solicitud"
       requests: Solicitudes
       rideshare: "Traslado compartido"
-      search_verb: Buscar
       you_have_something_others_do_not: "¿Tienes algo que ofecer?"
       feed_title: "%{listing_type} en %{service_name}%{optional_category}"
     left_panel_link:
@@ -1520,7 +1672,7 @@ es-ES:
       booking_to: a
       how_paypal_works: "Cómo funciona PayPal"
       payment_help: "Ayuda de pagos"
-      unable_load_availability: ~
+      unable_load_availability: "No se ha podido cargar la información sobre disponibilidad. Intenta de nuevo más tarde."
     new:
       listing: anuncio
       selected_category: "Categoría: %{category}"
@@ -1595,8 +1747,8 @@ es-ES:
       verification_required: "Verificación requerida"
   listing_conversations:
     preauthorize:
-      dates_not_available: ~
-      error_in_checking_availability: ~
+      dates_not_available: "Las fechas seleccionadas no están disponibles"
+      error_in_checking_availability: "No se pudo verificar la disponibilidad para las fechas seleccionadas"
       details: Detalles
       by: "%{listing} por %{author}"
       payment: Pago
@@ -1609,6 +1761,17 @@ es-ES:
       invalid_parameters: "Valores inválidos para una transacción nueva"
     transaction_agreement_checkbox:
       read_more: Ver
+    stripe_payment:
+      payment: ~
+      pay_with_card: ~
+      address: ~
+      address_country: ~
+      address_name: ~
+      address_city: ~
+      address_state: ~
+      address_street1: ~
+      address_street2: ~
+      address_postal_code: ~
   mapview:
     index:
       all_categories: "Todas las categorías"
@@ -1628,7 +1791,6 @@ es-ES:
       request_type: "Tipo de solicitud"
       requests: Solicitudes
       rideshare: "Traslado compartido"
-      search_verb: Buscar
       you_have_something_others_do_not: "Tienes algo que quieres ofertar?"
     please_comment: Comentario
   mercury:
@@ -1646,13 +1808,14 @@ es-ES:
     connected_account: "La cuenta de PayPal '%{email}' se ha conectado con éxito."
     paypal_receive_funds_info_label_australia_only: "Es necesario que tu cuenta PayPal esté habilitada para aceptar pagos. Esto puede requerir una cuenta Premium o Empresarial."
     paypal_receive_funds_info_label: "Es necesario que tu cuenta PayPal pueda aceptar pagos. Esto puede requerir que tengas una cuenta empresarial (Business account)."
-    paypal_receive_funds_info_australia_only: ~
+    paypal_receive_funds_info_australia_only: "Si ves un error al intentar conectar tu cuenta a %{service_name}, %{upgrade_paypal_account_link} y cambia tu cuenta a una cuenta de negocios, o (si eres un individuo), crea una cuenta Premier. Los dos tipos de cuentas son totalmente gratis."
     paypal_receive_funds_info: "Si ves un error al intentar conectar tu cuenta a %{service_name}, actualiza tu cuenta PayPal %{upgrade_paypal_account_link}. Es fácil y gratis. Si eres un persona física, PayPal recomienda que utilices tu nombre como el nombre de la empresa."
     upgrade_paypal_account_link_text: "iniciando sesión y haciendo clic en el enlace de actualización"
     admin_account_not_connected: "No es posible usar el sistema de pagos de %{service_name} para recibir pagos, ya que los pagos no se han configurado. Por favor %{contact_admin_link} para más información."
     contact_admin_link_text: "contacta al administrador de la comunidad"
     you_are_ready_to_accept_payments: "¡Estás listo para aceptar pagos!"
     commission: "%{commission} %"
+    not_now: ~
     new:
       payout_info_you_need_to_connect: "Para aceptar pagos necesitar conectar tu cuenta de PayPal con %{service_name}."
       payout_info_text: "Por favor, completa estos pasos para conectar tu cuenta."
@@ -1662,7 +1825,7 @@ es-ES:
       paypal_account_email_placeholder: "Tu dirección de email en Paypal"
       paypal_account_email_info_text: "Si no tiene suna cuenta PayPal, puedes crear una yendo a %{create_paypal_account}. Si el sistema arroja un error al conectar tu cuenta, necesitas actualizar tu cuenta a una cuenta empresarial -business-. Actualizar es fácil y rápido y no te costará nada. Si eres una persona natural -un indviduo- , deberás poner tu nombre y apellido en el campo del \"nombre de la empresa\" cuando PayPal te lo solicite. Para actualizar tu cuenta, %{upgrade_paypal_account} y busca el enlace de actualización."
       create_paypal_account: "haciendo clic aquí"
-      upgrade_paypal_account: "Inicia sesión en PayPal"
+      upgrade_paypal_account: "inicia sesión en PayPal"
       paypal_account_billing_agreement: "Concede permisos a %{service_name} para cargar comisión por transferencias"
       follow_steps: "sigue los pasos siguientes para empezar a recibir fondos:"
       connect_paypal_account_title: "Conecta tu cuenta de Paypal"
@@ -1699,6 +1862,8 @@ es-ES:
     paypal_permission_granted_summary: "permiso otorgado para cobrar las comisiones de transacción"
   paypal:
     pay_with_paypal: "Revisar la solicitud y proceder al pago"
+    checkout_with: ~
+    or_pay_with_paypal: ~
     checkout_with_paypal: "Pago con PayPal"
     cancel_succesful: "Pago en PayPal cancelado con éxito."
     transaction:
@@ -1718,7 +1883,7 @@ es-ES:
       invite_only_help_text_title: "Comunidad sólo de invitaciones"
     inactive_notification:
       this_person_is_not_active_in_kassi: "Este usuario ya no está activo en %{service_name}"
-      inactive_description: "Este usuario ha dejado de utilizar %{service_name}. No puedes ponerte en contacto con él, hacerle sugerencias o comentar sus listados."
+      inactive_description: "Este usuario ha dejado de utilizar %{service_name}. No puedes ponerte en contacto con él, hacerle sugerencias o comentar sus anuncios."
     new:
       create_new_account: "Crear una cuenta"
       email: "Dirección de correo electrónico:"
@@ -1796,16 +1961,6 @@ es-ES:
       following: Siguiendo
       follow: Seguir
       unfollow: "Dejar de seguir"
-  search:
-    show:
-      all_results: "Todos los resultados"
-      loading_more_search_results: "Cargar más resultados de búsqueda"
-      offers: Ofertas
-      requests: Solicitudes
-      search: Buscar
-      search_results: "Resultados de búsqueda"
-      search_returned_no_results: "Su búsqueda no ha obtenido resultados."
-      search_verb: buscar
   sessions:
     new:
       create_new_account: "Crear una cuenta nueva"
@@ -1835,9 +1990,12 @@ es-ES:
       change_email: Cambiar
       confirm_your_email: "Confirma tu correo electrónico"
       account_confirmation_instructions: "Pronto recibirás un correo electrónico con un vínculo para confirmar tu cuenta de correo. No olvides revisar la carpeta de correo no deseado! Una vez lo hayas hecho, podrás comenzar a usar %{service_name}."
-      account_confirmation_instructions_title_admin: "¡Bienvenido a tu comunidad!"
-      your_marketplace_has_now_been_created: "Tu comunidad ha sido creada. ¿Ha sido fácil, verdad? Sólo hay un paso más antes de que puedas entrar a tu sitio: Debes confirmar tu dirección de correo electrónico."
-      account_confirmation_instructions_admin: "Pronto recibirás un correo electrónico con un vínculo para confirmar tu cuenta de correo. No olvides revisar tu carpeta de correo no deseado! Una vez hayas confirmado tu cuenta, podrás comenzar a configurar tu comunidad."
+      account_confirmation_instructions_title_admin: "Confirma tu dirección de correo electrónico"
+      before_full_access_you_need_to_confirm_email: "Antes de darte acceso total a tu comunidad, es necesario que hagas sólo una cosa más: confirmar tu cuenta de correo electrónico."
+      before_confirmation_only_access_admin_dashboard: "Antes de confirmar to correo electrónico sólo puedes tener acceso al %{admin_dashboard_link}."
+      admin_dashboard_link_text: "panel de administración"
+      account_confirmation_instructions_admin: "Hemos enviado un correo electrónico a %{email_address} con un vínculo para confirmar tu cuenta de correo. Si no lo ves, revisa tu carpeta de correo no deseado o haz click en el botón de re-enviar! Una vez que llegue, abre el vínculo par confirmar tu cuenta de correo; una vez que lo hayas hecho, tendrás access completo a tu comunidad. Si necesitas ayuda, %{support_link}."
+      contact_support_link_text: "contacta al equipo de soporte de Sharetribe"
   settings:
     account:
       change: Cambiar
@@ -1846,7 +2004,7 @@ es-ES:
       delete_account_button: "Eliminar mi cuenta de forma permanente."
       delete_account_confirmation_popup: "¿Estás seguro de querer eliminar tu cuenta de forma permanente? También eliminaras toda la información relacionada con tu cuenta. Si lo haces, ya no podrás volver atrás."
       email_addresses: "Direcciones de email"
-      new_email: "Nieva Dirección de Correo Electrónico"
+      new_email: "Nueva Dirección de Correo Electrónico"
       delete_personal_information: "Si eliminas tu cuenta, tu información personal (nombre, número de teléfono, dirección, email, imagen de perfil, etc.) se eliminará permanentemente y no podrá ser recuperada. Todas las publicaciones que has creado se eliminarán del portal. No serás capaz de reactivar tu cuenta."
       delete_information_others_involved: "La información en la que están involucrados otros miembros (conversaciones con otra gente, transacciones que has realizado, revisiones que has dado a otros, etc) no se eliminarán cuando canceles tu cuenta. No obstante, tu nombre no aparecerá visualizado en esa información."
       unfinished_transactions: "Tu cuenta no puede ser eliminada porque tienes transacciones en marcha. Por favor, completa todas las transacciones antes de eliminar tu cuenta."
@@ -2059,28 +2217,43 @@ es-ES:
       quantity: "Cantidad:"
       subtotal: "Subtotal:"
       shipping-price: "Envío:"
+      stripe-fee: ~
     price_per_quantity: "Precio por %{unit_type}:"
     price: "Precio:"
     quantity: "Cantidad: %{quantity}"
     unit_price: "Precio unitario: %{unit_price}"
     total: "Total:"
+    total_to_pay: ~
   unit:
     day: día
     days: días
   web:
     listings:
+      errors:
+        availability:
+          something_went_wrong: "No hemos podido cargar información sobre disponibilidad. Intenta cargar la página nuevamente."
+          saving_failed: "No hemos podido guardar los cambios sobre disponibilidad. Intenta cargar la página nuevamente."
       pricing_units:
-        piece: ~
-        hour: ~
-        day: ~
-        night: ~
-        week: ~
-        month: ~
+        piece: pieza
+        hour: hora
+        day: día
+        night: noche
+        week: semana
+        month: mes
+      edit_availability_header: Disponibilidad
+      save_and_close_availability_editing: "Guardar y cerrar"
+      confirm_discarding_unsaved_availability_changes_explanation: "Hay cambios sobre disponibilidad que no han sido guardados. Si continuas, estos cambios se perderán."
+      confirm_discarding_unsaved_availability_changes_question: "¿Estás seguro que quieres desechar los cambios?"
+      edit_listing_availability: "Editar la disponibilidad del anuncio"
     no_listings:
-      sorry: ~
-      try_other_search_terms: ~
+      sorry: "Perdón, no hemos encontrado ningún anuncio que satisfaga tus criterios de búsqueda."
+      try_other_search_terms: "Intenta la búsqueda con términos distintos"
     listing_card:
-      no_picture: ~
+      add_picture: "Añadir imagen"
+      no_picture: "No hay imagen"
+    search:
+      page: Página
+      page_of_pages: "de %{total_number_of_pages}"
     topbar:
       menu: Menú
       more: Más
@@ -2097,22 +2270,18 @@ es-ES:
       admin_dashboard: "Panel de administración"
       language: Idioma
     utils:
-      km: ~
-      mi: ~
+      km: km
+      mi: mi
     branding:
-      powered_by: ~
-      create_own: ~
-      learn_more: ~
+      powered_by: "%{service_name} es impulsado por %{sharetribe_link}, plataforma de consumo colaborativo."
+      create_own: "Quieres crear tu propia comunidad de consumo colaborativo en línea como %{service_name}? %{learn_more}."
+      learn_more: "Aprende como"
   will_paginate:
     models:
       person:
         zero: usuarios
         one: usuario
         other: usuarios
-      listing_conversation:
-        zero: transacciones
-        one: transacción
-        other: transacciones
     previous_label: "&#8592; Anterior"
     next_label: "Siguiente &#8594;"
     page_gap: "&hellip;"
@@ -2127,3 +2296,76 @@ es-ES:
         other: "Mostrando todo: %{count} %{model}"
       multi_page: "Mostrando %{model} %{from} - %{to} de %{count}"
       multi_page_html: "Mostrando %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> de <b>%{count}</b> en total"
+  stripe_accounts:
+    admin_account_not_connected: ~
+    contact_admin_link_text: ~
+    you_are_ready_to_accept_payments: ~
+    commission: ~
+    pay_with_stripe: ~
+    add_and_pay: ~
+    card_not_stored: ~
+    missing_payment: ~
+    stripe_bank_connected: ~
+    stripe_can_accept: ~
+    stripe_credit_card: ~
+    paypal: ~
+    paypal_connected: ~
+    paypal_can_accept: ~
+    paypal_connected_give_permission: ~
+    form_new:
+      need_info: ~
+      select_country: ~
+      legal_name: ~
+      country: ~
+      birth_date: ~
+      ssn_last_4: ~
+      personal_id_number: ~
+      address_country: ~
+      address_state: ~
+      address_city: ~
+      address_postal_code: ~
+      address_line1: ~
+      tos_link: ~
+      tos_link_title: ~
+      save_details: ~
+      edit: ~
+      cancel: ~
+    form_bank:
+      bank_account_number: ~
+      bank_routing_number: ~
+      bank_routing_1: ~
+      bank_routing_2: ~
+      bank_currency: ~
+      messages:
+        account_number: ~
+        routing_number: ~
+        bank_code: ~
+        branch_code: ~
+        transit_number: ~
+        institution_number: ~
+        format_varies_by_bank: ~
+        bsb: ~
+        error_message: ~
+        clearing_code: ~
+        sort_code: ~
+        must_match: ~
+        a_dash: ~
+        digits: ~
+        digits_or_chars: ~
+    form_verification:
+      personal_id_number: ~
+      document: ~
+      send_verification: ~
+      need_verification: ~
+  payment_settings:
+    title: ~
+    bank_account: ~
+    paypal: ~
+    bank_account_details: ~
+    add_bank_details: ~
+    can_accept_stripe_and_paypal: ~
+    to_accept_paypal: ~
+    connect_paypal: ~
+    wrong_setup: ~
+    invalid_bank_account_number: ~
+    invalid_postal_code: ~

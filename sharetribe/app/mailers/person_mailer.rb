@@ -210,13 +210,23 @@ class PersonMailer < ActionMailer::Base
   def community_member_email(sender, recipient, email_subject, email_content, community)
     @email_type = "email_from_admins"
     set_up_layout_variables(recipient, community, @email_type)
+
+    sender_address = EmailService::API::Api.addresses.get_sender(community_id: community.id).data
+    if sender_address[:type] == :default
+      sender_name = sender.name(community)
+      sender_email = sender.confirmed_notification_email_to
+      reply_to = "\"#{sender_name}\"<#{sender_email}>"
+    else
+      reply_to = sender_address[:smtp_format]
+    end
+
     with_locale(recipient.locale, community.locales.map(&:to_sym), community.id) do
       @email_content = email_content
       @no_recipient_name = true
       premailer_mail(:to => recipient.confirmed_notification_emails_to,
                      :from => community_specific_sender(community),
                      :subject => email_subject,
-                     :reply_to => "\"#{sender.name(community)}\"<#{sender.confirmed_notification_email_to}>")
+                     :reply_to => reply_to)
     end
   end
 
@@ -291,7 +301,10 @@ class PersonMailer < ActionMailer::Base
          to: email_address,
          from: community_specific_sender(@community),
          subject: t("devise.mailer.reset_password_instructions.subject")) do |format|
-       format.html { render layout: false, locals: { reset_token: reset_token } }
+      format.html {
+        render layout: false, locals: { reset_token: reset_token,
+                                        host: @community.full_domain}
+      }
      end
   end
 
@@ -311,7 +324,7 @@ class PersonMailer < ActionMailer::Base
       @test_email = test_email
       @show_branding_info = !PlanService::API::Api.plans.get_current(community_id: community.id).data[:features][:whitelabel]
 
-      subject = if @recipient.has_admin_rights? && !@test_email
+      subject = if @recipient.has_admin_rights?(@current_community) && !@test_email
         t("emails.welcome_email_marketplace_creator.welcome_email_subject_for_marketplace_creator")
       else
         t("emails.welcome_email.welcome_email_subject", :community => community.full_name(recipient.locale), :person => PersonViewUtils.person_display_name_for_type(person, "first_name_only"))

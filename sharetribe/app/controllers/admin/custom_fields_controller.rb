@@ -1,7 +1,6 @@
-class Admin::CustomFieldsController < ApplicationController
+class Admin::CustomFieldsController < Admin::AdminBaseController
 
-  before_filter :ensure_is_admin
-  before_filter :field_type_is_valid, :only => [:new, :create]
+  before_action :field_type_is_valid, :only => [:new, :create]
 
   CHECKBOX_TO_BOOLEAN = ->(v) {
     if v == false || v == true
@@ -82,13 +81,8 @@ class Admin::CustomFieldsController < ApplicationController
     shapes = listings_api.shapes.get(community_id: @community.id).data
     price_in_use = shapes.any? { |s| s[:price_enabled] }
 
-    onboarding_popup_locals = OnboardingViewUtils.popup_locals(
-      flash[:show_onboarding_popup],
-      admin_getting_started_guide_path,
-      Admin::OnboardingWizard.new(@current_community.id).setup_status)
-
-    render locals: onboarding_popup_locals.merge(
-             { show_price_filter: price_in_use })
+    make_onboarding_popup
+    render locals: { show_price_filter: price_in_use }
   end
 
   def new
@@ -143,6 +137,7 @@ class Admin::CustomFieldsController < ApplicationController
   end
 
   def build_custom_field_entity(type, params)
+    params = params.respond_to?(:to_unsafe_hash) ? params.to_unsafe_hash : params
     case type
     when "TextField"
       TextFieldEntity.call(params)
@@ -168,11 +163,11 @@ class Admin::CustomFieldsController < ApplicationController
       @min_option_count = 2
     end
 
-    @custom_field = CustomField.find(params[:id])
+    @custom_field = @current_community.custom_fields.find(params[:id])
   end
 
   def update
-    @custom_field = CustomField.find(params[:id])
+    @custom_field = @current_community.custom_fields.find(params[:id])
 
     # Hack for comma/dot issue. Consider creating an app-wide comma/dot handling mechanism
     params[:custom_field][:min] = ParamsService.parse_float(params[:custom_field][:min]) if params[:custom_field][:min].present?
@@ -286,7 +281,7 @@ class Admin::CustomFieldsController < ApplicationController
       custom_field.update_attributes(:sort_priority => sort_priorities[custom_field.id])
     end
 
-    render nothing: true, status: 200
+    render body: nil, status: 200
   end
 
   private

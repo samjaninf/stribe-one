@@ -42,7 +42,6 @@
 #  min_days_between_community_updates :integer          default(1)
 #  deleted                            :boolean          default(FALSE)
 #  cloned_from                        :string(22)
-#  stripe_customer_id                 :string(255)
 #
 # Indexes
 #
@@ -64,7 +63,7 @@ require "open-uri"
 
 # This class represents a person (a user of Sharetribe).
 
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
 
   include ErrorsHelper
   include ApplicationHelper
@@ -85,8 +84,6 @@ class Person < ActiveRecord::Base
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
-
-  attr_protected :is_admin
 
   has_many :listings, -> { where(deleted: 0) }, :dependent => :destroy, :foreign_key => "author_id"
   has_many :emails, :dependent => :destroy, :inverse_of => :person
@@ -112,7 +109,6 @@ class Person < ActiveRecord::Base
   has_many :followers, :through => :follower_relationships, :foreign_key => "person_id"
   has_many :inverse_follower_relationships, :class_name => "FollowerRelationship", :foreign_key => "follower_id"
   has_many :followed_people, :through => :inverse_follower_relationships, :source => "person"
-  has_one :stripe_account, :dependent => :destroy
 
   has_and_belongs_to_many :followed_listings, :class_name => "Listing", :join_table => "listing_followers"
 
@@ -272,10 +268,13 @@ class Person < ActiveRecord::Base
             deprecator: MethodDeprecator.new
 
   def name(community_or_display_type)
+    deprecation_message = "This is view logic (how to display name) and thus should not be in model layer. Consider using PersonViewUtils."
+    MethodDeprecator.new.deprecation_warning(:name, deprecation_message)
     return name_or_username(community_or_display_type)
   end
-  deprecate name: "This is view logic (how to display name) and thus should not be in model layer. Consider using PersonViewUtils.",
-            deprecator: MethodDeprecator.new
+  # FIXME deprecate on Person#name brakes airbrake
+  # deprecate name: "This is view logic (how to display name) and thus should not be in model layer. Consider using PersonViewUtils.",
+  #          deprecator: MethodDeprecator.new
 
   def given_name_or_username
     if given_name.present?
@@ -426,12 +425,12 @@ class Person < ActiveRecord::Base
     community_membership.consent
   end
 
-  def is_marketplace_admin?
-    community_membership.admin?
+  def is_marketplace_admin?(community)
+    community_membership.community_id == community.id && community_membership.admin?
   end
 
-  def has_admin_rights?
-    is_admin? || is_marketplace_admin?
+  def has_admin_rights?(community)
+    is_admin? || is_marketplace_admin?(community)
   end
 
   def should_receive?(email_type)
@@ -621,18 +620,6 @@ class Person < ActiveRecord::Base
     self.legacy_encrypted_password = nil
     self.password_salt = nil
     super
-  end
-
-  def stripe_account_connected?
-    stripe_account.present? && !stripe_account.stripe_user_id.nil?
-  end
-
-  def stripe_connected_and_tranfers_enabled?
-    if stripe_account_connected?
-      stripe_account.tranfers_enabled?
-    else
-      false
-    end
   end
 
   private

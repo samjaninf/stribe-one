@@ -15,23 +15,19 @@
 #  confirmation_after_days          :integer          not null
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
+#  api_client_id                    :string(255)
+#  api_private_key                  :string(255)
+#  api_publishable_key              :string(255)
+#  api_verified                     :boolean
+#  api_visible_private_key          :string(255)
+#  api_country                      :string(255)
 #
 # Indexes
 #
 #  index_payment_settings_on_community_id  (community_id)
 #
 
-class PaymentSettings < ActiveRecord::Base
-
-  attr_accessible(
-    :active,
-    :community_id,
-    :payment_gateway,
-    :payment_process,
-    :commission_from_seller,
-    :minimum_price_cents,
-    :minimum_transaction_fee_cents,
-    :confirmation_after_days)
+class PaymentSettings < ApplicationRecord
 
   validates_presence_of(:community_id)
 end

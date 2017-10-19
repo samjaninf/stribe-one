@@ -20,7 +20,7 @@ module TransactionService::Transaction
   GATEWAY_ADAPTERS = {
     paypal: TransactionService::Gateway::PaypalAdapter.new,
     stripe: TransactionService::Gateway::StripeAdapter.new,
-    none: TransactionService::Gateway::FreeAdapter.new
+    none: TransactionService::Gateway::FreeAdapter.new,
   }
 
   TX_PROCESSES = {
@@ -78,9 +78,14 @@ module TransactionService::Transaction
     author_id = opts[:transaction][:listing_author_id]
     community_id = opts[:transaction][:community_id]
 
-    set_adapter = settings_adapter(payment_gateway)
-
-    Result::Success.new(result: set_adapter.configured?(community_id: community_id, author_id: author_id))
+    payment_gateways = payment_gateway.is_a?(Array) ? payment_gateway : [payment_gateway]
+    payment_gateways.each do |gateway|
+      set_adapter = settings_adapter(gateway)
+      if set_adapter.configured?(community_id: community_id, author_id: author_id)
+        return Result::Success.new(result: true)
+      end
+    end
+    Result::Success.new(result: false)
   end
 
   def create(opts, force_sync: true)
@@ -93,7 +98,6 @@ module TransactionService::Transaction
 
     tx_process = tx_process(tx[:payment_process])
     gateway_adapter = gateway_adapter(tx[:payment_gateway])
-    
     res = tx_process.create(tx: tx,
                             gateway_fields: opts[:gateway_fields],
                             gateway_adapter: gateway_adapter,

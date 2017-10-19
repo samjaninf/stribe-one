@@ -1,7 +1,6 @@
 require 'csv'
 
-class Admin::CommunityMembershipsController < ApplicationController
-  before_filter :ensure_is_admin
+class Admin::CommunityMembershipsController < Admin::AdminBaseController
 
   def index
     @selected_left_navi_link = "manage_members"
@@ -37,7 +36,7 @@ class Admin::CommunityMembershipsController < ApplicationController
   end
 
   def ban
-    membership = CommunityMembership.find_by_id(params[:id])
+    membership = CommunityMembership.find_by(id: params[:id], community_id: @current_community.id)
 
     if membership.person == @current_user
       flash[:error] = t("admin.communities.manage_members.ban_me_error")
@@ -54,12 +53,12 @@ class Admin::CommunityMembershipsController < ApplicationController
 
   def promote_admin
     if removes_itself?(params[:remove_admin], @current_user)
-      render nothing: true, status: 405
+      render body: nil, status: 405
     else
       @current_community.community_memberships.where(person_id: params[:add_admin]).update_all("admin = 1")
       @current_community.community_memberships.where(person_id: params[:remove_admin]).update_all("admin = 0")
 
-      render nothing: true, status: 200
+      render body: nil, status: 200
     end
   end
 
@@ -67,7 +66,7 @@ class Admin::CommunityMembershipsController < ApplicationController
     @current_community.community_memberships.where(person_id: params[:allowed_to_post]).update_all("can_post_listings = 1")
     @current_community.community_memberships.where(person_id: params[:disallowed_to_post]).update_all("can_post_listings = 0")
 
-    render nothing: true, status: 200
+    render body: nil, status: 200
   end
 
   private
@@ -117,7 +116,7 @@ class Admin::CommunityMembershipsController < ApplicationController
 
   def removes_itself?(ids, current_admin_user)
     ids ||= []
-    ids.include?(current_admin_user.id) && current_admin_user.is_marketplace_admin?
+    ids.include?(current_admin_user.id) && current_admin_user.is_marketplace_admin?(@current_community)
   end
 
   def sort_column

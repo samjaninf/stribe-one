@@ -20,11 +20,15 @@ module FeatureTests
 
         expect(page).to have_content("PayPal account connected")
 
-        # Save payment preferences
-        paypal_preferences.set_payment_preferences(min_price: min_price, commission: commission, min_commission: min_commission)
-        paypal_preferences.save_settings
+        paypal_preferences.edit_payment_general_preferences(min_price: min_price)
+        paypal_preferences.click_button("Save settings")
+
+        #paypal_preferences.change_paypal_settings
+        paypal_preferences.edit_payment_transaction_fee_preferences(commission: commission, min_commission: min_commission)
+        paypal_preferences.click_button("Save")
         onboarding_wizard.dismiss_dialog
-        expect(page).to have_content("Payment system preferences updated")
+
+        expect(page).to have_content("Transaction fee settings updated")
       end
 
       def connect_seller_paypal
@@ -51,6 +55,7 @@ module FeatureTests
         listing = FeatureTests::Page::Listing
         listing_book = FeatureTests::Page::ListingBook
         topbar = FeatureTests::Section::Topbar
+        worker = FeatureTests::Worker
 
         topbar.click_logo
         home.click_listing(title)
@@ -68,8 +73,14 @@ module FeatureTests
 
         listing_book.proceed_to_payment
 
-        expect(page).to have_content("Payment authorized")
-        expect(page).to have_content("Snowman ☃ sells: #{title}")
+        worker.work_until do
+          begin
+            page.has_content?("Payment authorized") &&
+              page.has_content?("Snowman ☃ sells: #{title}")
+          rescue Selenium::WebDriver::Error::StaleElementReferenceError
+            false
+          end
+        end
       end
 
       def accept_listing_request
@@ -103,7 +114,7 @@ module FeatureTests
         choose("Skip feedback")
         page.click_button("Continue")
 
-        expect(page).to have_content("Offer confirmed")
+        expect(page).to have_content("Offer completed")
         expect(page).to have_content("Feedback skipped")
       end
 

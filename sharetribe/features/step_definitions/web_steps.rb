@@ -277,7 +277,16 @@ Given /^I will(?:| (not)) confirm all following confirmation dialogs in this pag
 end
 
 When /^I confirm alert popup$/ do
-  page.driver.browser.switch_to.alert.accept unless ENV['PHANTOMJS']
+  unless ENV['PHANTOMJS']
+    # wait is necessary for firefox if alerts have slide-out animations
+    wait = Selenium::WebDriver::Wait.new ignore: Selenium::WebDriver::Error::NoAlertPresentError
+    alert = wait.until { page.driver.browser.switch_to.alert }
+    alert.accept
+    begin
+      page.driver.browser.switch_to.alert
+    rescue Selenium::WebDriver::Error::NoSuchAlertError
+    end
+  end
 end
 
 Then /^I should see validation error$/ do
@@ -315,4 +324,11 @@ end
 
 When(/^I change field "([^"]*)" to "([^"]*)"$/) do |from, to|
   find_field_with_value(from).set(to)
+end
+
+When(/^mock googlemap location with "([^,]+), ([-.0-9]+),\s*([-.0-9]+)"/) do |address, lat, lon|
+  # sometimes google maps geojs api does not work in phantom or takes too long
+  page.execute_script("document.getElementById('person_location_address').value = '#{address}'")
+  page.execute_script("document.getElementById('person_location_latitude').value = "+lat)
+  page.execute_script("document.getElementById('person_location_longitude').value = "+lon)
 end

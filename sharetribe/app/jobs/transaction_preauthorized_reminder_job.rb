@@ -1,5 +1,6 @@
 class TransactionPreauthorizedReminderJob < Struct.new(:transaction_id)
 
+  include SessionContextSerializer
   include DelayedAirbrakeNotification
 
   # This before hook should be included in all Jobs to make sure that the service_name is
@@ -13,6 +14,8 @@ class TransactionPreauthorizedReminderJob < Struct.new(:transaction_id)
 
   def perform
     transaction = Transaction.find(transaction_id)
+
+    return if Maybe(::PlanService::API::Api.plans.get_current(community_id: transaction.community.id).data)[:expired].or_else(false)
 
     if transaction.status == "preauthorized"
       MailCarrier.deliver_now(TransactionMailer.transaction_preauthorized_reminder(transaction))

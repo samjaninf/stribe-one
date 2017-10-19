@@ -1,4 +1,10 @@
 zh:
+  number:
+    currency:
+      format:
+        separator: ~
+        delimiter: ~
+        format: ~
   admin:
     categories:
       edit:
@@ -222,6 +228,7 @@ zh:
         last_community_updates: 请注意在删除后，你和你的集市的用户可能仍然会收到最后的集市更新邮件。
         you_will_be_redirected_to: "当你删除了你的集市，你会被重定向到%{destination}。你将再也无法访问你的集市。"
         delete_this_marketplace: 删除这个集市。
+        payment_preferences: ~
       manage_members:
         manage_members: 管理用户
         email: 电子邮件
@@ -239,11 +246,11 @@ zh:
         ban_me_error: 你不能禁止自己。
       new_layout:
         new_layout: 新布局
-        description_roadmap: ~
-        description_process: ~
+        description_roadmap_new: ~
         enabled_for_you: ~
         enabled_for_all: ~
         new_topbar: "新的顶部条 (所有页面可见)"
+        searchpage: ~
       social_media:
         social_media: 社交媒体
         twitter_handle: Twitter用户名
@@ -309,9 +316,31 @@ zh:
           canceled: 已取消
           initiated: 等待PayPal付款
           pending_ext: 等待PayPal付款
+          none:
+            free: ~
+          paypal:
+            free: ~
+            pending: ~
+            preauthorized: ~
+            accepted: ~
+            rejected: ~
+            paid: ~
+            confirmed: ~
+            canceled: ~
+            initiated: ~
+            pending_ext: ~
+          stripe:
+            free: ~
+            pending: ~
+            preauthorized: ~
+            accepted: ~
+            rejected: ~
+            paid: ~
+            confirmed: ~
+            canceled: ~
+            initiated: ~
+            pending_ext: ~
         not_available: 无
-      paypal_account:
-        paypal_admin_account: 付款
     custom_fields:
       edit:
         edit_listing_field: "编辑信息字段“%{field_name}”"
@@ -369,12 +398,25 @@ zh:
       new:
         send_email_to_members: 发送电子邮件给用户
         send_email_to_members_title: 发送电子邮件给所有用户
+        send_email: 发送邮件
+        send_email_or: ~
+        send_test_email: ~
+        test_sent: ~
+        send_email_article_title: ~
+        send_email_article_text: ~
+        recipients:
+          title: ~
+          options:
+            all_users: ~
+            with_listing: ~
+            with_listing_no_payment: ~
+            with_payment_no_listing: ~
+            no_listing_no_payment: ~
         email_subject: 邮件主题
         email_content: 邮件内容
         email_content_placeholder: 你想和你的用户说些什么？
         email_language: 邮件接收者使用的语言
         any_language: 任何语言
-        send_email: 发送邮件
         message_will_be_sent_only_to_people_with_this_language: "注意：电子邮件只会以你选择的语言发送给使用%{service_name}的用户。"
         email_sent: 邮件已发送。
     left_hand_navigation:
@@ -382,7 +424,6 @@ zh:
       users_and_transactions: 用户和交易
       configure: 配置
       emails_title: 电邮
-      support: 支持
       subscription: 订阅
       preview: 预览站点
     listing_shapes:
@@ -476,20 +517,77 @@ zh:
     paypal_accounts:
       marketplace_paypal_integration: 支付偏好
       preferences_updated: 支付偏好设置更新
-      marketplace_currency_used: "这个集市用的货币是 %{currency}. 如果想更改货币单位，请 %{contact_support_link}"
       contact_support_link_text: "联系 Sharetribe 的支持人员"
       integration_info_text: Sharetribe的支付系统由PayPal提供支持。如果你想使用你的用户名在你的集市上付款，你必须连接你的PayPal帐号及决定最小交易规模以及对每个交易收取的费用。
       link_paypal_personal_account_label: 你是自己提供产品或者服务吗？
       link_paypal_personal_account: ~
+      link_stripe_personal_account: ~
+      link_paypal_and_stripe_personal_account: ~
       personal_payment_preferences_link_text: 你的个人集市账户
       read_more_about_paypal: 了解更多关于Sharetribe的支付系统
-      set_minimum_price_and_fee: 设置最低价格和交易费用
+      edit_payment_settings: ~
+      supported_currencies_information_text: ~
+      currency_change_warning_text: ~
+      marketplace_currency_label: ~
       minimum_listing_price_label: 最小交易规模：
       transaction_fee_label: 交易费用：
       minimum_transaction_fee_label: 最低交易费用：
       save_settings: 保存设置
       minimum_listing_price_below_tx_fee: "最少的交易额至少等于最低交易费用%{minimum_transaction_fee}。"
       minimum_listing_price_below_min: "最少的交易额必须高于最低佣金%{minimum_commission}。"
+    payment_preferences:
+      title: ~
+      general_settings: ~
+      connect_a_payment_provider: ~
+      contact_support: ~
+      no_payments_link_text: ~
+      your_country: ~
+      you_cannot_use_online_payments: ~
+      which_to_choose: ~
+      you_can_use_stripe_or_paypal: ~
+      you_can_use_stripe_only: ~
+      read_more_stripe: ~
+      you_can_use_paypal_only: ~
+      read_more_paypal: ~
+      read_more_about_paypal_and_stripe: ~
+      general_settings_updated: ~
+      transaction_fee_settings_updated: ~
+      choose_popup_text: ~
+      invalid_api_keys: ~
+      missing_api_keys: ~
+      stripe_verified: ~
+      change_settings: ~
+      configure_stripe: ~
+      configure_paypal: ~
+      transaction_fee_settings: ~
+      transaction_fee_save: ~
+      stripe_fee: ~
+      stripe_fee_notice: ~
+      fee_should_be_less_than_minimum_price: ~
+      stripe_connected:
+        title: ~
+      paypal_connected:
+        title: ~
+      stripe_form:
+        add_your_api_keys: ~
+        how_to_get_these: ~
+        publishable_key_example: ~
+        secret_key_example: ~
+        save_api_keys: ~
+        invalid_secret: ~
+        invalid_publishable: ~
+      index:
+        header: ~
+        info: ~
+        active: ~
+        gateway: ~
+        process: ~
+        commission: ~
+        minimum_price: ~
+        minimum_fee: ~
+        api_verified: ~
+        actions: ~
+        payments_not_enabled: ~
     transaction_types:
       sell: 出售
       rent: 出租
@@ -554,13 +652,25 @@ zh:
     username_or_email: Email或用户名
     what_is_this: 这是什么？
     removed_user: 已删除的用户
+    payment_fee_info:
+      title: ~
+      title_paypal: ~
+      stripe: ~
+      paypal: ~
+      info: ~
     paypal_fee_info:
       title: PayPal的支付处理费
       body_text: "PayPal对每笔付款收取一笔处理费。该费用介于总销售费用的2%到5%之间，取决于你的月销售量和买家所在国家。总的说来，国内的购买比国际的购买的费用低，每月销售额高则可以获得费用折扣。你可以通过登录你的PayPal帐号访问%{link_to_paypal}来查看详细费用。在每次购买之后你将得到一据显示具体费用的收据。"
-      body_with_shipping_text: |-
-          PayPal对每笔付款收取一笔处理费。该费用介于总销售费用（包括运费）的2%到5%之间，取决于你的月销售量和买家所在国家。总的说来，国内的购买比国际的购买的费用低，每月销售额高则可以获得费用折扣。
-          你可以通过登录你的PayPal帐号访问%{link_to_paypal}来查看详细费用。在每次购买之后你将得到一据显示具体费用的收据。
+      body_text_accept: ~
       link_to_paypal_text: 这里
+    paypal_only_fee_info:
+      title: ~
+      body_text: ~
+      link_to_paypal_text: ~
+    stripe_fee_info:
+      title: ~
+      body_text: ~
+      link_to_stripe_text: ~
   conversations:
     accept:
       details: 订单明细
@@ -581,8 +691,12 @@ zh:
       you_will_get_label: 你将得到：
       total_label: 总计：
       total_value: "%{seller_gets}*"
+      total_value_paypal: ~
+      total_value_stripe: ~
       paypal_fee_info: "* 不包括<a id='%{fee_info_link_id}' href='#'>PayPal的支付处理费用</a>"
+      payment_fee_info: ~
       shipping_price_label: "运费:"
+      stripe-fee_label: ~
     confirm:
       confirm_description: 如果你的请求被完成，你应该确认完成。然后你可以给其他人反馈。
       cancel_description: 如果你的请求没有完成，你可以标记它为“有争议的”。你仍然可以评论给其他交易方描述发生的事情。
@@ -674,7 +788,7 @@ zh:
       paid: 付款成功
       pending_external:
         paypal:
-          multicurrency: "由于你的PayPal帐号还没有设置%{currency}货币收款，我们无法处理PayPal付款。点击%{paypal_url}并登录你的帐号来手动接受或拒绝付款。"
+          multicurrency: "由于你的PayPal帐号还没有设置%{currency}收款，我们无法处理PayPal付款。点击%{paypal_url}并登录你的帐号来手动接受或拒绝付款。"
           verify: "因为你没有验证PayPal帐号，你不能接受这笔交易。点击%{paypal_url}验证你的帐号。"
           intl: "由于你的PayPal帐号没有设置取款机制，我们无法处理PayPal付款。点击%{paypal_url}并登录你的帐号来手动接受或拒绝付款。"
       waiting_for_current_user_to_deliver_listing: "正在等待你交付%{listing_title}"
@@ -689,7 +803,7 @@ zh:
       waiting_for_listing_author_to_accept_offer: "正在等待%{listing_author_name}接受宝贝"
       waiting_for_listing_author_to_accept_request: "正在等待%{listing_author_name}接受请求，当%{listing_author_name}接受后，你将会被扣款。"
       waiting_for_you_to_accept_request: 正在等待你接受请求
-      waiting_confirmation_from_requester: "正在等待%{requester_name}标记请求为已完成"
+      waiting_confirmation_from_requester: "正在等待 %{requester_name} 确认您的请求\n"
       waiting_confirmation_from_you: 正在等待你标记请求完成
       waiting_payment_from_requester: "正在等待%{requester_name}支付"
       waiting_payment_from_you: 正在等待你支付
@@ -739,12 +853,12 @@ zh:
       consent_not_given: 你还没有接受条款
   emails:
     accept_reminder:
-      remember_to_accept_offer: "请记得接受或拒绝来自%{sender_name}提供的宝贝"
+      remember_to_accept_offer: "请记得接受或拒绝来自%{sender_name}提供的请求"
       remember_to_accept_request: "请记得接受或拒绝来自%{sender_name}的请求"
-      you_can_accept_or_reject_offer_at: 你可以在此接受或拒绝该宝贝
+      you_can_accept_or_reject_offer_at: 你可以在此接受或拒绝该请求
       you_can_accept_or_reject_request_at: 你可以在此接受或拒绝该请求
-      you_have_not_yet_accepted_or_rejected_offer: "你尚未接受或拒绝你在%{date}收到的%{title}"
-      you_have_not_yet_accepted_or_rejected_request: "你尚未接受或拒绝你在%{date}收到的%{title}"
+      you_have_not_yet_accepted_or_rejected_offer: "你尚未接受或拒绝你在%{date}收到對%{title}的請求"
+      you_have_not_yet_accepted_or_rejected_request: "你尚未接受或拒绝你在%{date}收到對%{title}的請求"
       show_thread: 显示对话
     branding:
       powered_by: ~
@@ -763,11 +877,11 @@ zh:
       payment_settings_link: 付款设置
     transaction_confirmed:
       here_is_a_message_from: "这里有一条%{other_party_given_name}发送的消息："
-      request_marked_as_confirmed: 请求已完成——记得给予评价
+      request_marked_as_confirmed: 交易成功——請记得给予评价
       request_marked_as_canceled: 请求已取消
-      has_marked_request_as_confirmed: "%{other_party_full_name}标记关于“%{request}”的请求为完成。你现在可以评论给%{other_party_given_name}。"
-      has_marked_request_as_canceled: "%{other_party_full_name}取消了关于“%{request}”的请求。你仍然可以评论%{other_party_given_name}。"
-      giving_feedback_is_good_idea: "给予评论是个不错的主意。如果一切顺利，你应该让其他人知道%{other_party_given_name}可以被信任。如果有任何问题，在评论中提到它们也是很好的。"
+      has_marked_request_as_confirmed: "%{other_party_full_name}以确认您对“%{request}”的请求已成功完成。您现在可以对%{other_party_given_name}评论了。"
+      has_marked_request_as_canceled: "%{other_party_full_name}取消了关于“%{request}”的请求，不過你仍然可以對%{other_party_given_name}做出评论。"
+      giving_feedback_is_good_idea: "我们建议您对此次的经验给予评论。如果一切顺利，你应该让其他人知道%{other_party_given_name}是可以被信任的。任何问题也可以同时在评论中提到。"
       give_feedback_to: "给%{other_party_given_name}反馈"
     transaction_automatically_confirmed:
       subject: 请求自动完成——记得给予评价
@@ -797,11 +911,11 @@ zh:
     conversation_status_changed:
       has_accepted_your_offer: "%{accepter} 已经接受了你的%{listing}"
       has_accepted_your_request: "%{accepter}已经接受了你的%{listing}"
-      has_rejected_your_offer: "%{accepter} 已经拒绝了你的%{listing}"
+      has_rejected_your_offer: "%{accepter} 已经拒绝了你對%{listing}的請求。有任何問題請先與物主聯繫。"
       has_rejected_your_request: "%{accepter} 已经拒绝了你的%{listing}"
       view_thread: 查看对话
       your_offer_was_accepted: 你的宝贝已被接受
-      your_offer_was_rejected: 你的宝贝被拒绝
+      your_offer_was_rejected: 你的请求被拒绝
       your_request_was_accepted: 你的请求已被接受
       your_request_was_rejected: 你的请求被拒绝
       you_can_now_pay_to: "你现在可以支付要求的金额给%{payment_receiver}。"
@@ -828,6 +942,31 @@ zh:
       price_per_unit_type: "每%{unit_type}的价格"
       quantity: "数量:"
       you_have_received_new_payment: "你已经为<b>%{listing_title}</b>支付了<b>%{payment_sum}</b>给%{payer_full_name}。这是你的收据。"
+    payment_receipt_to_seller:
+      payment_gateway_fee: ~
+      shipping_total: ~
+      product: ~
+      price_payer_paid: ~
+      service_fee: ~
+      you_will_get: ~
+      new_payment: ~
+      price_per_unit_type: ~
+      quantity: ~
+      you_have_received_new_payment: ~
+    payment_receipt_to_payer:
+      receipt_of_payment: ~
+      you_have_made_new_payment: ~
+      product: ~
+      price_per_unit_type: ~
+      duration: ~
+      quantity: ~
+      subtotal: ~
+      total: ~
+      price: ~
+      service_fee: ~
+      stripe_gateway_fee: ~
+      paypal_gateway_fee: ~
+      money_will_be_transferred: ~
     paypal_new_payment:
       paypal_gateway_fee: PayPal的费用：
       shipping_total: "运费:"
@@ -847,10 +986,12 @@ zh:
       total: 总共
       price: 价格
       service_fee: 服务费
+      stripe_gateway_fee: ~
+      paypal_gateway_fee: ~
       money_will_be_transferred: "以下两种情况发生时，钱将被转给%{recipient_name} a)你标记请求为完成 b)你付款之后的%{automatic_confirmation_days}天。"
     new_testimonial:
-      has_given_you_feedback_in_kassi: "%{name}在%{service_name}给你了反馈"
-      you_can_give_feedback_to: "你还没有给%{name}反馈"
+      has_given_you_feedback_in_kassi: "%{name}在%{service_name}给了你反馈"
+      you_can_give_feedback_to: "你还没有對%{name} 评价"
       view_feedback: 查看反馈
     new_update_to_listing:
       listing_you_follow_has_been_updated: 以下发布的信息已更新
@@ -874,7 +1015,7 @@ zh:
       text_version_text: "你可以共享一些其他人可能需要的东西吗？或者你可能需要一些别人已经拥有的东西？点击%{url}新添一个宝贝或者查看其他人当前提供的或者请求的东西"
     reset_password_instructions:
       change_my_password: 修改密码
-      reset_password_instructions: "<p>你声明你忘记了%{service_name}的用户名或者密码。</p><p>你的用户名是：%{username}</p><p>如果你需要重置密码，点击以下链接：%{password_reset_link}</p><br/><p>如果你没有这个要求，请忽略这封电子邮件。 你的密码将不会改变，直到你访问上面的链接并创建一个新的密码。</p>"
+      reset_password_instructions: "<p>你以確認你忘记了%{service_name}的用户名或者密码。</p><p>你的用户名是：%{username}</p><p>如果你需要重置密码，点击以下链接：%{password_reset_link}</p><br/><p>如果你没有这个要求，请忽略这封电子邮件。 你的密码将不会改变，直到你访问上面的链接并创建一个新的密码。</p>"
     testimonial_reminder:
       remember_to_give_feedback_to: "提醒：记得给%{name} 评价"
       you_have_not_given_feedback_yet: "你尚未评价%{name} 参与的活动'%{event}'。记得评价%{given_name} 在活动中的表现。"
@@ -882,6 +1023,9 @@ zh:
       subject: "%{requester}已经请求并授权支付了%{listing_title}"
       transaction_requested_by_user: "%{requester}已经请求并授权支付了%{listing_title}"
       you_have_time_to_accept: "你需要在%{payment_expires_in}天内接受或拒绝请求。如果在该期限内接受，你会收到付款。如果你在该期限内没有接受，请求将自动被拒绝，你将无法收到支付款项。"
+      if_you_do_accept: ~
+      if_you_do_accept_stripe: ~
+      if_you_do_not_accept: ~
       click_here_to_reply: 点击这里回应请求
     transaction_preauthorized_reminder:
       subject: "记得接受来自%{requester}的关于%{listing_title}的请求"
@@ -891,7 +1035,7 @@ zh:
     welcome_email:
       welcome_email_subject: "欢迎来到%{service_name}"
       welcome_to_marketplace: "欢迎来到%{service_name}！恭喜你注册成功。"
-      love_marketplace_crew: "爱你的，<br /><i>%{service_name}团队</i>"
+      love_marketplace_crew: "<br /><i>%{service_name}团队</i>  敬上"
       welcome_email_footer_text: "你希望从%{service_name}接收哪种类型的邮件？%{settings_link}"
       settings_link_text: 查看你的设置
     new_listing_by_followed_person:
@@ -922,6 +1066,7 @@ zh:
     transaction_agreement:
       required_error: 你需要接受协议
     paypal:
+      transaction_cannot_complete: ~
       buyer_cannot_pay_error: " 该支付被Paypal拒绝。请联系他们的客服获得更多信息：%{customer_service_link}"
       pending_review_error: 支付已经提交，但是被Paypal标记为‘需要检查’。当Paypal完成检查后，该支付将会被自动授权。
       seller_express_checkout_disabled: ~
@@ -929,6 +1074,8 @@ zh:
       cancel_error: 取消时发生错误。不能完成取消操作。
       accept_authorization_error: 尝试接受预授权的PayPal付款时出错。请重试。
       reject_authorization_error: 在尝试拒绝Paypal支付预授权时发生错误。请重试。
+    stripe:
+      generic_error: ~
   error_pages:
     back_to_kassi_front_page: 回到主页
     error_404:
@@ -1273,7 +1420,7 @@ zh:
       reply_cannot_be_empty: 你不能发送空白消息
       reply_sent: 回复发送成功
       request_accepted: 你的请求已被接受
-      request_confirmed: 请求已完成。
+      request_confirmed: 请求完成。
       request_rejected: 请求已拒绝
       request_canceled: 请求已取消
       message_sent: 消息已发出
@@ -1322,6 +1469,8 @@ zh:
       notifications: 通知
       profile: 个人资料
       settings: 设置
+      paypal_payments: ~
+      stripe_payments: ~
       payments: 付款
   listings:
     bubble_listing_not_visible:
@@ -1372,7 +1521,7 @@ zh:
         repeated: 重复的（在字段“详细描述”中添加次数和天数）
       description:
         detailed_description: 详细描述
-        youtube_info: ~
+        youtube_info: "如果您的描述包括Youtube连结, 该影片将会在描述栏下方显示."
       destination:
         destination: 目的地
       form_content:
@@ -1418,7 +1567,11 @@ zh:
         long_time: 周，月，……
         after_service_fee_you_will_get: "在%{service_name}和付款处理费之后你将得到%{sum_with_currency}"
         no_service_fee_you_will_get_paypal_text: "%{paypal_fee_info_link}会从价格中扣除"
+        no_service_fee_you_will_get_payment_text: ~
+        after_service_fee_you_will_get_payment_text: ~
         after_service_fee_you_will_get_paypal_text: "%{service_name}费用（%{sum_with_currency}）和%{paypal_fee_info_link}会从价格中扣除"
+        after_service_fee_you_will_get_stripe_text: ~
+        payment_fee_info_link_text: ~
         paypal_fee_info_link_text: PayPal的支付处理费
         delivery: 配送方式
         shipping: 配送
@@ -1481,7 +1634,6 @@ zh:
       request_type: 请求信息的类型
       requests: 需求
       rideshare: 拼车
-      search_verb: 搜索
       you_have_something_others_do_not: 想卖点什么？
       feed_title: "在%{service_name}%{optional_category}中的%{listing_type}"
     left_panel_link:
@@ -1594,6 +1746,17 @@ zh:
       invalid_parameters: ~
     transaction_agreement_checkbox:
       read_more: 查看。
+    stripe_payment:
+      payment: ~
+      pay_with_card: ~
+      address: ~
+      address_country: ~
+      address_name: ~
+      address_city: ~
+      address_state: ~
+      address_street1: ~
+      address_street2: ~
+      address_postal_code: ~
   mapview:
     index:
       all_categories: 全部分类
@@ -1613,7 +1776,6 @@ zh:
       request_type: 请求信息的类型
       requests: 所有请求的信息
       rideshare: 拼车
-      search_verb: 搜索
       you_have_something_others_do_not: 想卖点什么？
     please_comment: 评论
   mercury:
@@ -1624,20 +1786,24 @@ zh:
   paypal_accounts:
     payout_info_title: 支付信息
     paypal_account_email_connected: "<del>连接PayPal 帐号</del> 完成！"
-    payout_info_paypal: ~
+    payout_info_paypal: "%{service_name}使用Paypal为付款提供商。用户必须拥有%{create_paypal_account_link}才能够接受付款。同時这个账户也需要与%{service_name} 连接才能够使用。"
     paypal_billing_agreement_made: "<del>授权%{service_name}收取交易费</del> 完成！"
-    commission_permission_needed: ~
+    commission_permission_needed: "你也需要同意%{service_name} 收取手续费."
     create_paypal_account_link_text: "PayPal 账户"
     connected_account: "PayPal帐号“%{email}”连接成功。"
     paypal_receive_funds_info_label_australia_only: ~
     paypal_receive_funds_info_label: "你的 PayPal 账户需要可以接受付款。这可能需要一个商业账户。"
     paypal_receive_funds_info_australia_only: ~
-    paypal_receive_funds_info: ~
-    upgrade_paypal_account_link_text: 登陆并点击升级套餐连接
+    paypal_receive_funds_info: |-
+        如果您在与%{service_name} 做付款连结时发生问题，请通过%{upgrade_paypal_account_link}升级您的账户到商业账户。 
+        
+        升级到商业账户是完全免费的。Paypal建议使用您的名字为商业账户里的公司名字。
+    upgrade_paypal_account_link_text: 升级至商业账户连接
     admin_account_not_connected: ~
     contact_admin_link_text: 联系集市管理员
     you_are_ready_to_accept_payments: 你已准备好接受付款！
     commission: "%{commission}%"
+    not_now: ~
     new:
       payout_info_you_need_to_connect: "要接受付款你需要连接你的PayPal帐号和%{service_name}。"
       payout_info_text: 请完成下列两个步骤来连接你的帐号。
@@ -1645,14 +1811,14 @@ zh:
       admin_account_not_connected: "没有为%{service_name}配置付款方式，所以你不能连接到你的PayPal帐号。请%{contact_admin_link}了解详情。"
       paypal_account_email: "连接你的 PayPal 帐号"
       paypal_account_email_placeholder: 你的PayPal电邮地址
-      paypal_account_email_info_text: "如果你没有PayPal帐号，你可以用%{create_paypal_account}创建一个。如果你在连接PayPal帐号时的到错误信息，那你需要升级到商业帐号。升级是免费而快捷的。如果你是个人用户，你应该只需要在PayPal询问”商业名称“时填入姓名。要升级帐号，通过%{upgrade_paypal_account}查找升级链接。"
+      paypal_account_email_info_text: "如果你没有PayPal帐号，你可以用%{create_paypal_account}创建一个。如果你在连接PayPal帐号时的到错误信息，那你需要升级到商业帐号。升级是免费而快捷的。如果你是个人用户，你只需要在PayPal询问”商业名称“时填入姓名。要升级帐号，通过%{upgrade_paypal_account}查找升级链接。"
       create_paypal_account: 点击这里
       upgrade_paypal_account: 登录你的PayPal帐号
       paypal_account_billing_agreement: "授权%{service_name}收取交易费"
       follow_steps: 跟着下面的步骤做以开始接收资金
       connect_paypal_account_title: "连接 PayPal 帐号"
-      connect_paypal_account_title_with_step: ~
-      connect_paypal_account_instructions: ~
+      connect_paypal_account_title_with_step: "步骤%{current_step}: 连接 PayPal 帐号"
+      connect_paypal_account_instructions: 请按下方按钮来连接您的Paypal账号
       connect_paypal_account: 连接PayPal帐号
       paypal_account_billing_agreement_with_step: ~
       paypal_account_billing_agreement_info_both: "当你在%{service_name}完成一个销售后，服务费（%{commission_from_seller}的商品总价，不包括运费，最少的费用%{minimum_commission}）将从你的Paypal账号中扣除。要在%{service_name}中接受付款，你必须允许收取此费用。该费用不包括%{paypal_info_link}"
@@ -1662,7 +1828,7 @@ zh:
       paypal_info_link_text: PayPal的支付处理费
       billing_agreement_description: "授权%{service_name}收取交易费。"
       billing_agreement: 授权
-      permissions_not_granted: 没有授权连接PayPal帐号。
+      permissions_not_granted: PayPal授權連接失敗。
       could_not_fetch_redirect_url: 不能获得连接到PayPal的重定向链接。
       paypal_not_enabled: "PayPal 支付没有启用。"
       billing_agreement_canceled: 账单协议已取消
@@ -1681,9 +1847,11 @@ zh:
     paypal_account_all_set_up: 太棒了，一切就绪！
     can_receive_payments: 现在你可以为你的列表接收付款了。
     paypal_account_connected_summary: "PayPal 账户 %{email} 连接成功"
-    paypal_permission_granted_summary: ~
+    paypal_permission_granted_summary: 手续费连接通过
   paypal:
     pay_with_paypal: 进行支付
+    checkout_with: ~
+    or_pay_with_paypal: ~
     checkout_with_paypal: 用PayPal结帐
     cancel_succesful: PayPal付款成功取消
     transaction:
@@ -1780,16 +1948,6 @@ zh:
       following: 正在关注
       follow: 关注
       unfollow: 取消关注
-  search:
-    show:
-      all_results: 所有结果
-      loading_more_search_results: 加载更多搜索结果
-      offers: 宝贝
-      requests: 请求
-      search: 搜索
-      search_results: 搜索结果
-      search_returned_no_results: 没有发现符合要求的结果
-      search_verb: 搜索
   sessions:
     new:
       create_new_account: 注册新用户
@@ -1820,8 +1978,11 @@ zh:
       confirm_your_email: 请确认您的电子邮件
       account_confirmation_instructions: "您很快会收到一封确认邮件，请点击邮件中的链接激活您的账号。如果您在收件箱没有找到确认邮件，请检查您的垃圾邮件文件夹。 在确认邮件之后您就可以加入%{service_name}了。"
       account_confirmation_instructions_title_admin: 欢迎来到你的集市！
-      your_marketplace_has_now_been_created: 你的集市站点已经创建。这很容易吧？接下来只要一个步骤你就可以访问你的站点了：你需要确认你的电邮地址。
+      before_full_access_you_need_to_confirm_email: ~
+      before_confirmation_only_access_admin_dashboard: ~
+      admin_dashboard_link_text: ~
       account_confirmation_instructions_admin: 您很快会收到一封确认邮件，请点击邮件中的链接激活您的账号。如果您在收件箱没有找到确认邮件，请检查您的垃圾邮件文件夹。在确认邮件之后您就可以开启您的集市了。
+      contact_support_link_text: ~
   settings:
     account:
       change: 修改
@@ -1866,7 +2027,7 @@ zh:
       email_weekly_community_updates: 如果有新发布的信息，<b>每周</b>发送给我一封更新的邮件
       do_not_email_community_updates: 不要给我发送有更新消息的电子邮件
       email_when_conversation_accepted: …有人接受了我的宝贝或请求
-      email_when_conversation_rejected: …有人拒绝了我的宝贝或请求
+      email_when_conversation_rejected: …有人拒绝了我的请求
       email_about_completed_transactions: ……有人将我的宝贝或请求标记为已完成
       email_about_new_payments: ……我收到一笔新的付款
       email_about_new_listings_by_followed_people: ……我关注的人发布了一则新的信息
@@ -2032,16 +2193,22 @@ zh:
       quantity: "数量:"
       subtotal: "小结:"
       shipping-price: "运费:"
+      stripe-fee: ~
     price_per_quantity: "每%{unit_type}:"
     price: "总共:"
     quantity: "数量:%{quantity}"
     unit_price: "单位价格: %{unit_price}"
     total: "总共:"
+    total_to_pay: ~
   unit:
     day: 日
     days: 天
   web:
     listings:
+      errors:
+        availability:
+          something_went_wrong: ~
+          saving_failed: ~
       pricing_units:
         piece: ~
         hour: ~
@@ -2049,11 +2216,20 @@ zh:
         night: ~
         week: ~
         month: ~
+      edit_availability_header: ~
+      save_and_close_availability_editing: ~
+      confirm_discarding_unsaved_availability_changes_explanation: ~
+      confirm_discarding_unsaved_availability_changes_question: ~
+      edit_listing_availability: ~
     no_listings:
       sorry: ~
       try_other_search_terms: ~
     listing_card:
+      add_picture: ~
       no_picture: ~
+    search:
+      page: ~
+      page_of_pages: ~
     topbar:
       menu: 菜单
       more: 更多
@@ -2081,8 +2257,6 @@ zh:
       person:
         zero: 用户
         other: 用戶
-      listing_conversation:
-        other: 交易
     previous_label: "&#8592;上一页"
     next_label: "下一页 &#8594;"
     page_gap: "&hellip;"
@@ -2095,3 +2269,76 @@ zh:
         other: "显示 <b>所有&nbsp;%{count}个</b> %{model}"
       multi_page: "显示 %{model} %{from} - %{to} 总共 %{count} 个"
       multi_page_html: "显示 %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> 总共 <b>%{count}</b> 个"
+  stripe_accounts:
+    admin_account_not_connected: ~
+    contact_admin_link_text: ~
+    you_are_ready_to_accept_payments: ~
+    commission: ~
+    pay_with_stripe: ~
+    add_and_pay: ~
+    card_not_stored: ~
+    missing_payment: ~
+    stripe_bank_connected: ~
+    stripe_can_accept: ~
+    stripe_credit_card: ~
+    paypal: ~
+    paypal_connected: ~
+    paypal_can_accept: ~
+    paypal_connected_give_permission: ~
+    form_new:
+      need_info: ~
+      select_country: ~
+      legal_name: ~
+      country: ~
+      birth_date: ~
+      ssn_last_4: ~
+      personal_id_number: ~
+      address_country: ~
+      address_state: ~
+      address_city: ~
+      address_postal_code: ~
+      address_line1: ~
+      tos_link: ~
+      tos_link_title: ~
+      save_details: ~
+      edit: ~
+      cancel: ~
+    form_bank:
+      bank_account_number: ~
+      bank_routing_number: ~
+      bank_routing_1: ~
+      bank_routing_2: ~
+      bank_currency: ~
+      messages:
+        account_number: ~
+        routing_number: ~
+        bank_code: ~
+        branch_code: ~
+        transit_number: ~
+        institution_number: ~
+        format_varies_by_bank: ~
+        bsb: ~
+        error_message: ~
+        clearing_code: ~
+        sort_code: ~
+        must_match: ~
+        a_dash: ~
+        digits: ~
+        digits_or_chars: ~
+    form_verification:
+      personal_id_number: ~
+      document: ~
+      send_verification: ~
+      need_verification: ~
+  payment_settings:
+    title: ~
+    bank_account: ~
+    paypal: ~
+    bank_account_details: ~
+    add_bank_details: ~
+    can_accept_stripe_and_paypal: ~
+    to_accept_paypal: ~
+    connect_paypal: ~
+    wrong_setup: ~
+    invalid_bank_account_number: ~
+    invalid_postal_code: ~

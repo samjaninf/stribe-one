@@ -1,5 +1,4 @@
-class Admin::CommunityCustomizationsController < ApplicationController
-  before_filter :ensure_is_admin
+class Admin::CommunityCustomizationsController < Admin::AdminBaseController
 
   def edit_details
     @selected_left_navi_link = "tribe_details"
@@ -15,14 +14,8 @@ class Admin::CommunityCustomizationsController < ApplicationController
       .map { |data| has_preauthorize_process?(data) }
       .or_else(nil).tap { |p| raise ArgumentError.new("Cannot find transaction process: #{opts}") if p.nil? }
 
-    onboarding_popup_locals = OnboardingViewUtils.popup_locals(
-      flash[:show_onboarding_popup],
-      admin_getting_started_guide_path,
-      Admin::OnboardingWizard.new(@current_community.id).setup_status)
-
-    render locals: onboarding_popup_locals.merge({
-      locale_selection_locals: { all_locales: all_locales, enabled_locale_keys: enabled_locale_keys, unofficial_locales: unofficial_locales }
-    })
+    make_onboarding_popup
+    render locals: {locale_selection_locals: { all_locales: all_locales, enabled_locale_keys: enabled_locale_keys, unofficial_locales: unofficial_locales }}
   end
 
   def update_details
@@ -37,8 +30,7 @@ class Admin::CommunityCustomizationsController < ApplicationController
         :transaction_agreement_label,
         :transaction_agreement_content
       ]
-      params.require(:community_customizations).require(locale).permit(*permitted_params)
-      locale_params = params[:community_customizations][locale]
+      locale_params = params.require(:community_customizations).require(locale).permit(*permitted_params)
       customizations = find_or_initialize_customizations_for_locale(locale)
       update_results.push(customizations.update_attributes(locale_params))
       customizations

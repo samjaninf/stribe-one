@@ -318,13 +318,12 @@ function initialize_listing_view(locale) {
   });
 }
 
-function updateSellerGetsValue(priceInputSelector, displayTargetSelector, currencySelector, communityCommissionPercentage, minCommission, showReversed) {
+function updateSellerGetsValue(currencyOpts, priceInputSelector, displayTargetSelector, communityCommissionPercentage, minCommission, showReversed) {
   // true == Show the fee instead of what's left after the fee
   showReversed = showReversed || false;
 
   $display = $(displayTargetSelector);
   $input = $(priceInputSelector);
-  $currency = $(currencySelector);
 
   function updateYouWillGet() {
     var sum = ST.paymentMath.parseFloatFromFieldValue($input.val());
@@ -336,14 +335,19 @@ function updateSellerGetsValue(priceInputSelector, displayTargetSelector, curren
       displaySum = sum - ST.paymentMath.totalCommission(sum, communityCommissionPercentage, minCommission);
     }
 
+    displaySumInCents = displaySum * Math.pow(10, currencyOpts.digits);
+
     $display.text(
-      [ST.paymentMath.displayMoney(Math.max(0, displaySum)),
-       $currency.val()]
-        .join(" "));
+      ST.paymentMath.displayMoney(Math.max(0, displaySumInCents),
+                                  currencyOpts.symbol,
+                                  currencyOpts.digits,
+                                  currencyOpts.format,
+                                  currencyOpts.separator,
+                                  currencyOpts.delimiter)
+    );
   }
 
   $input.keyup(updateYouWillGet);
-  $currency.change(updateYouWillGet);
 
   // Run once immediately
   updateYouWillGet();
@@ -356,7 +360,7 @@ function initialize_give_feedback_form(locale, grade_error_message, text_error_m
   $(form_id).validate({
     errorPlacement: function(error, element) {
       if (element.attr("name") == "testimonial[grade]") {
-        error.appendTo(element.parent().parent());
+        error.appendTo($("#testimonial-grade-error"));
       }  else {
         error.insertAfter(element);
       }
@@ -901,19 +905,16 @@ function enableSamePageScroll() {
   }
 }
 
-function initialize_stripe_preauthorize_form(locale, beforeSubmit) {
-  $('#transaction-agreement-read-more-stripe').click(function() { 
-    $('#transaction-agreement-content').lightbox_me({centered: true, zIndex: 1000000}); 
-  });
-  
-  var opts = {
-    errorPlacement: function(error, element) {
-      if (element.attr("name") == "listing_conversation[contract_agreed]") {
-        error.appendTo(element.parent().parent());
-      } else {
-        error.insertAfter(element);
+function autoSetMinimalPriceFromCountry() {
+    var _minimal_commissions = {USD: 50, AUD: 50, BRL: 50, GBP: 50, CAD: 50, CZK: 1500, DKK: 500, EUR: 50, HKD: 500, HUF: 10000, ILS: 200, JPY: 50, MXN: 500, MYR: 200, TWD: 1500, NZD: 50, NOK: 500, PHP: 2000, PLN: 200, RUB: 1500, SGD: 100, SEK: 500, CHF: 100, THB: 1500, TRY: 150};
+    var _min_price = $("#payment_preferences_form_minimum_listing_price");
+    $("#payment_preferences_form_marketplace_currency").change(function(){
+      var currency = $(this).val();
+      var min_tx = _minimal_commissions[currency] / 100;
+      var cur_tx = parseFloat(_min_price.val());
+      if(isNaN(cur_tx) || min_tx > cur_tx) {
+        _min_price.val(min_tx.toFixed(2))
       }
-    }
-  }
-
+      _min_price.next(".paypal-preferences-currency-label").text(currency);
+    }).trigger('change');
 }

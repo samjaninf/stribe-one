@@ -21,6 +21,8 @@
 //
 //= require jquery
 //= require jquery-ui-1.9.2.custom
+//= require jquery-ui-1.9.2.sortable
+//= require jquery.ui.touch-punch.min.js
 //= require jquery_ujs
 //= require jquery.form
 //= require jquery.validate
@@ -70,6 +72,7 @@
 //= require admin/listing_shapes
 //= require admin/settings.js
 //= require admin/emails.js
+//= require admin/payment_preferences.js
 //= require payment_math
 //= require dropdown
 //= require jquery.nouislider
@@ -87,5 +90,6 @@
 //= require transaction
 //= require listing_form
 //= require radio_buttons
-//= require connect
+//= require new_layout
+//= require stripe_form
 //= require_self

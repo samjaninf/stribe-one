@@ -13,7 +13,7 @@
 #  index_custom_field_options_on_custom_field_id  (custom_field_id)
 #
 
-class CustomFieldOption < ActiveRecord::Base
+class CustomFieldOption < ApplicationRecord
   include SortableByPriority # use `sort_priority()` for sorting
 
   belongs_to :custom_field
@@ -36,5 +36,6 @@ class CustomFieldOption < ActiveRecord::Base
         titles.build(:value => value, :locale => locale)
       end
     end
+    self.updated_at = Time.zone.now # to change TranslationCache key
   end
 end

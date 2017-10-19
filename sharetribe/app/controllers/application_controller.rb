@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   layout 'application'
 
-  before_filter :check_http_auth,
+  before_action :check_http_auth,
     :check_auth_token,
     :fetch_community,
     :fetch_community_plan_expiration_status,
@@ -27,11 +27,9 @@ class ApplicationController < ActionController::Base
     :redirect_removed_locale,
     :set_locale,
     :redirect_locale_param,
-    :set_default_url_for_mailer,
     :fetch_community_admin_status,
     :warn_about_missing_payment_info,
     :set_homepage_path,
-    :report_queue_size,
     :maintenance_warning,
     :cannot_access_if_banned,
     :cannot_access_without_confirmation,
@@ -40,19 +38,19 @@ class ApplicationController < ActionController::Base
     :set_display_expiration_notice
 
   # This updates translation files from WTI on every page load. Only useful in translation test servers.
-  before_filter :fetch_translations if APP_CONFIG.update_translations_on_every_page_load == "true"
+  before_action :fetch_translations if APP_CONFIG.update_translations_on_every_page_load == "true"
 
   #this shuold be last
-  before_filter :push_reported_analytics_event_to_js
-  before_filter :push_reported_gtm_data_to_js
+  before_action :push_reported_analytics_event_to_js
+  before_action :push_reported_gtm_data_to_js
 
   helper_method :root, :logged_in?, :current_user?
 
   attr_reader :current_user
 
   def redirect_removed_locale
-    if params[:locale] && Kassi::Application.config.REMOVED_LOCALES.include?(params[:locale])
-      fallback = Kassi::Application.config.REMOVED_LOCALE_FALLBACKS[params[:locale]]
+    if params[:locale] && Rails.application.config.REMOVED_LOCALES.include?(params[:locale])
+      fallback = Rails.application.config.REMOVED_LOCALE_FALLBACKS[params[:locale]]
       redirect_to_locale(fallback, :moved_permanently)
     end
   end
@@ -143,9 +141,9 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_locale(new_locale, status)
     if @current_community.default_locale == new_locale.to_s
-      redirect_to url_for(params.except(:locale).merge(only_path: true)), :status => status
+      redirect_to url_for(params.to_unsafe_hash.symbolize_keys.except(:locale).merge(only_path: true)), :status => status
     else
-      redirect_to url_for(params.merge(locale: new_locale, only_path: true)), :status => status
+      redirect_to url_for(params.to_unsafe_hash.symbolize_keys.merge(locale: new_locale, only_path: true)), :status => status
     end
   end
 
@@ -171,7 +169,7 @@ class ApplicationController < ActionController::Base
                            user_id: @current_user&.id,
                            request: request,
                            is_admin: Maybe(@current_user).is_admin?.or_else(false),
-                           is_marketplace_admin: Maybe(@current_user).is_marketplace_admin?.or_else(false))
+                           is_marketplace_admin: Maybe(@current_user).is_marketplace_admin?(@current_community).or_else(false))
   end
 
   # Ensure that user accepts terms of community and has a valid email
@@ -208,7 +206,7 @@ class ApplicationController < ActionController::Base
   def ensure_user_belongs_to_community
     return unless @current_user
 
-    if !@current_user.is_admin? && @current_user.accepted_community != @current_community
+    if !@current_user.has_admin_rights?(@current_community) && @current_user.accepted_community != @current_community
 
       logger.info(
         "Automatically logged out user that doesn't belong to community",
@@ -226,11 +224,23 @@ class ApplicationController < ActionController::Base
   end
 
   # A before filter for views that only users that are logged in can access
+  #
+  # Takes one parameter: A warning message that will be displayed in flash notification
+  #
+  # Sets the `return_to` variable to session, so that we can redirect user back to this
+  # location after the user signed up.
+  #
+  # Returns true if user is logged in, false otherwise
   def ensure_logged_in(warning_message)
-    return if logged_in?
-    session[:return_to] = request.fullpath
-    flash[:warning] = warning_message
-    redirect_to login_path and return
+    if logged_in?
+      true
+    else
+      session[:return_to] = request.fullpath
+      flash[:warning] = warning_message
+      redirect_to login_path
+
+      false
+    end
   end
 
   def logged_in?
@@ -332,34 +342,38 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_default_url_for_mailer
-    url = @current_community ? "#{@current_community.full_domain}" : "www.#{APP_CONFIG.domain}"
-    ActionMailer::Base.default_url_options = {:host => url}
-    if APP_CONFIG.always_use_ssl
-      ActionMailer::Base.default_url_options[:protocol] = "https"
-    end
-  end
-
   def fetch_community_admin_status
-    @is_current_community_admin = @current_user && @current_user.has_admin_rights?
+    @is_current_community_admin = (@current_user && @current_user.has_admin_rights?(@current_community))
   end
 
   def fetch_community_plan_expiration_status
     @current_plan = request.env[:current_plan]
   end
 
-  # Before filter for PayPal, shows notification if user is not ready for payments
+  # Before filter for payments, shows notification if user is not ready for payments
   def warn_about_missing_payment_info
-    if @current_user && StripeHelper.open_listings_with_missing_payment_info?(@current_user.id, @current_community.id)
-      settings_link = view_context.link_to(t("stripe_accounts.from_your_payment_settings_link_text"),
-        payment_settings_path(:stripe, @current_user), target: "_blank")
-      warning = t("stripe_accounts.missing", settings_link: settings_link)
-      flash.now[:warning] = warning.html_safe
-    end
-  end
+    if @current_user
+      has_paid_listings = PaymentHelper.open_listings_with_payment_process?(@current_community.id, @current_user.id)
+      paypal_community  = PaypalHelper.community_ready_for_payments?(@current_community.id)
+      stripe_community  = StripeHelper.community_ready_for_payments?(@current_community.id)
+      paypal_ready      = PaypalHelper.account_prepared_for_user?(@current_user.id, @current_community.id)
+      stripe_ready      = StripeHelper.user_stripe_active?(@current_community.id, @current_user.id)
 
-  def report_queue_size
-    MonitoringService::Monitoring.report_queue_size
+      accept_payments = []
+      if paypal_community && paypal_ready
+        accept_payments << :paypal
+      end
+      if stripe_community && stripe_ready
+        accept_payments << :stripe
+      end
+
+      if has_paid_listings && accept_payments.blank?
+        payment_settings_link = view_context.link_to(t("paypal_accounts.from_your_payment_settings_link_text"),
+          person_payment_settings_path(@current_user), target: "_blank")
+
+        flash.now[:warning] = t("stripe_accounts.missing_payment", settings_link: payment_settings_link).html_safe
+      end
+    end
   end
 
   def maintenance_warning
@@ -509,7 +523,7 @@ class ApplicationController < ActionController::Base
     return true if @current_user.is_admin?
 
     # Show for admins if their status is accepted
-    @current_user.is_marketplace_admin? &&
+    @current_user.is_marketplace_admin?(@current_community) &&
       @current_user.community_membership.accepted?
   end
 
@@ -615,5 +629,12 @@ class ApplicationController < ActionController::Base
 
   def render_not_found!(msg = "Not found")
     raise ActionController::RoutingError.new(msg)
+  end
+
+  def make_onboarding_popup
+    @onboarding_popup = OnboardingViewUtils.popup_locals(
+      flash[:show_onboarding_popup],
+      admin_getting_started_guide_path,
+      Admin::OnboardingWizard.new(@current_community.id).setup_status)
   end
 end

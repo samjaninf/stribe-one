@@ -7,6 +7,7 @@ export const Profile = Immutable.Record({
   description: 'product author',
   avatarImage: new AvatarImage(),
   profileURL: 'https://example.com/anonym',
+  username: 'username',
 });
 
 const parseProfileImage = (image) => {
@@ -18,10 +19,15 @@ const parseProfileImage = (image) => {
   });
 };
 
-export const parse = (profile) => new Profile({
-  familyName: profile.getIn([':attributes', ':familyName']),
-  givenName: profile.getIn([':attributes', ':givenName']),
-  description: profile.getIn([':attributes', ':description']),
-  avatarImage: parseProfileImage(profile.getIn([':attributes', ':avatar'])),
-  profileURL: 'https://example.com/anonym', // when we get username, find from routes
-});
+export const parse = (profile, getProfilePath) => {
+  const username = profile.getIn([':attributes', ':username']);
+  const profileURL = username ? getProfilePath(username) : '/';
+  return new Profile({
+    familyName: profile.getIn([':attributes', ':familyName']),
+    givenName: profile.getIn([':attributes', ':givenName']),
+    description: profile.getIn([':attributes', ':description']),
+    avatarImage: parseProfileImage(profile.getIn([':attributes', ':avatar'])),
+    profileURL,
+    username,
+  });
+};

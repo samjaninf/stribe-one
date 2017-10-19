@@ -1,16 +1,16 @@
 class AcceptPreauthorizedConversationsController < ApplicationController
 
-  before_filter do |controller|
+  before_action do |controller|
     controller.ensure_logged_in t("layouts.notifications.you_must_log_in_to_accept_or_reject")
   end
 
-  before_filter :fetch_conversation
-  before_filter :fetch_listing
+  before_action :fetch_conversation
+  before_action :fetch_listing
 
-  before_filter :ensure_is_author
+  before_action :ensure_is_author
 
   # Skip auth token check as current jQuery doesn't provide it automatically
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
 
   def accept
     tx_id = params[:id]
@@ -23,10 +23,8 @@ class AcceptPreauthorizedConversationsController < ApplicationController
 
     payment_type = tx[:payment_gateway]
     case payment_type
-    when :paypal
-      render_paypal_form("accept")
-    when :stripe
-      render_stripe_form("accept")
+    when :paypal, :stripe
+      render_payment_form("accept", payment_type)
     else
       raise ArgumentError.new("Unknown payment type: #{payment_type}")
     end
@@ -43,10 +41,8 @@ class AcceptPreauthorizedConversationsController < ApplicationController
 
     payment_type = tx[:payment_gateway]
     case payment_type
-    when :paypal
-      render_paypal_form("reject")
-    when :stripe
-      render_stripe_form("reject")
+    when :paypal, :stripe
+      render_payment_form("reject", payment_type)
     else
       raise ArgumentError.new("Unknown payment type: #{payment_type}")
     end
@@ -69,6 +65,14 @@ class AcceptPreauthorizedConversationsController < ApplicationController
 
     if res[:success]
       flash[:notice] = success_msg(res[:flow])
+
+      Analytics.record_event(
+        flash,
+        status == :paid ? "PreauthorizedTransactionAccepted" : "PreauthorizedTransactionRejected",
+        { listing_id: tx[:listing_id],
+          listing_uuid: tx[:listing_uuid].to_s,
+          transaction_id: tx[:id] })
+
       redirect_to person_transaction_path(person_id: sender_id, id: tx_id)
     else
       flash[:error] = error_msg(res[:flow])
@@ -118,9 +122,9 @@ class AcceptPreauthorizedConversationsController < ApplicationController
 
   def error_msg(flow)
     if flow == :accept
-      t("error_messages.stripe.accept_authorization_error")
+      t("error_messages.paypal.accept_authorization_error")
     elsif flow == :reject
-      t("error_messages.stripe.reject_authorization_error")
+      t("error_messages.paypal.reject_authorization_error")
     end
   end
 
@@ -139,20 +143,21 @@ class AcceptPreauthorizedConversationsController < ApplicationController
     @listing_conversation = @current_community.transactions.find(params[:id])
   end
 
-  def render_paypal_form(preselected_action)
+  def render_payment_form(preselected_action, payment_type)
     transaction_conversation = MarketplaceService::Transaction::Query.transaction(@listing_conversation.id)
     result = TransactionService::Transaction.get(community_id: @current_community.id, transaction_id: @listing_conversation.id)
     transaction = result[:data]
     community_country_code = LocalizationUtils.valid_country_code(@current_community.country)
 
     render "accept", locals: {
-      payment_gateway: :paypal,
+      payment_gateway: payment_type,
       listing: @listing,
       listing_quantity: transaction[:listing_quantity],
       booking: transaction[:booking],
       orderer: @listing_conversation.starter,
-      sum: transaction[:item_total],
+      sum: transaction[:item_total] + (transaction[:payment_gateway_fee] || 0),
       fee: transaction[:commission_total],
+      gateway_fee: transaction[:payment_gateway_fee],
       shipping_price: transaction[:shipping_price],
       shipping_address: transaction[:shipping_address],
       seller_gets: transaction[:checkout_total] - transaction[:commission_total],
@@ -162,32 +167,25 @@ class AcceptPreauthorizedConversationsController < ApplicationController
         id: @listing_conversation.id
       ),
       preselected_action: preselected_action,
-      paypal_fees_url: PaypalCountryHelper.fee_link(community_country_code)
+      paypal_fees_url: PaypalCountryHelper.fee_link(community_country_code),
+      stripe_fees_url: "https://stripe.com/#{community_country_code.downcase}/pricing",
+      paypal_commission: paypal_tx_settings[:commission_from_seller],
+      stripe_commission: stripe_tx_settings[:commission_from_seller]
     }
   end
 
-  def render_stripe_form(preselected_action)
-    result = TransactionService::Transaction.get(community_id: @current_community.id, transaction_id: @listing_conversation.id)
-    transaction = result[:data]
-    commission_total = (transaction[:item_total] * transaction[:commission_from_seller]) / 100 #Money.new(transaction[:commission_from_seller]*100, @current_community.currency)
-    render action: :accept, locals: {
-      payment_gateway: :stripe,
-      listing: @listing,
-      listing_quantity: transaction[:listing_quantity],
-      booking: transaction[:booking],
-      orderer: @listing_conversation.starter,
-      sum: transaction[:item_total],
-      fee: commission_total, #transaction[:commission_total],
-      shipping_price: nil,
-      shipping_address: nil,
-      seller_gets: transaction[:checkout_total] - commission_total, #transaction[:commission_total],
-      form: @listing_conversation,
-      form_action: acceptance_preauthorized_person_message_path(
-        person_id: @current_user.id,
-        id: @listing_conversation.id
-      ),
-      preselected_action: preselected_action
-    }
+  def paypal_tx_settings
+    Maybe(TransactionService::API::Api.settings.get(community_id: @current_community.id, payment_gateway: :paypal, payment_process: :preauthorize))
+    .select { |result| result[:success] }
+    .map { |result| result[:data] }
+    .or_else({})
+  end
+
+  def stripe_tx_settings
+    Maybe(TransactionService::API::Api.settings.get(community_id: @current_community.id, payment_gateway: :stripe, payment_process: :preauthorize))
+    .select { |result| result[:success] }
+    .map { |result| result[:data] }
+    .or_else({})
   end
 
 end

@@ -1,6 +1,4 @@
-class Admin::CategoriesController < ApplicationController
-
-  before_filter :ensure_is_admin
+class Admin::CategoriesController < Admin::AdminBaseController
 
   def index
     @selected_left_navi_link = "listing_categories"
@@ -17,7 +15,7 @@ class Admin::CategoriesController < ApplicationController
 
   def create
     @selected_left_navi_link = "listing_categories"
-    @category = Category.new(params[:category].except(:listing_shapes))
+    @category = Category.new(category_params)
     @category.community = @current_community
     @category.parent_id = nil if params[:category][:parent_id].blank?
     @category.sort_priority = Admin::SortingService.next_sort_priority(@current_community.categories)
@@ -47,7 +45,7 @@ class Admin::CategoriesController < ApplicationController
     shapes = get_shapes
     selected_shape_ids = shape_ids_from_params(params)
 
-    if @category.update_attributes(params[:category].except(:listing_shapes))
+    if @category.update_attributes(category_params)
       update_category_listing_shapes(selected_shape_ids, @category)
       redirect_to admin_categories_path
     else
@@ -59,7 +57,7 @@ class Admin::CategoriesController < ApplicationController
   def order
     new_sort_order = params[:order].map(&:to_i).each_with_index
     order_categories!(new_sort_order)
-    render nothing: true, status: 200
+    render body: nil, status: 200
   end
 
   # Remove form
@@ -123,7 +121,7 @@ class Admin::CategoriesController < ApplicationController
 
     raise ArgumentError.new("No shapes selected for category #{category.id}, shape_ids: #{shape_ids}") if selected_shapes.empty?
 
-    CategoryListingShape.delete_all(category_id: category.id)
+    CategoryListingShape.where(category_id: category.id).delete_all
 
     selected_shapes.each { |s|
       CategoryListingShape.create!(category_id: category.id, listing_shape_id: s[:id])
@@ -138,6 +136,10 @@ class Admin::CategoriesController < ApplicationController
     ListingService::API::Api.shapes.get(community_id: @current_community.id).maybe.or_else(nil).tap { |shapes|
       raise ArgumentError.new("Cannot find any shapes for community #{@current_community.id}") if shapes.nil?
     }
+  end
+
+  def category_params
+    params.require(:category).slice(:parent_id, :translation_attributes, :sort_priority, :url, :basename).permit!
   end
 
 end

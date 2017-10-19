@@ -1,4 +1,10 @@
 tr-TR:
+  number:
+    currency:
+      format:
+        separator: ~
+        delimiter: ~
+        format: ~
   admin:
     categories:
       edit:
@@ -224,6 +230,7 @@ tr-TR:
         last_community_updates: ~
         you_will_be_redirected_to: ~
         delete_this_marketplace: ~
+        payment_preferences: ~
       manage_members:
         manage_members: "Kullanıcıları yönet"
         email: E-posta
@@ -241,11 +248,11 @@ tr-TR:
         ban_me_error: "Kendinizi banlayamazsınız."
       new_layout:
         new_layout: ~
-        description_roadmap: ~
-        description_process: ~
+        description_roadmap_new: ~
         enabled_for_you: ~
         enabled_for_all: ~
         new_topbar: ~
+        searchpage: ~
       social_media:
         social_media: "Sosyal medya"
         twitter_handle: "Twitter aracı"
@@ -311,9 +318,31 @@ tr-TR:
           canceled: "İptal edilen"
           initiated: "PayPal ödemesi bekleniyor"
           pending_ext: "PayPal ödemesi bekleniyor"
+          none:
+            free: ~
+          paypal:
+            free: ~
+            pending: ~
+            preauthorized: ~
+            accepted: ~
+            rejected: ~
+            paid: ~
+            confirmed: ~
+            canceled: ~
+            initiated: ~
+            pending_ext: ~
+          stripe:
+            free: ~
+            pending: ~
+            preauthorized: ~
+            accepted: ~
+            rejected: ~
+            paid: ~
+            confirmed: ~
+            canceled: ~
+            initiated: ~
+            pending_ext: ~
         not_available: ~
-      paypal_account:
-        paypal_admin_account: Ödemeler
     custom_fields:
       edit:
         edit_listing_field: "'%{field_name}' listeleme alanını düzenle"
@@ -371,12 +400,25 @@ tr-TR:
       new:
         send_email_to_members: "Kullanıcılara e-posta gönderin"
         send_email_to_members_title: "Tüm kullanıcılarınıza e-posta gönderin"
+        send_email: "E-postayı gönder"
+        send_email_or: ~
+        send_test_email: "Kendinize test için bir email gönderin"
+        test_sent: "Test email posta kutunuza gönderildi"
+        send_email_article_title: "bu makale"
+        send_email_article_text: ~
+        recipients:
+          title: ~
+          options:
+            all_users: ~
+            with_listing: ~
+            with_listing_no_payment: ~
+            with_payment_no_listing: ~
+            no_listing_no_payment: ~
         email_subject: "E-posta konusu"
         email_content: "E-posta içeriği"
         email_content_placeholder: "Kullanıcılarınızla ne paylaşmak istiyorsunuz?"
         email_language: "E-posta alıcılarının dili"
         any_language: "Herhangi bir dilde"
-        send_email: "E-postayı gönder"
         message_will_be_sent_only_to_people_with_this_language: "Not: E-posta sadece %{service_name}'i seçtiğiniz dilde kullanan kullanıcılara gönderilecektir."
         email_sent: "E-posta gönderildi."
     left_hand_navigation:
@@ -384,7 +426,6 @@ tr-TR:
       users_and_transactions: "Kullanıcılar & işlemler"
       configure: Ayarlar
       emails_title: E-postalar
-      support: Destek
       subscription: ~
       preview: ~
     listing_shapes:
@@ -470,20 +511,77 @@ tr-TR:
     paypal_accounts:
       marketplace_paypal_integration: "Ödeme tercihleri"
       preferences_updated: "Ödeme referansları güncellendi"
-      marketplace_currency_used: ~
       contact_support_link_text: ~
       integration_info_text: "%{service_name}'in ödeme sistemi PayPal altyapısını kullanmaktadır. Eğer kullanıcılarınızın ödemelerini pazar aracılığıyla yapmasına izin vermek istiyorsanız, PayPal hesabınızı eklemeli, minimum listeleme ücreti ve her işlemden keseceğiniz ücreti belirlemelisiniz."
       link_paypal_personal_account_label: ~
       link_paypal_personal_account: ~
+      link_stripe_personal_account: ~
+      link_paypal_and_stripe_personal_account: ~
       personal_payment_preferences_link_text: ~
       read_more_about_paypal: "Sharetribe'nin ödeme sistemi hakkında daha fazla bilgi edinin"
-      set_minimum_price_and_fee: "Minimum fiyat & işletim bedeli belirleyin"
+      edit_payment_settings: ~
+      supported_currencies_information_text: ~
+      currency_change_warning_text: ~
+      marketplace_currency_label: ~
       minimum_listing_price_label: "Minimum listeleme fiyatı:"
       transaction_fee_label: "İşlem ücreti:"
       minimum_transaction_fee_label: "Minumum işlem ücreti:"
       save_settings: "Ayarları kaydet"
       minimum_listing_price_below_tx_fee: ~
       minimum_listing_price_below_min: ~
+    payment_preferences:
+      title: ~
+      general_settings: ~
+      connect_a_payment_provider: ~
+      contact_support: ~
+      no_payments_link_text: ~
+      your_country: ~
+      you_cannot_use_online_payments: ~
+      which_to_choose: ~
+      you_can_use_stripe_or_paypal: ~
+      you_can_use_stripe_only: ~
+      read_more_stripe: ~
+      you_can_use_paypal_only: ~
+      read_more_paypal: ~
+      read_more_about_paypal_and_stripe: ~
+      general_settings_updated: ~
+      transaction_fee_settings_updated: ~
+      choose_popup_text: ~
+      invalid_api_keys: ~
+      missing_api_keys: ~
+      stripe_verified: ~
+      change_settings: ~
+      configure_stripe: ~
+      configure_paypal: ~
+      transaction_fee_settings: ~
+      transaction_fee_save: ~
+      stripe_fee: ~
+      stripe_fee_notice: ~
+      fee_should_be_less_than_minimum_price: ~
+      stripe_connected:
+        title: ~
+      paypal_connected:
+        title: ~
+      stripe_form:
+        add_your_api_keys: ~
+        how_to_get_these: ~
+        publishable_key_example: ~
+        secret_key_example: ~
+        save_api_keys: ~
+        invalid_secret: ~
+        invalid_publishable: ~
+      index:
+        header: ~
+        info: ~
+        active: ~
+        gateway: ~
+        process: ~
+        commission: ~
+        minimum_price: ~
+        minimum_fee: ~
+        api_verified: ~
+        actions: ~
+        payments_not_enabled: ~
     transaction_types:
       sell: Satmak
       rent: "Kiraya vermek"
@@ -548,17 +646,28 @@ tr-TR:
     username_or_email: "E-posta ya da kullanıcı adı"
     what_is_this: "Bu nedir?"
     removed_user: "Silinmiş kullanıcı"
+    payment_fee_info:
+      title: ~
+      title_paypal: ~
+      stripe: ~
+      paypal: ~
+      info: ~
     paypal_fee_info:
       title: "PayPal işlem ücreti"
       body_text: |-
           PayPal'i kullanarak ürün ödemelerini almak için geçerli olan standart oran %3,4 + 0,45 TL tutarındadır. PayPal ile aylık 4.500,00 TL tutarından daha fazla satış yapıyorsanız %2,4 + 0,45 TL gibi daha düşük oranlardan yararlanabilirsiniz. PayPal satış ücret oranlarını ve diğer indirimli oran ve ücretleri detaylı olarak incelemek için lütfen %{link_to_paypal} ziyaret ediniz.
           
           PayPal her alışverişten sonra size komisyon oranlarını detaylı gösteren bir eposta göndermektedir.
-      body_with_shipping_text: |-
-          PayPal'i kullanarak ürün ödemelerini almak için geçerli olan standart oran %3,4 + 0,45 TL tutarındadır. PayPal ile aylık 4.500,00 TL tutarından daha fazla satış yapıyorsanız %2,4 + 0,45 TL gibi daha düşük oranlardan yararlanabilirsiniz. PayPal satış ücret oranlarını ve diğer indirimli oran ve ücretleri detaylı olarak incelemek için lütfen %{link_to_paypal} ziyaret ediniz.
-          
-          PayPal her alışverişten sonra size komisyon oranlarını detaylı gösteren bir eposta göndermektedir.
+      body_text_accept: ~
       link_to_paypal_text: buradan
+    paypal_only_fee_info:
+      title: ~
+      body_text: ~
+      link_to_paypal_text: ~
+    stripe_fee_info:
+      title: ~
+      body_text: ~
+      link_to_stripe_text: ~
   conversations:
     accept:
       details: "Sipariş Detayları"
@@ -579,8 +688,12 @@ tr-TR:
       you_will_get_label: "Alacağınız:"
       total_label: "Toplam:"
       total_value: ~
+      total_value_paypal: ~
+      total_value_stripe: ~
       paypal_fee_info: "* <a id='%{fee_info_link_id}' href='#'>PayPal işlem ücreti</a> dahil değildir."
+      payment_fee_info: ~
       shipping_price_label: "Kargo:"
+      stripe-fee_label: ~
     confirm:
       confirm_description: "Eğer talebiniz gerçekleştirildiyse, bunu \"Gerçekleşti\" olarak işaretlemelisiniz. Bundan sonra, diğer tarafa geri bildirim bırakabilirsiniz."
       cancel_description: "Eğer talebiniz gerçekleştirilmediyse, \"Gerçekleşmedi\" olarak işaretleyebilirsiniz. Bundan sonra, geri bildirim bırakıp neler olduğunu açıklayabilirsiniz."
@@ -826,6 +939,31 @@ tr-TR:
       price_per_unit_type: "%{unit_type} başına fiyat"
       quantity: "Adet:"
       you_have_received_new_payment: "%{listing_title} için %{payer_full_name} kişisinden %{payment_sum} tutarında ödeme aldınız. Faturanız burada."
+    payment_receipt_to_seller:
+      payment_gateway_fee: ~
+      shipping_total: ~
+      product: ~
+      price_payer_paid: ~
+      service_fee: ~
+      you_will_get: ~
+      new_payment: ~
+      price_per_unit_type: ~
+      quantity: ~
+      you_have_received_new_payment: ~
+    payment_receipt_to_payer:
+      receipt_of_payment: ~
+      you_have_made_new_payment: ~
+      product: ~
+      price_per_unit_type: ~
+      duration: ~
+      quantity: ~
+      subtotal: ~
+      total: ~
+      price: ~
+      service_fee: ~
+      stripe_gateway_fee: ~
+      paypal_gateway_fee: ~
+      money_will_be_transferred: ~
     paypal_new_payment:
       paypal_gateway_fee: "PayPal işlem ücreti:"
       shipping_total: "Kargo:"
@@ -845,6 +983,8 @@ tr-TR:
       total: Toplam
       price: Fiyat
       service_fee: "Hizmet bedeli"
+      stripe_gateway_fee: ~
+      paypal_gateway_fee: ~
       money_will_be_transferred: "Ödeme %{recipient_name}'in hesabına a) talebi tamamlandı olarak işaretlediğinizde ya da b) ödeme yapmanızın ardından %{automatic_confirmation_days} gün geçtikten sonra aktarılacak."
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name}, %{service_name} altında sana bir geri bildirimde bulundu"
@@ -880,6 +1020,9 @@ tr-TR:
       subject: "%{requester} %{listing_title}'i talep etti ve ödeme yaptı"
       transaction_requested_by_user: "%{requester} \"%{listing_title}\"i talep etti ve ödeme yaptı"
       you_have_time_to_accept: "Talebi %{payment_expires_in} gün içerisinde kabul ya da reddetmeniz gerekmektedir. Bu süre içerisinde kabul etmezseniz, talep otomatik olarak reddedilecek ve ödeme alamayacaksınız."
+      if_you_do_accept: "belirtilen zaman içerisinde isteği kabul etmeniz durumunda ücret hemen hesabınıza geçer."
+      if_you_do_accept_stripe: ~
+      if_you_do_not_accept: "isteği red eder iseniz ya da belirlenen sürede kabul etmez iseniz, işlem otomatik olarak iptal olur,  %{requester} ödeme alınmaz , ödeme yapılmaz."
       click_here_to_reply: "Talebe cevap vermek için buraya tıklayın"
     transaction_preauthorized_reminder:
       subject: "%{listing_title} listelemesi hakkında %{requester}'den gelen talebi kabul etmeyi unutmayın"
@@ -920,6 +1063,7 @@ tr-TR:
     transaction_agreement:
       required_error: "Sözleşmeyi kabul etmelisiniz"
     paypal:
+      transaction_cannot_complete: ~
       buyer_cannot_pay_error: ~
       pending_review_error: ~
       seller_express_checkout_disabled: ~
@@ -927,6 +1071,8 @@ tr-TR:
       cancel_error: "İptal sırasında bir hata meydana geldi. İptal işlemi tamamlanamadı."
       accept_authorization_error: "İzin verilmiş PayPal ödemesi kabul edilirken hata meydana geldi. Lütfen tekrar deneyin."
       reject_authorization_error: "izin verilmiş PayPal ödemesini reddederken bir hata meydana geldi. Lütfen tekrar deneyin."
+    stripe:
+      generic_error: ~
   error_pages:
     back_to_kassi_front_page: "Anasayfaya dön"
     error_404:
@@ -1320,6 +1466,8 @@ tr-TR:
       notifications: Bildirimler
       profile: "Profil bilgisi"
       settings: Ayarlar
+      paypal_payments: ~
+      stripe_payments: ~
       payments: Ödemeler
   listings:
     bubble_listing_not_visible:
@@ -1416,7 +1564,11 @@ tr-TR:
         long_time: "hafta, ay, ..."
         after_service_fee_you_will_get: "%{service_name} hizmet bedeli düşüldükten sonra %{sum_with_currency} tutarında ödeme alacaksınız."
         no_service_fee_you_will_get_paypal_text: "%{paypal_fee_info_link} toplam ücretten kesilecektir..."
+        no_service_fee_you_will_get_payment_text: ~
+        after_service_fee_you_will_get_payment_text: ~
         after_service_fee_you_will_get_paypal_text: "%{service_name} ücreti (%{sum_with_currency}) ve %{paypal_fee_info_link} toplam ücretten kesilecektir."
+        after_service_fee_you_will_get_stripe_text: ~
+        payment_fee_info_link_text: ~
         paypal_fee_info_link_text: "PayPal işlem ücreti"
         delivery: "Teslim Yöntemi"
         shipping: "Kargo:"
@@ -1479,7 +1631,6 @@ tr-TR:
       request_type: "Talep türü"
       requests: Talepler
       rideshare: "Yolculuğu paylaşın"
-      search_verb: Arama
       you_have_something_others_do_not: "Teklif edecek bir şeyleriniz mi var?"
       feed_title: "%{service_name}%{optional_category} içinde %{listing_type}"
     left_panel_link:
@@ -1592,6 +1743,17 @@ tr-TR:
       invalid_parameters: ~
     transaction_agreement_checkbox:
       read_more: Görüntüle.
+    stripe_payment:
+      payment: ~
+      pay_with_card: ~
+      address: ~
+      address_country: ~
+      address_name: ~
+      address_city: ~
+      address_state: ~
+      address_street1: ~
+      address_street2: ~
+      address_postal_code: ~
   mapview:
     index:
       all_categories: "Tüm kategoriler"
@@ -1611,7 +1773,6 @@ tr-TR:
       request_type: "Talep türü"
       requests: Talepler
       rideshare: "Yolculuk paylaşımı"
-      search_verb: Ara
       you_have_something_others_do_not: "Teklif edecek bir şeyleriniz mi var?"
     please_comment: Yorum
   mercury:
@@ -1636,6 +1797,7 @@ tr-TR:
     contact_admin_link_text: ~
     you_are_ready_to_accept_payments: "Ödeme kabul etmeye hazırsınız!"
     commission: "%{commission}%"
+    not_now: ~
     new:
       payout_info_you_need_to_connect: "Ödeme kabul edebilmek için PayPal hesabınızı %{service_name}'a bağlamanız gerekmektedir."
       payout_info_text: "Lütfen, hesabınızı bağlamak için aşağıdaki iki adımı tamamlayın."
@@ -1682,6 +1844,8 @@ tr-TR:
     paypal_permission_granted_summary: ~
   paypal:
     pay_with_paypal: "Ödeme yap"
+    checkout_with: ~
+    or_pay_with_paypal: ~
     checkout_with_paypal: "PayPal ile öde"
     cancel_succesful: "PayPal ödemesi başarıyla iptal edildi"
     transaction:
@@ -1778,16 +1942,6 @@ tr-TR:
       following: "Takip ediliyor"
       follow: "Takip et"
       unfollow: "Takip etmeyi durdur"
-  search:
-    show:
-      all_results: "Tüm sonuçlar"
-      loading_more_search_results: "Daha fazla arama sonucu yükleniyor"
-      offers: Teklifler
-      requests: Talepler
-      search: Ara
-      search_results: "Arama sonuçları"
-      search_returned_no_results: "Aramanızla eşleşen sonuç bulunamadı."
-      search_verb: Ara
   sessions:
     new:
       create_new_account: "Yeni hesap oluştur"
@@ -1818,8 +1972,11 @@ tr-TR:
       confirm_your_email: "Email adresinizi doğrulayın"
       account_confirmation_instructions: "Birkaç dakika içinde girdiğiniz email adresini doğrulamak için tıklamanız gereken linki içeren bir e-posta alacaksınız. E-posta adresinizi doğruladıktan sonra, %{service_name} pazar yerine katılabilirsiniz."
       account_confirmation_instructions_title_admin: "Pazar yerinize hoş geldiniz!"
-      your_marketplace_has_now_been_created: "Pazar siteniz oluşturuldu. Çok kolaydı, değil mi? Sitenize erişebilmeniz için tek bir adım kaldı: e-posta adresinizi doğrulamalısınız."
+      before_full_access_you_need_to_confirm_email: ~
+      before_confirmation_only_access_admin_dashboard: ~
+      admin_dashboard_link_text: ~
       account_confirmation_instructions_admin: "Birkaç dakika içinde girdiğiniz e-posta adresini doğrulamak için tıklamanız gereken linki içeren bir e-posta alacaksınız. E-posta adresinizi doğruladıktan sonra, pazarınızı düzenlemeye başlayabilirsiniz."
+      contact_support_link_text: ~
   settings:
     account:
       change: Değiştir
@@ -2021,16 +2178,22 @@ tr-TR:
       quantity: "Adet:"
       subtotal: "Ara Toplam:"
       shipping-price: "Kargo:"
+      stripe-fee: ~
     price_per_quantity: "%{unit_type} başına fiyat"
     price: "Fiyat:"
     quantity: "Adet: %{quantity}"
     unit_price: "Birim başına fiyat: %{unit_price}"
     total: "Toplam:"
+    total_to_pay: ~
   unit:
     day: gün
     days: günler
   web:
     listings:
+      errors:
+        availability:
+          something_went_wrong: ~
+          saving_failed: ~
       pricing_units:
         piece: ~
         hour: ~
@@ -2038,11 +2201,20 @@ tr-TR:
         night: ~
         week: ~
         month: ~
+      edit_availability_header: ~
+      save_and_close_availability_editing: ~
+      confirm_discarding_unsaved_availability_changes_explanation: ~
+      confirm_discarding_unsaved_availability_changes_question: ~
+      edit_listing_availability: ~
     no_listings:
       sorry: ~
       try_other_search_terms: ~
     listing_card:
+      add_picture: ~
       no_picture: ~
+    search:
+      page: ~
+      page_of_pages: ~
     topbar:
       menu: ~
       more: Menü
@@ -2070,9 +2242,6 @@ tr-TR:
       person:
         zero: kullanıcı
         other: kullanıcılar
-      listing_conversation:
-        zero: işlem
-        other: işlem
     previous_label: "&#8592; Önceki"
     next_label: "Sonraki &#8594;"
     page_gap: "&hellip;"
@@ -2085,3 +2254,76 @@ tr-TR:
         other: "%{count} %{model} görüntüleniyor"
       multi_page: "Toplam %{count} %{model}'den %{from} - %{to} arası görüntüleniyor"
       multi_page_html: "Toplam %{count} %{model}'den %{from}&nbsp;-&nbsp;%{to} arası görüntüleniyor"
+  stripe_accounts:
+    admin_account_not_connected: ~
+    contact_admin_link_text: ~
+    you_are_ready_to_accept_payments: ~
+    commission: ~
+    pay_with_stripe: ~
+    add_and_pay: ~
+    card_not_stored: ~
+    missing_payment: ~
+    stripe_bank_connected: ~
+    stripe_can_accept: ~
+    stripe_credit_card: ~
+    paypal: ~
+    paypal_connected: ~
+    paypal_can_accept: ~
+    paypal_connected_give_permission: ~
+    form_new:
+      need_info: ~
+      select_country: ~
+      legal_name: ~
+      country: ~
+      birth_date: ~
+      ssn_last_4: ~
+      personal_id_number: ~
+      address_country: ~
+      address_state: ~
+      address_city: ~
+      address_postal_code: ~
+      address_line1: ~
+      tos_link: ~
+      tos_link_title: ~
+      save_details: ~
+      edit: ~
+      cancel: ~
+    form_bank:
+      bank_account_number: ~
+      bank_routing_number: ~
+      bank_routing_1: ~
+      bank_routing_2: ~
+      bank_currency: ~
+      messages:
+        account_number: ~
+        routing_number: ~
+        bank_code: ~
+        branch_code: ~
+        transit_number: ~
+        institution_number: ~
+        format_varies_by_bank: ~
+        bsb: ~
+        error_message: ~
+        clearing_code: ~
+        sort_code: ~
+        must_match: ~
+        a_dash: ~
+        digits: ~
+        digits_or_chars: ~
+    form_verification:
+      personal_id_number: ~
+      document: ~
+      send_verification: ~
+      need_verification: ~
+  payment_settings:
+    title: ~
+    bank_account: ~
+    paypal: ~
+    bank_account_details: ~
+    add_bank_details: ~
+    can_accept_stripe_and_paypal: ~
+    to_accept_paypal: ~
+    connect_paypal: ~
+    wrong_setup: ~
+    invalid_bank_account_number: ~
+    invalid_postal_code: ~

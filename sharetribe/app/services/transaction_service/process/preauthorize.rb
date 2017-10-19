@@ -11,8 +11,9 @@ module TransactionService::Process
 
     def create(tx:, gateway_fields:, gateway_adapter:, force_sync:)
       Transition.transition_to(tx[:id], :initiated)
+      tx[:current_state] = :initiated
 
-      if use_async?(force_sync, gateway_adapter)
+      if !force_sync
         proc_token = Worker.enqueue_preauthorize_op(
           community_id: tx[:community_id],
           transaction_id: tx[:id],
@@ -41,7 +42,7 @@ module TransactionService::Process
     def finalize_create(tx:, gateway_adapter:, force_sync:)
       ensure_can_execute!(tx: tx, allowed_states: [:initiated, :preauthorized])
 
-      if use_async?(force_sync, gateway_adapter)
+      if !force_sync
         proc_token = Worker.enqueue_preauthorize_op(
           community_id: tx[:community_id],
           transaction_id: tx[:id],
@@ -68,7 +69,7 @@ module TransactionService::Process
             else
 
               initiate_booking(tx: tx).on_error { |error_msg, data|
-                logger.error("Failed to initiate booking", :failed_initiate_booking, tx.slice(:community_id, :id).merge(error_msg: error_msg))
+                logger.error("Failed to initiate booking #{data.inspect} #{error_msg}", :failed_initiate_booking, tx.slice(:community_id, :id).merge(error_msg: error_msg))
 
                 void_res = gateway_adapter.reject_payment(tx: tx, reason: "")[:response]
 
@@ -157,9 +158,6 @@ module TransactionService::Process
     private
 
     def initiate_booking(tx:)
-      end_on = tx[:booking][:end_on]
-      end_adjusted = tx[:unit_type] == :day ? end_on + 1.days : end_on
-
       auth_context = {
         marketplace_id: tx[:community_uuid],
         actor_id: tx[:starter_uuid]
@@ -173,7 +171,7 @@ module TransactionService::Process
           customerId: tx[:starter_uuid],
           initialStatus: :paid,
           start: tx[:booking][:start_on],
-          end: end_adjusted
+          end: tx[:booking][:end_on]
         },
         opts: {
           max_attempts: 3,
@@ -214,18 +212,13 @@ module TransactionService::Process
                                               result: proc_token[:op_output]}))
     end
 
-    def use_async?(force_sync, gw_adapter)
-      !force_sync && gw_adapter.allow_async?
-    end
-
     def logger
       @logger ||= SharetribeLogger.new(:preauthorize_process)
     end
 
     def ensure_can_execute!(tx:, allowed_states:)
-      tx = Transaction.find(tx[:id])
-      tx_state = tx.current_state.to_sym
-      
+      tx_state = tx[:current_state]
+
       unless allowed_states.include?(tx_state)
         raise TransactionService::Transaction::IllegalTransactionStateException.new(
                "Transaction was in illegal state, expected state: [#{allowed_states.join(',')}], actual state: #{tx_state}")
