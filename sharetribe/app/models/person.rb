@@ -148,8 +148,8 @@ class Person < ApplicationRecord
 
   validates_length_of :phone_number, :maximum => 25, :allow_nil => true, :allow_blank => true
   validates_length_of :username, :within => 3..20
-  validates_length_of :given_name, :within => 1..255, :allow_nil => true, :allow_blank => true
-  validates_length_of :family_name, :within => 1..255, :allow_nil => true, :allow_blank => true
+  validates_length_of :given_name, :within => 1..30, :allow_nil => true, :allow_blank => true
+  validates_length_of :family_name, :within => 1..30, :allow_nil => true, :allow_blank => true
   validates_length_of :display_name, :within => 1..30, :allow_nil => true, :allow_blank => true
 
   validates_format_of :username,
@@ -157,7 +157,7 @@ class Person < ApplicationRecord
 
   USERNAME_BLACKLIST = YAML.load_file("#{Rails.root}/config/username_blacklist.yml")
 
-  validates :username, :exclusion => USERNAME_BLACKLIST
+  validates :username, exclusion: USERNAME_BLACKLIST, uniqueness: {scope: :community_id}
 
   has_attached_file :image, :styles => {
                       :medium => "288x288#",
@@ -629,4 +629,13 @@ class Person < ApplicationRecord
     ::Digest::SHA256.hexdigest(str)
   end
 
+  def logger
+    @logger ||= SharetribeLogger.new(:person, logger_metadata.keys).tap { |logger|
+      logger.add_metadata(logger_metadata)
+    }
+  end
+
+  def logger_metadata
+    { person_uuid: uuid }
+  end
 end

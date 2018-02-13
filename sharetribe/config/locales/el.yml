@@ -137,7 +137,12 @@ el:
         amazon_ses_notification: ~
         this_is_how_it_will_look: ~
         send_verification_button: ~
+        change_sender_email: ~
         successfully_saved: ~
+        successfully_saved_name: ~
+        set_sender_name: ~
+        change_sender_name: ~
+        change_sender_prompt: ~
         status: ~
         status_verified: ~
         status_error: ~
@@ -206,6 +211,7 @@ el:
         twitter_handle: ~
         update_settings: ~
         automatically_confirmed_no_escrow: ~
+        automatically_confirmed_no_escrow_stripe_info: ~
         automatic_newsletter_frequency: ~
         newsletter_daily: ~
         newsletter_weekly: ~
@@ -233,7 +239,12 @@ el:
         export_all_as_csv: ~
         save_user_status_error: ~
         ban_user_confirmation: ~
+        unban_user_confirmation: ~
         ban_me_error: ~
+        search: ~
+        search_by_name_email: ~
+        reset_search: ~
+        for_search_terms: ~
       new_layout:
         new_layout: ~
         description_roadmap_new: ~
@@ -296,6 +307,7 @@ el:
           initiated_by: ~
           other_party: ~
         status:
+          conversation: ~
           free: ~
           pending: ~
           preauthorized: ~
@@ -331,6 +343,17 @@ el:
             initiated: ~
             pending_ext: ~
         not_available: ~
+      conversations:
+        conversations: ~
+        headers:
+          started_from: ~
+          status: ~
+          started: ~
+          last_activity: ~
+          initiated_by: ~
+          other_party: ~
+        participants: ~
+        profile: ~
     custom_fields:
       edit:
         edit_listing_field: ~
@@ -409,6 +432,11 @@ el:
         any_language: "Οποιαδήποτε γλώσσα"
         message_will_be_sent_only_to_people_with_this_language: "Σημείωση: Το μήνυμα θα σταλεί μόνο στα μηνύματα που χρησιμοποιούν το %{service_name} στη γλώσσα που επιλέξατε."
         email_sent: "Το μήνυμα στάλθηκε."
+        to_improve_email_deliverability: ~
+        email_subject_text: ~
+        firstname_cannot_be_removed: ~
+        hello_firstname: ~
+        hello_firstname_text: ~
     left_hand_navigation:
       general: ~
       users_and_transactions: ~
@@ -421,9 +449,11 @@ el:
       read_more: ~
       read_more_availability_management: ~
       allow_providers_to_manage_availability: ~
+      per_hour_availability: ~
       per_day_availability: ~
       per_night_availability: ~
       pricing_units_disabled_info: ~
+      can_not_find_name: ~
       index:
         listing_shapes: ~
         description: ~
@@ -546,10 +576,19 @@ el:
       stripe_fee: ~
       stripe_fee_notice: ~
       fee_should_be_less_than_minimum_price: ~
+      confirm_disable: ~
       stripe_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
       paypal_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
+      cannot_enable_gateway: ~
+      cannot_disable_gateway: ~
       stripe_form:
         add_your_api_keys: ~
         how_to_get_these: ~
@@ -889,7 +928,10 @@ el:
       message_not_displaying_correctly: "Μήπως αυτό το μήνυμα δεν εμφανίζεται σωστά;"
       view_it_in_your_browser: "Δείτε το στο φυλλομετρητή σας."
       or: ή
+      unsubscribe_from_these_emails_info: ~
       unsubscribe_from_these_emails: "απεγγραφείτε από αυτά τα μηνύματα"
+      unsubscribe_from_invitation_emails_info: ~
+      unsubscribe_from_invitation_emails: ~
     conversation_status_changed:
       has_accepted_your_offer: "Ο/Η %{accepter} δέχτηκε την προσφορά σας για την καταχώρηση \"%{listing}\""
       has_accepted_your_request: "Ο/Η %{accepter} δέχτηκε το αίτημά σας για την καταχώρηση \"%{listing}\""
@@ -924,6 +966,7 @@ el:
       price_per_unit_type: ~
       quantity: ~
       you_have_received_new_payment: "Πληρωθήκατε <b>%{payment_sum}</b> για το \"<b>%{listing_title}</b>\" από τον/την %{payer_full_name}. Ορίστε η απόδειξή σας."
+      listing_per_unit_title: ~
     payment_receipt_to_seller:
       payment_gateway_fee: ~
       shipping_total: ~
@@ -971,6 +1014,7 @@ el:
       stripe_gateway_fee: ~
       paypal_gateway_fee: ~
       money_will_be_transferred: ~
+      listing_per_unit_title: ~
     new_testimonial:
       has_given_you_feedback_in_kassi: "O/H %{name} σχολίασε για σένα στο %{service_name}"
       you_can_give_feedback_to: "Έχετε παραλείψει να γράψετε την κριτική σας για τον/την %{name}."
@@ -1355,8 +1399,10 @@ el:
       feedback_sent_to: "Η κριτική δόθηκε στον/στην %{target_person}."
       feedback_skipped: "Η κριτική παραλείφθηκε"
       invitation_cannot_be_sent: "Η πρόσκληση δεν μπόρεσε να σταλεί"
+      invitation_cannot_unsubscribe: ~
       invitation_limit_reached: ~
       invitation_sent: "Η πρόσκληση εστάλη επιτυχώς"
+      invitation_successfully_unsubscribed: ~
       inviting_new_users_is_not_allowed_in_this_community: "Σε αυτή την κοινότητα δεν επιτρέπεται να προσκαλέσεις άλλους χρήστες"
       login_again: "Παρακαλούμε, συνδεθείτε ξανά."
       login_failed: "Η σύνδεση απέτυχε. Παρακαλούμε δώστε τα σωστά στοιχεία."
@@ -1640,6 +1686,10 @@ el:
       how_paypal_works: ~
       payment_help: ~
       unable_load_availability: ~
+      booking_date: ~
+      select_one: ~
+      start_time: ~
+      end_time: ~
     new:
       listing: καταχώρηση
       selected_category: "Κατηγορία: %{category}"
@@ -1857,6 +1907,7 @@ el:
       email_is_in_use: "Το email που δώσατε χρησιμοποιείται ήδη."
       email_is_in_use_or_not_allowed: "Αυτή η ηλεκτρονική διεύθυνση δεν επιτρέπεται σε αυτή την κοινότητα ή χρησιμοποιείται ήδη. Παρακαλούμε χρησιμοποιήστε μία ηλεκτρονική διεύθυνση που σχετίζεται με αυτή την κοινότητα (δείτε τις οδηγίες παραπάνω). Αν και πάλι δεν μπορείτε να συνδεθείτε επικοινωνήστε μαζί μας."
       email_not_allowed: "Αυτή η διεύθυνση email δεν επιτρέπεται σε αυτή την κοινότητα. Παρακαλούμε, χρησιμοποιήστε μία διεύθυνση που να σχετίζεται με αυτή την κοινότητα. Αν και πάλι δεν μπορείτε να γραφτείτε, παρακαλούμε επικοινωνήστε μαζί μας."
+      invalid_username_or_email: ~
       email_restriction_instructions:
         one: "Αυτή η κοινότητα αφορά το %{community_name}. Για να συμμετέχετε πρέπει να έχετε διεύθυνση email της μορφής '%{allowed_emails}'."
         other: "Αυτή η κοινότητα αφορά το %{community_name}. Για να εγγραφείτε πρέπει η διεύθυνση email σας να αποδεικνύει ότι μπορείτε να συμμετέχετε εδώ."
@@ -2082,6 +2133,7 @@ el:
   date:
     formats:
       long_with_abbr_day_name: ~
+    first_day_of_week: ~
   datepicker:
     days:
       sunday: Κυριακή
@@ -2141,6 +2193,7 @@ el:
       short: "%e %b %Y στις %H:%M"
       shorter: "%e %b στις %H:%M"
       short_date: "%e %b %Y"
+      hours_only: "%H:%M"
   timestamps:
     day_ago: "πριν από %{count} μέρα"
     days_ago: "πριν από %{count} μέρες"
@@ -2162,10 +2215,13 @@ el:
       booked_nights: ~
       price_per_day: ~
       price_per_night: ~
+      price_per_hour: ~
+      price_per_unit: ~
       quantity: ~
       subtotal: ~
       shipping-price: ~
       stripe-fee: ~
+      start_end_time: ~
     price_per_quantity: ~
     price: ~
     quantity: ~
@@ -2181,6 +2237,8 @@ el:
         availability:
           something_went_wrong: ~
           saving_failed: ~
+        working_hours:
+          required: ~
       pricing_units:
         piece: ~
         hour: ~
@@ -2193,6 +2251,13 @@ el:
       confirm_discarding_unsaved_availability_changes_explanation: ~
       confirm_discarding_unsaved_availability_changes_question: ~
       edit_listing_availability: ~
+      working_hours:
+        default_schedule: ~
+        i_am_available_on: ~
+        start_time: ~
+        end_time: ~
+        add_another_time_slot: ~
+        save: ~
     no_listings:
       sorry: ~
       try_other_search_terms: ~
@@ -2231,6 +2296,10 @@ el:
     page_entries_info:
       multi_page: ~
       multi_page_html: ~
+    person:
+      community_members_entries_info:
+        multi_page: ~
+        multi_page_html: ~
   stripe_accounts:
     admin_account_not_connected: ~
     contact_admin_link_text: ~
@@ -2292,6 +2361,13 @@ el:
       document: ~
       send_verification: ~
       need_verification: ~
+    form_pin:
+      social_insurance_number: ~
+      social_security_number: ~
+      hong_kong_identity_card: ~
+      singapore_identity_card: ~
+      messages:
+        social_insurance_number: ~
   payment_settings:
     title: ~
     bank_account: ~

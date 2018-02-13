@@ -1,17 +1,20 @@
 :plain
   var dataLayer = dataLayer || [];
-  (function(dl){
-    var marketplaceId = #{community_id};
-    if (marketplaceId) {
-      dl.push({"event": "identify", "id": "mp-"+marketplaceId+"-admin" });
+  function _gtm_identify(dl, info ){
+    if (info.community_id) {
+      dl.push({
+        event: "identify",
+        id: "mp-" + info.community_id + "-admin",
+        communityAdminEmail: info.community_admin_email,
+      });
     }
 
     dl.push({
       event: 'feature flags',
-      featureFlags: #{feature_flags.to_json.html_safe}
+      featureFlags: info.feature_flags
     });
 
-  })(dataLayer);
+  };
 
   <!-- Google Tag Manager -->
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -30,3 +33,8 @@
       window.dataLayer.push(data);
     }
   };
+
+  onDocumentReady(function() {
+    ST.analytics.initGoogleTagManager();
+  });
+

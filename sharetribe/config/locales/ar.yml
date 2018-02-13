@@ -137,7 +137,12 @@ ar:
         amazon_ses_notification: ~
         this_is_how_it_will_look: "هكذا تبدو:"
         send_verification_button: "أرسل رسالة التأكيد"
+        change_sender_email: "تغيير البريد الإلكتروني للمرسل"
         successfully_saved: "تم حفظ بريد المرسل بنجاح، سيتم إرسال رسالة التأكيد حالا"
+        successfully_saved_name: "تم تحديث اسم المرسل بنجاح"
+        set_sender_name: "تغيير اسم المرسل"
+        change_sender_name: "تغيير اسم المرسل"
+        change_sender_prompt: "‎%{change_email_link}‎ أو ‎%{change_name_link}‎"
         status: "‎%{status}‎ :الحالة"
         status_verified: مؤكد-مستخدم
         status_error: "حصل خطأ ما. يرجى إعادة تهيئة الصفحة."
@@ -206,6 +211,7 @@ ar:
         twitter_handle: ~
         update_settings: "حفظ الإعدادات"
         automatically_confirmed_no_escrow: ~
+        automatically_confirmed_no_escrow_stripe_info: "للعمليات الشرائية التي تتم من خلال سترب يتم تأخير الدفعات لمزود الخدمة إلى أن يتم تحديد الطلب بالمكتمل. ‎%{learn_more}‎"
         automatic_newsletter_frequency: "‎%{frequency_dropdown}‎: أرسل نشرات إخبارية تلقائيا"
         newsletter_daily: يومي
         newsletter_weekly: أسبوعي
@@ -227,13 +233,18 @@ ar:
         join_date: "تم الإنضمام"
         admin: المشرف
         posting_allowed: "النشر مسموح"
-        ban_user: "حظر المستخدم"
+        ban_user: حظر
         saving_user_status: "جاري الحفظ..."
         save_user_status_successful: "تم الحفظ"
         export_all_as_csv: "استخرج الكل في ملف إكسل"
         save_user_status_error: "فشل في الحفظ. رجاء قم بإعادة تهيئة الصفحة وأعد المحاولة مرة أخرى."
         ban_user_confirmation: ~
+        unban_user_confirmation: "سوف يلغى الحظر عن هذا الحساب وسيتمكن من التسجيل مرة أخرى في السوق عبر نفس الحساب. هل أنت متأكد من ذلك؟"
         ban_me_error: "لا يمكنك حظر نفسك"
+        search: بحث
+        search_by_name_email: "ابحث عن اسم أو بريد إلكتروني أو اسم معروض"
+        reset_search: "أظهر الكل"
+        for_search_terms: ~
       new_layout:
         new_layout: "تصميم جديد"
         description_roadmap_new: ~
@@ -296,6 +307,7 @@ ar:
           initiated_by: البداية
           other_party: "جهة أخرى"
         status:
+          conversation: محادثه
           free: محادثة
           pending: "قيد الإنتظار"
           preauthorized: مخول
@@ -331,6 +343,17 @@ ar:
             initiated: "انتظار دفع سترب"
             pending_ext: "انتظار دفع سترب"
         not_available: "غير متوفر"
+      conversations:
+        conversations: "أظهر المحادثات"
+        headers:
+          started_from: "بدأت من"
+          status: الحاله
+          started: بدأت
+          last_activity: "آخر نشاط"
+          initiated_by: البداية
+          other_party: "الجهة الأخرى"
+        participants: "‎%{author}‎ مع ‎%{starter}‎ :المحادثه"
+        profile: "الشخصي ‎%{author}‎‎ ملف"
     custom_fields:
       edit:
         edit_listing_field: "‎%{field_name}‎ تعديل حقل الإعلان"
@@ -409,6 +432,11 @@ ar:
         any_language: "أي لغة"
         message_will_be_sent_only_to_people_with_this_language: "حسب اللغة التي تختارها سترسل الرسالة لمستخدمي ‎%{service_name}‎"
         email_sent: "تم إرسال الرسالة"
+        to_improve_email_deliverability: ~
+        email_subject_text: ~
+        firstname_cannot_be_removed: ~
+        hello_firstname: ~
+        hello_firstname_text: ~
     left_hand_navigation:
       general: عام
       users_and_transactions: "المستخدمين والعمليات"
@@ -421,9 +449,11 @@ ar:
       read_more: ~
       read_more_availability_management: ~
       allow_providers_to_manage_availability: ~
+      per_hour_availability: ~
       per_day_availability: "متاح باليوم"
       per_night_availability: "متاح بالليلة"
       pricing_units_disabled_info: "لا يمكن استخدام وحدات الأسعار عندما يكون التقويم مفعل."
+      can_not_find_name: ~
       index:
         listing_shapes: "أنواع الطلب"
         description: ~
@@ -560,10 +590,19 @@ ar:
       stripe_fee: ~
       stripe_fee_notice: ~
       fee_should_be_less_than_minimum_price: ~
+      confirm_disable: ~
       stripe_connected:
         title: ~
+        disable: "تعطيل سترب"
+        disabled: "سترب غير مفعل"
+        enable: "إعادة تفعيل سترب"
       paypal_connected:
         title: ~
+        disable: "تعطيل باي بال"
+        disabled: "باي بال غير مفعل"
+        enable: "إعادة تفعيل باي بال"
+      cannot_enable_gateway: "‎%{gateway}‎ لا يمكنك تفعيل طريقة الدفع ."
+      cannot_disable_gateway: "‎%{gateway}‎ لا يمكنك تعطيل طريقة الدفع ."
       stripe_form:
         add_your_api_keys: ~
         how_to_get_these: ~
@@ -824,7 +863,7 @@ ar:
       confirm: مكتملة
       cancel: خلاف
   feedback:
-    feedback_subject: "‎%{service_name}‎ لا يوجد أي ردود أفعال من"
+    feedback_subject: "‎%{service_name}‎ رسالة جديدة لـ"
     feedback_body: ~
     unlogged_user: "مستخدم غير مسجل"
     anonymous_user: "مستخدم مجهول"
@@ -858,7 +897,7 @@ ar:
       remember_to_accept_request: "‎%{sender_name}‎ تذكير بقبول أو رفض الطلب المقدم من"
       you_can_accept_or_reject_offer_at: "يمكنك قبول أو رفض العرض على"
       you_can_accept_or_reject_request_at: "يمكنك قبول أو رفض الطلب على"
-      you_have_not_yet_accepted_or_rejected_offer: "‎%{date}‎ الذي استقبلته في تاريخ ‎%{title}‎ لم تقم بعد بقبول أو رفض العرض"
+      you_have_not_yet_accepted_or_rejected_offer: "‎%{date}‎ الذي استقبلته في ‎%{title}‎ لم تقم بقبول أو رفض العرض"
       you_have_not_yet_accepted_or_rejected_request: "‎%{date}‎ الذي استقبلته في تاريخ ‎%{title}‎ لم تقم بعد بقبول أو رفض الطلب"
       show_thread: "أظهر المحادثة"
     branding:
@@ -898,7 +937,7 @@ ar:
       confirmation_instructions_signature: "‎%{service_name}‎ فريق ‎<br/>‎شكرا جزيلا"
       need_to_confirm: "قم بتأكيد بريدك الإلكتروني بالضغط على الزر في الأسفل ‎%{service_name}‎ للإلتحاق بـ"
       confirmation_link_text: "تأكيد العنوان الخاص بي"
-      or_paste_link: "بدلا من ذلك، يمكنك نسخ الرابط بالأسفل واضافته إلى المتصفح الخاص بك:"
+      or_paste_link: "أو قم بنسخ الرابط التالي إلى المتصفح الخاص بك"
     common:
       hey: "،‎%{name}‎ مرحبا"
       kassi_team: "‎%{service_name}‎ فريق عمل"
@@ -908,7 +947,10 @@ ar:
       message_not_displaying_correctly: "هل هذا البريد الإلكتروني مكتوب بشكل جيد؟"
       view_it_in_your_browser: "اعرض في المتصفح الخاص بك"
       or: أو
+      unsubscribe_from_these_emails_info: "‎%{service_name}‎ لقد استقبلت هذه الرسالة لأنك عضو في"
       unsubscribe_from_these_emails: "إلغاء الإشتراك من هذه النشرات الإخبارية"
+      unsubscribe_from_invitation_emails_info: "قام بدعوتك للانضمام ‎%{service_name}‎ لقد استقبلت هذه الرسالة لأن عضو في"
+      unsubscribe_from_invitation_emails: "‎%{service_name}‎ إيقاف استقبال دعوات للانضمام لـ"
     conversation_status_changed:
       has_accepted_your_offer: "‎%{listing}‎ قام بقبول عرضك ‎%{accepter}‎"
       has_accepted_your_request: "‎%{listing}‎ قام بقبول طلبك ‎%{accepter}‎"
@@ -929,11 +971,11 @@ ar:
       join_now: "إنضم الآن"
       invitation_code: "‎%{code}‎ :رمز التفعيل"
     new_comment:
-      has_commented_your_listing_in_kassi: "‎%{listing}‎ قام بالتعليق على إعلانك ‎%{author}‎"
+      has_commented_your_listing_in_kassi: "‎%{listing}‎ علق على إعلانك ‎%{author}‎"
       view_comment: "أظهر التعليق"
-      you_have_a_new_comment: "‎‎%{service_name}‎  قام بالتعليق على ‎%{author}‎"
+      you_have_a_new_comment: "‎‎%{service_name}‎ وضع تعليق جديد في ‎%{author}‎"
       listing_you_follow_has_a_new_comment: "‎%{service_name}‎‎ علق على إعلان تقوم بمتابعته في ‎%{author}‎"
-      has_commented_listing_you_follow_in_kassi: "‎%{service_name}‎ الذي تتابعه ‎%{listing}‎ قام بالتعليق على الإعلان ‎%{author}‎"
+      has_commented_listing_you_follow_in_kassi: "‎%{service_name}‎ الذي تتابعه في ‎%{listing}‎ علق على الإعلان ‎%{author}‎"
     new_message:
       view_message: "أظهر الرسالة"
       has_sent_you_a_message_in_kassi: "‎%{service_name}‎ قام بإرسال رسالة لـ ‎%{sender}‎"
@@ -943,6 +985,7 @@ ar:
       price_per_unit_type: "‎%{unit_type}‎ السعر بـ"
       quantity: "الكمية:"
       you_have_received_new_payment: ~
+      listing_per_unit_title: ~
     payment_receipt_to_seller:
       payment_gateway_fee: ~
       shipping_total: ~
@@ -990,6 +1033,7 @@ ar:
       stripe_gateway_fee: ~
       paypal_gateway_fee: ~
       money_will_be_transferred: ~
+      listing_per_unit_title: ~
     new_testimonial:
       has_given_you_feedback_in_kassi: "‎‎%{service_name}‎ قام بإعطاء رأيه في ‎%{name}‎"
       you_can_give_feedback_to: "‎%{name}‎ لم تقم بإعطاء رأيك عن"
@@ -1004,7 +1048,7 @@ ar:
       added_listing: "قام بإضافة إعلان: ‎%{name_link}‎"
       update_mail_title: "‎%{title_link}‎ آخر تحديثات"
       title_link_text: "‎%{community_name}‎"
-      intro_paragraph: "‎%{time_since_last_update}‎ خلال ‎%{community_link}‎ آخر مستجدات"
+      intro_paragraph: "‎%{time_since_last_update}‎ خلال ‎%{community_link}‎ آخر تحديثات"
       intro_paragraph_link_text: "‎%{community_name}‎"
       reduce_email_footer_text: "‎%{settings_link}‎ أو ‎%{unsubscribe_link}‎ كثير من الإشعارات؟"
       settings_link_text: "قم بتعديل إعدادات بريدك الإلكتروني هنا"
@@ -1041,19 +1085,16 @@ ar:
       welcome_email_subject: "‎%{service_name}‎ أهلا بك في"
       welcome_to_marketplace: "سعداء بوجودك معنا ‎%{service_name}‎ أهلا بك في"
       love_marketplace_crew: "‎%{service_name}‎ مع كامل الاحترام والتقدير"
-      welcome_email_footer_text: |-
-          ‎%{settings_link}‎
-          ؟‎%{service_name}‎
-          ما هي الرسائل التي تود استقبالها من
+      welcome_email_footer_text: "‎%{settings_link}‎ ؟‎%{service_name}‎ تحديث إشعارات"
       settings_link_text: "تأكد من الإعدادات الخاصة بك"
     new_listing_by_followed_person:
-      subject: "‎%{service_name}‎ قام بوضع إعلان جديد ‎‎%{author_name}‎"
-      has_posted_a_new_listing: ":‎%{author_name}‎ قام بوضع إعلان جديد"
+      subject: "‎‎%{service_name}‎ قام بوضع إعلان جديد في ‎%{author_name}‎"
+      has_posted_a_new_listing: ":قام بوضع إعلان جديد ‎%{author_name}‎"
       you_are_receiving_this_because: "‎%{author_name}‎ لقد استقبلت إشعارا لأنك تتابع"
       view_listing: "أظهر الإعلان"
     new_member_notification:
-      new_member_has_joined: ~
-      this_is_automatic_message: "هذه رسالة تلقائية مرسلة من قبل مشرف ‎%{community}‎"
+      new_member_has_joined: ".قد يكون ما زال عليه تأكيد البريد الإلكتروني الخاص به ‎%{community}‎ تسجيل مشترك جديد في"
+      this_is_automatic_message: "‎%{community}‎ رسالة تلقائية مرسلة من قبل"
       person_name: "الإسم:"
       person_email: "البريد الإلكتروني:"
   error_messages:
@@ -1107,7 +1148,7 @@ ar:
       javascript_is_disabled_in_your_browser: "تم إيقاف عمل Javascript على المتصفح الخاص بك"
       kassi_does_not_currently_work_without_javascript: "من المتصفح الخاص بك ثم قم بتحميل الصفحة مرة أخرى javascript يجب عليك تفعيل خاصية javascript لا تعمل بشكل صحيح دون ‎%{service_name}‎"
       contact_us: "اتصل بنا"
-      send_feedback: "أرسل رسالة"
+      send_feedback: "أرسل الرسالة"
       your_feedback_to_admins: "‎%{service_name}‎ رسالتك إلى فريق عمل"
     send: أرسل
     your_email_address: "بريدك الإلكتروني"
@@ -1144,7 +1185,7 @@ ar:
     login:
       logged_in_to_kassi: "‎%{time_ago}‎ ‎%{service_name}‎ مسجل في ‎%{name}‎"
     comment:
-      commented: "‎%{time_ago}‎ ‎%{listing_title}‎ قام بالتعليق على الإعلان ‎%{commenter_name}‎"
+      commented: "‎%{time_ago}‎ ‎%{listing_title}‎ علق على الإعلان ‎%{commenter_name}‎"
       offer_partitive: عرض
       request_partitive: طلب
   header:
@@ -1160,7 +1201,7 @@ ar:
     contact_us: "اتصل بنا"
     profile: "الملف الشخصي"
     manage_listings: "إدارة الإعلانات"
-    invite: "دعوة مشتركين جدد"
+    invite: "ارسال دعوة"
     login: "تسجيل الدخول"
     signup: "إنشاء حساب"
     menu: القائمة
@@ -1229,19 +1270,19 @@ ar:
       requesting: بحاجة
       tell_it_here: "عبر عنها هنا!"
       welcome_to_new_kassi: "!‎%{service_name}‎ أهلا بك في"
-      no_reviews: "لا يوجد مراجعات"
+      no_reviews: "لا يوجد تقييم"
       no_image: "لا يوجد صورة"
       filter: فرز
       this_is_private_community: "يجب عليك تسجيل الدخول قبل عرض هذا المحتوى"
     invitation_form:
-      email: "البريد الإلكتروني (مجموعة)"
+      email: "البريد الإلكتروني"
       message: "رسالة شخصية"
       send_invitation: "إرسال الدعوة"
-      add_email_addresses_description: "أضف العناوين البريدية للأشخاص الذين تود دعوتهم في الأسفل. لإضافة أكثر من بريد إلكتروني قم بوضع فاصلة بينهم."
+      add_email_addresses_description: "أضف العناوين البريدية للأشخاص الذين تود دعوتهم في الأسفل لإضافة أكثر من بريد إلكتروني قم بوضع فاصلة بينهم"
       add_lots_of_email_addresses: ~
       this_article_link: "هذا المقال"
       invitation_emails_field_placeholder: "friend1@example.com, friend2@example.com, ..."
-      invitation_message_field_placeholder: "لقد قمت بالتسجيل في هذا السوق الرائع. يجب عليك التسجيل أيضا!"
+      invitation_message_field_placeholder: "قمت بالتسجيل في هذا السوق الرائع يجب عليك التسجيل أيضا"
       errors_in_emails: "قم بتأكد من صحة العناوين المدخلة، وإذا قمت بإدخال عدة عناوين تأكد من أنها مفصولة بفاصلة"
     list_item:
       review: مراجعة
@@ -1307,7 +1348,7 @@ ar:
       feedback_handle: رأي
       give_feedback: "اتصل بنا"
       or_check_our: "...أو تفحص"
-      send_feedback_to_admin: "أرسل رسالة"
+      send_feedback_to_admin: "أرسل الرسالة"
       to_see_what_others_have_suggested: "لمشاهدة ما اقترحه المستخدمين الآخرين، وصوت للأفكار المطروحة هناك"
       your_email_address: "بريدك الإلكتروني (للتواصل معك)"
       connect: "مشترك جديد"
@@ -1353,7 +1394,7 @@ ar:
       logout: "تسجيل الخروج"
       notifications: إشعارات
       requests: "طلبات صداقة"
-      settings: إعدادات
+      settings: الإعدادات
       sign_up: "تسجيل جديد"
     notifications:
       listing_could_not_be_saved: "‎%{contact_admin_link}‎ فشل في حفظ الإعلان قم بالمحاولة مرة أخرى في حال استمرت المشكلة قم بالإتصال بنا"
@@ -1367,13 +1408,13 @@ ar:
       comment_cannot_be_empty: "التعليقات لا يمكن أن تكون فارغة"
       comment_sent: "تم إرسال التعليق"
       confirmation_link_is_wrong_or_used: "رابط التفعيل استخدم من قبل أو لم يعد صالحا. حاول التسجيل مرة أخرى، أو قم بالتواصل معنا في حال استمرار المشكلة."
-      additional_email_confirmed: "تم الآن تأكيد البريد الإلكتروني المدخل"
+      additional_email_confirmed: "تم تأكيد البريد الإلكتروني بنجاح"
       could_not_get_email_from_facebook: "تعذر الحصول على بريد إلكتروني من فيسبوك، ولا يمكن إنشاء حساب دون بريد إلكتروني."
       facebook_email_unconfirmed: "‎%{email}‎ مربوط مع حسابك في فيسبوك مسبقا ولكن يبدو أنه لم يتم تأكيده بعد. يرجى تأكيد البريد الإلكتروني أولا قبل تسجيل الدخول باستخدام حساب فيسبوك"
       create_new_listing: "أضف إعلان جديد"
       create_one_here: "إنشاء جديد هنا"
       email_confirmation_sent_to_new_address: "رسالة التأكيد تم إرسالها إلى البريد الإلكتروني الجديد"
-      email_not_found: "‎%{service_name}‎ البريد الإلكتروني المعطى لم يتم إيجاده في قاعدة بيانات"
+      email_not_found: "‎%{service_name}‎ لم يتم إيجاد البريد الإلكتروني في قاعدة بيانات"
       error_with_session: "خطأ في الجلسة"
       feedback_considered_spam: "لم يتم حفظ رأيك، بسبب طريقة كتابته. رجاء قم بإعادة الكتابة أو استخدم منتدى الآراء"
       feedback_not_saved: "تعذر إرسال رأيك"
@@ -1381,8 +1422,10 @@ ar:
       feedback_sent_to: "‎%{target_person}‎ تم إرسال رأيك إلى"
       feedback_skipped: "تم تخطي إعطاء الرأي"
       invitation_cannot_be_sent: "تعذر إرسال الدعوة"
+      invitation_cannot_unsubscribe: "لا يمكنك الغاء استقبال رسائل الدعوات"
       invitation_limit_reached: "أنت تحاول إرسال الكثير من الدعوات لقد استنفذت عدد الدعوات المسموح باليوم"
       invitation_sent: "تم إرسال الدعوة بنجاح"
+      invitation_successfully_unsubscribed: "تم إلغاء استقبال رسائل الدعوات بنجاح"
       inviting_new_users_is_not_allowed_in_this_community: "دعوة مستخدمين جدد غير مسموح"
       login_again: "رجاء قم بتسجيل الدخول مجددا"
       login_failed: "فشل في تسجيل الدخول. رجاء قم بإدخال المعلومات الصحيحة"
@@ -1457,9 +1500,9 @@ ar:
       you_must_log_in_to_view_this_content: "لا بد من تسجيل الدخول لعرض هذا المحتوى"
       you_must_log_in_to_view_this_page: "يجب عليك تسجيل الدخول لعرض محتوى هذه الصفحة"
       you_must_log_in_to_view_your_inbox: ".لعرض بريدك الخاص ‎%{service_name}‎ لا بد من تسجيل الدخول لـ"
-      you_must_log_in_to_view_your_settings: ".لعرض الإعدادات الخاصة بك ‎%{service_name}‎ لا بد من تسجيل الدخول لـ"
+      you_must_log_in_to_view_your_settings: ".لعرض الإعدادات الخاصة بك ‎%{service_name}‎ قم بتسجيل الدخول لـ"
       you_must_log_in_to_add_news_item: ".لتتمكن من إضافة مقال جديد ‎%{service_name}‎ يجب عليك تسجيل الدخول لـ"
-      you_must_log_in_to_change_profile_settings: "للتعديل على إعدادات الملف الشخصي ‎%{service_name}‎ يجب عليك تسجيل الدخول إلى"
+      you_must_log_in_to_change_profile_settings: "لتعديل إعدادات الملف الشخصي ‎%{service_name}‎ قم بتسجيل الدخول لـ"
       you_must_log_in_to_accept_or_reject: ~
       you_must_log_in_to_confirm_or_cancel: ~
       you_need_to_confirm_your_account_first: "تحتاج إلى تأكيد بريدك الإلكتروني"
@@ -1476,7 +1519,7 @@ ar:
       account: الحساب
       notifications: إشعارات
       profile: "معلومات الملف الشخصي"
-      settings: إعدادات
+      settings: الإعدادات
       paypal_payments: ~
       stripe_payments: ~
       payments: المدفوعات
@@ -1485,7 +1528,7 @@ ar:
       listing_not_visible: "ليس لديك صلاحية لعرض هذا المحتوى"
     comment:
       wrote: كتب
-      send_private_message: "‎%{person}‎ أرسل رسالة شخصية إلى"
+      send_private_message: "‎%{person}‎ أرسل رسالة خاصة إلى"
       delete: حذف
       are_you_sure: "هل أنت متأكد من حذف التعليق؟"
     comment_form:
@@ -1516,8 +1559,8 @@ ar:
       create_failed_to_connect_to_booking_service: "خطأ في إنشاء الإعلان: تعذر الإتصال بخدمة الحجز. يرجى إعادة المحاولة لاحقا."
       update_failed_to_connect_to_booking_service: "تعذر تحديث الإعلان: تعذر الوصول إلى خدمة الحجز. يرجى المحاولة مرة أخرى."
     follow_links:
-      follow: "احصل على تحديثات عن التعليقات الجديدة عبر البريد الإلكتروني"
-      unfollow: "لا ترسل لي رسائل بريد إلكتروني عن التعليقات الجديدة"
+      follow: "متابعة التعليقات الجديدة عبر البريد الإلكتروني"
+      unfollow: "إلغاء استقبال إشعارات عن التعليقات الجديدة"
     form:
       custom_field_partials:
         dropdown:
@@ -1529,7 +1572,7 @@ ar:
         repeated: "مكرر (قم بإضافة تواريخ وأيام في \"الشرح المفصل\")"
       description:
         detailed_description: "شرح مفصل"
-        youtube_info: "إذا كان شرحك يحتوي على رابط فيديو من اليوتيوب، سيظهر مقطع الفيديو سيظهر أسفل من الشرح"
+        youtube_info: "إذا كان شرحك يحتوي على رابط فيديو من اليوتيوب، سوف يظهر مقطع الفيديو في آخر الشرح."
       destination:
         destination: "مكان الوصول"
       form_content:
@@ -1666,6 +1709,10 @@ ar:
       how_paypal_works: ~
       payment_help: "المساعدة في عملية الدفع"
       unable_load_availability: "تعذر تحميل المعلومات. رجاء قم بالمحاولة مرة أخرى لاحقا."
+      booking_date: ~
+      select_one: ~
+      start_time: ~
+      end_time: ~
     new:
       listing: إعلان
       selected_category: "‎%{category}‎ :قسم"
@@ -1703,7 +1750,7 @@ ar:
       item_request_trade: "طلب تبادل"
       no_description: "هذا المحتوى لا يحتوي على شرح"
       no_image: "لا يوجد صورة"
-      no_reviews: "لا يوجد مراجعات"
+      no_reviews: "لم يتم استقبال التقييم"
       offer: عرض
       listing_created: "تم الإنشاء"
       open_until: "‎%{date}‎ مفتوح لغاية"
@@ -1885,6 +1932,7 @@ ar:
       email_not_allowed: |-
           .رجاء استخدم بريد إلكتروني مسموح به في هذه الخدمة. إذا لم تستطع الدخول، رجاء قم بالإتصال بنا
           ‎%{service_name}‎ هذا البريد الإلكتروني غير مسموح به في
+      invalid_username_or_email: "اسم المستخدم أو البريد الإلكتروني غير صحيح أو مستخدم مسبقا"
       family_name: "إسم العائلة"
       given_name: "الإسم الأول"
       i_accept_the: "أوافق على"
@@ -1938,7 +1986,7 @@ ar:
       open_listings: "إعلانات مفتوحة"
       no_listings: "لا يوجد إعلانات"
       no_open_listings: "لا يوجد إعلانات مفتوحة"
-      no_reviews: "لا يوجد مراجعات"
+      no_reviews: "لا يوجد تقييم"
       show_all_listings: "أظهر كل الإعلانات"
       show_all_open_listings: "أظهر كل الإعلانات المفتوحة"
       show_all_reviews: "أظهر كل المراجعات"
@@ -1977,11 +2025,11 @@ ar:
     confirmation_pending:
       welcome_to_kassi: "!‎%{service_name}‎ أهلا بك في"
       check_your_email: "تحقق من بريدك الوارد"
-      resend_confirmation_instructions: "إعادة إرسال تعليمات التأكيد"
-      your_current_email_is: "‎%{email}‎ بريدك الإلكتروني هو"
+      resend_confirmation_instructions: "إعادة إرسال رابط التأكيد"
+      your_current_email_is: ".‎%{email}‎ بريدك الإلكتروني هو"
       change_email: تغيير
-      confirm_your_email: "رجاء قم بتأكيد بريدك الإلكتروني"
-      account_confirmation_instructions: "‎%{service_name}‎ سيصلك الآن رسالة لتأكيد بريدك الإلكتروني وتأكد من ملف سبام الخاص بك بعد ذلك يمكنك الانضمام إلى"
+      confirm_your_email: "تأكيد البريد الإلكتروني الخاص بك"
+      account_confirmation_instructions: "على بريدك الإلكتروني ‎%{service_name}‎ تم ارسال رابط تأكيد الإنضمام لـ"
       account_confirmation_instructions_title_admin: "قم بتأكيد بريدك الإلكتروني"
       before_full_access_you_need_to_confirm_email: ~
       before_confirmation_only_access_admin_dashboard: ~
@@ -2048,7 +2096,7 @@ ar:
       family_name: "إسم العائلة"
       given_name: "الإسم الأول"
       first_name_with_initial: "(فقط الحرف الأول مرئي للمستخدمين الآخرين)"
-      first_name_only: "(غير مرئي للمشتركين الآخرين)"
+      first_name_only: "غير مرئي للمشتركين الآخرين"
       display_name: "الأسم المعروض"
       display_name_description: "إذا كنت تمثل شركة أو مؤسسة، يمكنك استعمال اسم المنشأة كالاسم المعروض في إعلانك. الإسم المعروض هو ما يراه المستخدمين الآخرين وزوار الموقع عوضا عن اسمك الأول والثاني"
       location_description: "يمكنك إضافة عنوان الشارع أو المدينة أو الرمز البريدي. من الجيد إضافة بلدك عندما تضيف موقعك. مثلا: \"٢١٢١٢ جدة، المملكة العربية السعودية\" أو \"٢٠٠٠ شارع التحلية، جدة، المملكة العربية السعودية\""
@@ -2058,11 +2106,11 @@ ar:
       profile_page: "في صفحة الملف الشخصي"
       profilemap: "عرض الخارطة"
       street_address: الموقع
-      these_fields_are_shown_in_your: "‎%{service_name}‎ هذه المعلومات مرئية لكل مستخدمي"
+      these_fields_are_shown_in_your: ".‎%{service_name}‎ هذه المعلومات مرئية لمستخدمي"
       visible_to_everybody: "مرئية للكل"
       visible_to_registered_users: "(مرئية للمستخدمين المسجلين)"
-      default_in_listing: "(يستخدم غالبا عند إنشاء إعلان جديد)"
-      invisible: "(غير مرئي للمشتركين الآخرين)"
+      default_in_listing: "يستخدم غالبا عند إنشاء إعلان جديد"
+      invisible: "غير مرئي للمشتركين الآخرين"
       image_is_processing: ~
     save_information: "حفظ المعلومات"
   shipping_address:
@@ -2107,6 +2155,7 @@ ar:
   date:
     formats:
       long_with_abbr_day_name: ~
+    first_day_of_week: ~
   datepicker:
     days:
       sunday: الأحد
@@ -2166,6 +2215,7 @@ ar:
       short: ~
       shorter: "%b %e at %H:%M"
       short_date: ~
+      hours_only: "%H:%M"
   timestamps:
     day_ago: "يوم ‎%{count}‎ قبل"
     days_ago: "أيام ‎%{count}‎ قبل"
@@ -2220,10 +2270,13 @@ ar:
       booked_nights: "احجز ليلة:"
       price_per_day: "السعر باليوم:"
       price_per_night: "السعر بالليلة:"
+      price_per_hour: ~
+      price_per_unit: ~
       quantity: "الكمية:"
       subtotal: "المجموع الفرعي:"
       shipping-price: "الشحن:"
       stripe-fee: ~
+      start_end_time: ~
     price_per_quantity: ":‎%{unit_type}‎ السعر بـ"
     price: "السعر:"
     quantity: "‎%{quantity}‎ :الكمية"
@@ -2239,6 +2292,8 @@ ar:
         availability:
           something_went_wrong: "يتعذر عرض المعلومات المتوفرة. يرجى إعادة تهيئة الصفحة مرة أخرى"
           saving_failed: "لم نستطع حفظ تغييرات التوفر حاليا يرجى إعادة تهيئة الصفحة مرة أخرى"
+        working_hours:
+          required: ~
       pricing_units:
         piece: قطعة
         hour: ساعة
@@ -2251,6 +2306,13 @@ ar:
       confirm_discarding_unsaved_availability_changes_explanation: "لديك معلومات تغييرت لم يتم حفظها لمعلومات التوفر. إذا أردت المتابعة فإن هذه التغيرات لن تحفظ"
       confirm_discarding_unsaved_availability_changes_question: "هل أنت متأكد من تجاهل التغييرات؟"
       edit_listing_availability: "تحرير توفر الإعلان"
+      working_hours:
+        default_schedule: ~
+        i_am_available_on: ~
+        start_time: ~
+        end_time: ~
+        add_another_time_slot: ~
+        save: ~
     no_listings:
       sorry: "نعتذر، لا يوجد إعلانات في هذا البحث"
       try_other_search_terms: "حاول البحث في شيء آخر؟"
@@ -2297,6 +2359,10 @@ ar:
     page_entries_info:
       multi_page: ~
       multi_page_html: ~
+    person:
+      community_members_entries_info:
+        multi_page: ~
+        multi_page_html: ~
   stripe_accounts:
     admin_account_not_connected: ~
     contact_admin_link_text: ~
@@ -2358,6 +2424,13 @@ ar:
       document: ~
       send_verification: ~
       need_verification: ~
+    form_pin:
+      social_insurance_number: ~
+      social_security_number: ~
+      hong_kong_identity_card: ~
+      singapore_identity_card: ~
+      messages:
+        social_insurance_number: ~
   payment_settings:
     title: ~
     bank_account: ~

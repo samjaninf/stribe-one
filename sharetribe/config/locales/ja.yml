@@ -147,7 +147,12 @@ ja:
         amazon_ses_notification: ~
         this_is_how_it_will_look: ~
         send_verification_button: 認証メールを送信
+        change_sender_email: ~
         successfully_saved: ~
+        successfully_saved_name: ~
+        set_sender_name: ~
+        change_sender_name: ~
+        change_sender_prompt: ~
         status: "ステータス: %{status}"
         status_verified: "認証済 - 利用中"
         status_error: エラーが発生しました。ページを更新してください。
@@ -216,6 +221,7 @@ ja:
         twitter_handle: "Twitter ハンドルネーム （リストページのtweetボタンを使用します）"
         update_settings: 設定を保存する
         automatically_confirmed_no_escrow: "お支払いは%{days_dropdown}日後、完了済みとして処理されます。"
+        automatically_confirmed_no_escrow_stripe_info: ~
         automatic_newsletter_frequency: "%{frequency_dropdown}の☆速報☆を自動で送信する"
         newsletter_daily: 毎日
         newsletter_weekly: 毎週
@@ -243,7 +249,12 @@ ja:
         export_all_as_csv: CSVで全て出力
         save_user_status_error: 保存に失敗しました。ページを再読込してもう一度試してください
         ban_user_confirmation: これはマーケットプレイスのユーザを削除するものであり、今後二度とこのアカウントに戻れないようになります。本当にこの削除手続きを実行してもよろしいですか。
+        unban_user_confirmation: ~
         ban_me_error: 自分自身をアカウント停止ユーザに出来ません。
+        search: ~
+        search_by_name_email: ~
+        reset_search: ~
+        for_search_terms: ~
       new_layout:
         new_layout: ~
         description_roadmap_new: ~
@@ -306,6 +317,7 @@ ja:
           initiated_by: 買い手
           other_party: 相手
         status:
+          conversation: ~
           free: 会話
           pending: 保留中
           preauthorized: 仮承認済み
@@ -341,6 +353,17 @@ ja:
             initiated: ~
             pending_ext: ~
         not_available: ご利用できません
+      conversations:
+        conversations: ~
+        headers:
+          started_from: ~
+          status: ~
+          started: ~
+          last_activity: ~
+          initiated_by: ~
+          other_party: ~
+        participants: ~
+        profile: ~
     custom_fields:
       edit:
         edit_listing_field: "「%{field_name}」項目を編集する"
@@ -419,6 +442,11 @@ ja:
         any_language: 全ての言語
         message_will_be_sent_only_to_people_with_this_language: "注意： メールは、あなたが選択した言語を使用している%{service_name}内のユーザのみに、送信されます。"
         email_sent: メールを送信しました。
+        to_improve_email_deliverability: ~
+        email_subject_text: ~
+        firstname_cannot_be_removed: ~
+        hello_firstname: ~
+        hello_firstname_text: ~
     left_hand_navigation:
       general: 一般
       users_and_transactions: ユーザと課金処理履歴
@@ -431,9 +459,11 @@ ja:
       read_more: ~
       read_more_availability_management: ~
       allow_providers_to_manage_availability: ~
+      per_hour_availability: ~
       per_day_availability: ~
       per_night_availability: ~
       pricing_units_disabled_info: ~
+      can_not_find_name: ~
       index:
         listing_shapes: 課金タイプ
         description: 注文タイプとは、注文がどのように処理されるかを定義するものです。ユーザーが貸そうとしているのか売ろうとしているのか、あるいは単に広告を載せてダイレクトメッセージを通してやりとりをしようとしているのか、決める事ができます。
@@ -562,10 +592,19 @@ ja:
       stripe_fee: ~
       stripe_fee_notice: ~
       fee_should_be_less_than_minimum_price: ~
+      confirm_disable: ~
       stripe_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
       paypal_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
+      cannot_enable_gateway: ~
+      cannot_disable_gateway: ~
       stripe_form:
         add_your_api_keys: ~
         how_to_get_these: ~
@@ -907,7 +946,10 @@ ja:
       message_not_displaying_correctly: このメールアドレスは正しく表示されていませんか。
       view_it_in_your_browser: あなたのブラウザで表示する
       or: or
+      unsubscribe_from_these_emails_info: ~
       unsubscribe_from_these_emails: これらのメールを購読解除する
+      unsubscribe_from_invitation_emails_info: ~
+      unsubscribe_from_invitation_emails: ~
     conversation_status_changed:
       has_accepted_your_offer: "%{accepter}さんはあなたの%{listing}のオファーを受け入れました"
       has_accepted_your_request: "%{accepter}さんはあなたの%{listing}のリクエストを受け入れました"
@@ -942,6 +984,7 @@ ja:
       price_per_unit_type: "%{unit_type}ごとの料金"
       quantity: 数量：
       you_have_received_new_payment: "%{payer_full_name}さんより<b>%{listing_title}</b>の件で、<b>%{payment_sum}</b>支払われました。こちらはその領収書です。"
+      listing_per_unit_title: ~
     payment_receipt_to_seller:
       payment_gateway_fee: ~
       shipping_total: ~
@@ -989,6 +1032,7 @@ ja:
       stripe_gateway_fee: ~
       paypal_gateway_fee: ~
       money_will_be_transferred: "a) あなたがリクエストを完了しステータスを変更したとき、あるいは b) あなたがお支払い後、%{automatic_confirmation_days}日が経過したとき、お代金は%{recipient_name}さんの口座に送金されます。"
+      listing_per_unit_title: ~
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name}さんは%{service_name}であなたにレビューを書きました"
       you_can_give_feedback_to: "%{name}さんにまだレビューを書いていません。"
@@ -1373,8 +1417,10 @@ ja:
       feedback_sent_to: "%{target_person}さんにレビューを送信しました。"
       feedback_skipped: レビューを残しませんでした
       invitation_cannot_be_sent: 招待状は送られませんでした
+      invitation_cannot_unsubscribe: ~
       invitation_limit_reached: ~
       invitation_sent: 招待状は正常に送信されました
+      invitation_successfully_unsubscribed: ~
       inviting_new_users_is_not_allowed_in_this_community: 新しいユーザを招待することは許可されていません。
       login_again: もう一度ログインしてください。
       login_failed: ログインに失敗しました。正確にご入力願います。
@@ -1661,6 +1707,10 @@ ja:
       how_paypal_works: PayPalの仕組み
       payment_help: お支払いについて
       unable_load_availability: ~
+      booking_date: ~
+      select_one: ~
+      start_time: ~
+      end_time: ~
     new:
       listing: 投稿
       selected_category: "カテゴリー： %{category}"
@@ -1878,6 +1928,7 @@ ja:
       email_is_in_use: そのメールアドレスはすでに使用されています。
       email_is_in_use_or_not_allowed: このメールアドレスは有効でないか、既に使用されています。もし理由不明の場合はお問い合わせください。
       email_not_allowed: "このメールアドレスは%{service_name}での使用を認められていません。他のメールアドレを使用してください。もしまだ入れないようでしたら、サイト管理者にお問い合わせください。"
+      invalid_username_or_email: ユーザー名またはメールは無効でありまたはすでに利用されている
       email_restriction_instructions:
         other: "%{service_name}へのアクセスが制限されました。参加しなおすには、ご登録時のメールアドレスが必要です。"
       family_name: 姓
@@ -2102,6 +2153,7 @@ ja:
   date:
     formats:
       long_with_abbr_day_name: "%Y/%m/%d （%a）"
+    first_day_of_week: ~
   datepicker:
     days:
       sunday: 日曜日
@@ -2161,6 +2213,7 @@ ja:
       short: "%Y年 %H:%M"
       shorter: "%m/%e %H:%M"
       short_date: "%Y/%m/%e"
+      hours_only: ~
   timestamps:
     day_ago: "%{count}日前"
     days_ago: "%{count}日前"
@@ -2190,10 +2243,13 @@ ja:
       booked_nights: ~
       price_per_day: 日割り料金
       price_per_night: ~
+      price_per_hour: ~
+      price_per_unit: ~
       quantity: 数量：
       subtotal: 合計金額：
       shipping-price: 送料：
       stripe-fee: ~
+      start_end_time: ~
     price_per_quantity: "%{unit_type}ごとの料金："
     price: 料金：
     quantity: "数量： %{quantity}"
@@ -2209,6 +2265,8 @@ ja:
         availability:
           something_went_wrong: ~
           saving_failed: ~
+        working_hours:
+          required: ~
       pricing_units:
         piece: 点
         hour: 時間
@@ -2221,6 +2279,13 @@ ja:
       confirm_discarding_unsaved_availability_changes_explanation: ~
       confirm_discarding_unsaved_availability_changes_question: ~
       edit_listing_availability: 投稿の利用可能日を編集する
+      working_hours:
+        default_schedule: ~
+        i_am_available_on: ~
+        start_time: ~
+        end_time: ~
+        add_another_time_slot: ~
+        save: ~
     no_listings:
       sorry: 申し訳ございません、お探しの条件の商品がみつかりませんでした。
       try_other_search_terms: 他のキーワード検索をしてみてください
@@ -2267,6 +2332,10 @@ ja:
         other: "<b>すべての&nbsp;%{count}</b>%{model}を表示しています"
       multi_page: "%{from} - %{to} 全体で%{count}件の%{model}を表示しています"
       multi_page_html: "<b>%{from}&nbsp;-&nbsp;%{to}</b> 全体で<b>%{count}</b>件の%{model}を表示しています"
+    person:
+      community_members_entries_info:
+        multi_page: ~
+        multi_page_html: ~
   stripe_accounts:
     admin_account_not_connected: ~
     contact_admin_link_text: ~
@@ -2328,6 +2397,13 @@ ja:
       document: ~
       send_verification: ~
       need_verification: ~
+    form_pin:
+      social_insurance_number: ~
+      social_security_number: ~
+      hong_kong_identity_card: ~
+      singapore_identity_card: ~
+      messages:
+        social_insurance_number: ~
   payment_settings:
     title: ~
     bank_account: ~

@@ -1,6 +1,0 @@
-production:
-  adapter: mysql2
-  encoding: utf8
-  username: # ADD DATABASE USERNAME
-  password: # ADD DATABASE PASSWORD
-  database: sharetribe_production

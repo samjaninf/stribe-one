@@ -67,7 +67,7 @@ window.ST.stripe_form_i18n = {
       account_number: {title: 'IBAN', format: 'IE29AIBK93115212345678', regexp: 'IE[0-9]{2}[A-Z0-9]{4}[0-9]{14}', test_regexp: 'IE'+TEST_IBAN },
     },
     IT: { 
-      account_number: {title: 'IBAN', format: 'IT60X0542811101000000123456', regexp: 'IT[0-9]{2}[A-Z][0-9]{10}[A-Z0-9]{12}', test_regexp: 'IT'+TEST_IBAN },
+      account_number: {title: 'IBAN', format: 'IT60X0542811101000000123456', regexp: 'IT[0-9]{2}[A-Z]{1}[0-9]{5}[0-9]{5}[A-Z0-9]{12}', test_regexp: 'IT'+TEST_IBAN },
     },
     JP: { 
       account_number: {format: '1234567', regexp: '[0-9]{6,8}', test_regexp: '[0-9]{6,8}' }, 
@@ -85,14 +85,13 @@ window.ST.stripe_form_i18n = {
       account_number: {title: 'IBAN', format: 'NL39RABO0300065264', regexp: 'NL[0-9]{2}[A-Z]{4}[0-9]{10}', test_regexp: 'NL'+TEST_IBAN }
     },
     NZ: { 
-      account_number: {format: '0000000010', regexp: '[0-9]{9,10}', test_regexp: '[0-9]{9,10}' }, 
-      routing_number: {title: 'routing_number', format: '110000', regexp: '[0-9]{6}', test_regexp: '[0-9]{6}' } 
+      account_number: {format: '110000-0000000-010', regexp: '[0-9]{6}\-[0-9]{7}\-[0-9]{2,3}', test_regexp: '[0-9]{6}\-[0-9]{7}\-[0-9]{2,3}' }, 
     },
     NO: { 
       account_number: {title: 'IBAN', format: 'NO9386011117947', regexp: 'NO[0-9]{2}[0-9]{11}', test_regexp: 'NO'+TEST_IBAN },
     },
     PT: { 
-      account_number: {title: 'IBAN', format: 'PT50123443211234567890172', regexp: 'PT[0-9]{2}[0-9]{11}', test_regexp: 'PT'+TEST_IBAN },
+      account_number: {title: 'IBAN', format: 'PT50123443211234567890172', regexp: 'PT[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}', test_regexp: 'PT'+TEST_IBAN },
     },
     SG: { 
       account_number: {format: '123456789012', regexp: '[0-9]{6-12}', test_regexp: '[0-9]{6-12}' }, 
@@ -160,6 +159,15 @@ window.ST.stripe_form_i18n = {
   module.initStripeBankForm = function(stripe_test_api_mode) {
     window.ST.stripe_test_api_mode = stripe_test_api_mode;
     $("#stripe_account_form_address_country").change(function(){
+      var showElement = function (el, show) {
+        if (show) {
+          $(el).find('input').prop('disabled', false);
+          $(el).show();
+        } else {
+          $(el).find('input').prop('disabled', true);
+          $(el).hide();
+        }
+      };
       var country = $(this).val();
       if(country) {
         if($("#stripe-terms-link").size() > 0 ) {
@@ -170,18 +178,10 @@ window.ST.stripe_form_i18n = {
           var only = $(this).data("country-only");
           var except = $(this).data("country-except");
           if(only) {
-            if (only.indexOf(country) >= 0) {
-              $(this).show(); 
-            } else {
-              $(this).hide();
-            }
+            showElement(this, only.indexOf(country) >= 0)
           }
           if(except) {
-            if (except.indexOf(country) < 0) {
-              $(this).show(); 
-            } else {
-              $(this).hide();
-            }
+            showElement(this, except.indexOf(country) < 0)
           }
         });
         $("label.error").hide();
@@ -192,11 +192,23 @@ window.ST.stripe_form_i18n = {
       update_bank_number_form(country);
     });
     $("#stripe_account_form_address_country").trigger('change');
-    $(".bank-account-number input").rules("add", { country_regexp: 'account_number' } ); 
-    $(".bank-routing-number input").rules("add", { country_regexp: 'routing_number' } ); 
-    $(".bank-routing-1 input").rules("add", { country_regexp: 'routing_1' } ); 
-    $(".bank-routing-2 input").rules("add", { country_regexp: 'routing_2' } ); 
-  }
+    $("#stripe-account-form").validate({
+      submitHandler: function(form) {
+        var removeSpacesInputs = [".bank-account-number input", ".bank-routing-number input",
+          ".bank-routing-1 input", ".bank-routing-2 input"];
+        for (var index in removeSpacesInputs) {
+          var input = $(removeSpacesInputs[index]);
+          var value = input.val().replace(/\s+/g, '');
+          input.val(value);
+        }
+        form.submit();
+      }
+    });
+    $(".bank-account-number input").rules("add", { country_regexp: 'account_number' } );
+    $(".bank-routing-number input").rules("add", { country_regexp: 'routing_number' } );
+    $(".bank-routing-1 input").rules("add", { country_regexp: 'routing_1' } );
+    $(".bank-routing-2 input").rules("add", { country_regexp: 'routing_2' } );
+  };
 
   function explain_regexp(value) {
     var t = value;
@@ -220,7 +232,8 @@ window.ST.stripe_form_i18n = {
       }
       if(re) {
         var rx = new RegExp("^"+re+"$");
-        return rx.test(value);
+        var testValue = value.replace(/\s+/g, '');
+        return rx.test(testValue);
       }
       return this.optional(element) || $(element).val();
     },
@@ -234,6 +247,14 @@ window.ST.stripe_form_i18n = {
       }
       var def_title = field == 'account_number' ? i18n_label(field, 'Account number') : field;
       return i18n_label(title, def_title) + " " + i18n_label("must_match", "must be in the following format:")+ " " + explain_regexp(regexp);
+    }
+  );
+  // Canada
+  $.validator.addMethod(
+    "ca-social-insurance-number",
+    function(value, element, field) {
+      var sin = new SocialInsuranceNumber(value);
+      return sin.isValid();
     }
   );
 })(window.ST);

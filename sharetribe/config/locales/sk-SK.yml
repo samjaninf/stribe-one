@@ -157,7 +157,12 @@ sk-SK:
         amazon_ses_notification: ~
         this_is_how_it_will_look: "Takto to bude vyzerať:"
         send_verification_button: "Poslať overovací e-mail"
+        change_sender_email: ~
         successfully_saved: "Adresa odosielateľa bola úspešne uložená. Overovací e-mail bude o chvíľu odoslaný."
+        successfully_saved_name: ~
+        set_sender_name: ~
+        change_sender_name: ~
+        change_sender_prompt: ~
         status: "Stav: %{status}"
         status_verified: "Overený - používa sa"
         status_error: "Nastala chyba. Prosím obnovte stránku."
@@ -226,6 +231,7 @@ sk-SK:
         twitter_handle: "Twitter (používa se tweet tlačítkom na strane)"
         update_settings: "Uložiť nastavenia"
         automatically_confirmed_no_escrow: "Transakcia bude automaticky označená ako vybavená za %{days_dropdown} dní od doby, kedy bola platba prevedená."
+        automatically_confirmed_no_escrow_stripe_info: ~
         automatic_newsletter_frequency: "Automaticky posielať novinky: %{frequency_dropdown}"
         newsletter_daily: Denne
         newsletter_weekly: Týždenne
@@ -253,7 +259,12 @@ sk-SK:
         export_all_as_csv: "Exportovať všetko do CSV"
         save_user_status_error: "Pri ukladaní nastala chyba. Prosím obnovte stránku a skúste to znova."
         ban_user_confirmation: "Týmto bude užívateľ odstránený z trhoviska a nebude už pod týmto účtom pristupovať na túto stránku. Ste si istý, že chcete pokračovať?"
+        unban_user_confirmation: ~
         ban_me_error: "Nemôžete seba samého vylúčiť."
+        search: ~
+        search_by_name_email: ~
+        reset_search: ~
+        for_search_terms: ~
       new_layout:
         new_layout: "Nový vzhľad"
         description_roadmap_new: ~
@@ -316,6 +327,7 @@ sk-SK:
           initiated_by: Zahájené
           other_party: "Ďalšia strana"
         status:
+          conversation: ~
           free: Konverzácia
           pending: "Čaká na vybavenie"
           preauthorized: Predschválené
@@ -351,6 +363,17 @@ sk-SK:
             initiated: ~
             pending_ext: ~
         not_available: "Teraz k dispozicií"
+      conversations:
+        conversations: ~
+        headers:
+          started_from: ~
+          status: ~
+          started: ~
+          last_activity: ~
+          initiated_by: ~
+          other_party: ~
+        participants: ~
+        profile: ~
     custom_fields:
       edit:
         edit_listing_field: "Upraviť pole inzerátu '%{field_name}'"
@@ -429,6 +452,11 @@ sk-SK:
         any_language: "Akýkoľvek jazyk"
         message_will_be_sent_only_to_people_with_this_language: "Poznámka: e-mailová správa bude poslaná iba užívateľom, ktorý používajú %{service_name} v jazyku, ktorý vyberiete."
         email_sent: "E-mailová správa bola odoslaná."
+        to_improve_email_deliverability: ~
+        email_subject_text: ~
+        firstname_cannot_be_removed: ~
+        hello_firstname: ~
+        hello_firstname_text: ~
     left_hand_navigation:
       general: Všeobecné
       users_and_transactions: "Užívatelia a platby"
@@ -441,9 +469,11 @@ sk-SK:
       read_more: ~
       read_more_availability_management: ~
       allow_providers_to_manage_availability: ~
+      per_hour_availability: ~
       per_day_availability: "\"za deň\" dostupnosť"
       per_night_availability: "\"za noc\" dostupnosť"
       pricing_units_disabled_info: "Cena jednotky je nedostupná, pokiaľ je zapnutý kalendár dostupnosti."
+      can_not_find_name: ~
       index:
         listing_shapes: "Typy objednávok"
         description: "Tu si môžete nastaviť, ako bude Vaše stránka fungovať. Môžete sa rozhodnúť, či Vaši užívatelia budú prenajímať, predávať, alebo iba pridávať príspevky a komunikovať cez správy."
@@ -582,10 +612,19 @@ sk-SK:
       stripe_fee: ~
       stripe_fee_notice: ~
       fee_should_be_less_than_minimum_price: ~
+      confirm_disable: ~
       stripe_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
       paypal_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
+      cannot_enable_gateway: ~
+      cannot_disable_gateway: ~
       stripe_form:
         add_your_api_keys: ~
         how_to_get_these: ~
@@ -927,7 +966,10 @@ sk-SK:
       message_not_displaying_correctly: "Nezobrazuje sa Vám e-mailová správa správne?"
       view_it_in_your_browser: "Pozrite si ju v internetovom prehliadači"
       or: alebo
+      unsubscribe_from_these_emails_info: ~
       unsubscribe_from_these_emails: "odhlásiť sa z odberu týchto e-mailových správ"
+      unsubscribe_from_invitation_emails_info: ~
+      unsubscribe_from_invitation_emails: ~
     conversation_status_changed:
       has_accepted_your_offer: "%{accepter} prijal Vašu ponuku %{listing}"
       has_accepted_your_request: "%{accepter} prijal Vašu žiadosť %{listing}"
@@ -962,6 +1004,7 @@ sk-SK:
       price_per_unit_type: "Cena za %{unit_type}"
       quantity: "Množstvo:"
       you_have_received_new_payment: "Obdržali ste čiastku <b>%{payment_sum}</b> za <b>%{listing_title}</b> od užívateľa %{payer_full_name}. Tu je Vaše potvrdenie."
+      listing_per_unit_title: ~
     payment_receipt_to_seller:
       payment_gateway_fee: ~
       shipping_total: ~
@@ -1009,6 +1052,7 @@ sk-SK:
       stripe_gateway_fee: ~
       paypal_gateway_fee: ~
       money_will_be_transferred: "Peniaze budú prevedené užívateľovi %{recipient_name}, a) pokiaľ označíte žiadosť ako vybavenú nebo b) pokiaľ uplynulo %{automatic_confirmation_days} dní od dňa, kedy ste zaplatili."
+      listing_per_unit_title: ~
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name} Vám dal spätnú väzbu %{service_name}"
       you_can_give_feedback_to: "Ešte ste nedali spätnú väzbu %{name}"
@@ -1395,8 +1439,10 @@ sk-SK:
       feedback_sent_to: "Spätná väzba poslaná %{target_person}"
       feedback_skipped: "Spätná väzba vynechaná"
       invitation_cannot_be_sent: "Pozvánku nie je možné odoslať"
+      invitation_cannot_unsubscribe: ~
       invitation_limit_reached: "Snažíte sa poslať veľa pozvánok. Denný limit bol dosiahnutý."
       invitation_sent: "Pozvánka bola úspešne odoslaná"
+      invitation_successfully_unsubscribed: ~
       inviting_new_users_is_not_allowed_in_this_community: "Pozývať nových užívateľov nie je povolené."
       login_again: "Prosím, prihláste sa znovu."
       login_failed: "Prihlásenie neúspešné. Prosím, zadajte správne poverenia."
@@ -1685,6 +1731,10 @@ sk-SK:
       how_paypal_works: "Ako funguje PayPal"
       payment_help: "Pomoc k platbe"
       unable_load_availability: ~
+      booking_date: ~
+      select_one: ~
+      start_time: ~
+      end_time: ~
     new:
       listing: inzerát
       selected_category: "Kategória: %{category}"
@@ -1902,6 +1952,7 @@ sk-SK:
       email_is_in_use: "Daná e-mailová je už použitá."
       email_is_in_use_or_not_allowed: "Táto e-mailová adresa nie je povolená, alebo sa už používa. Pokiaľ máte problémy kontaktujte nás."
       email_not_allowed: "Tento e-mail nie je povolený v %{service_name}. Prosíme, použite povolenú e-mailovú adresu. Pokiaľ sa i naďalej nemôžete prihlásiť, kontaktujte nás."
+      invalid_username_or_email: ~
       email_restriction_instructions:
         one: "Prístup do %{service_name} je obmedzený. K pripojeniu budete potrebovať %{allowed_emails} e-mailovú adresu."
         few: "Prístup do %{service_name} je obmedzený. Budete potrebovať e-mailovú adresu, vďaka ktorej sa budete môcť prihlásiť."
@@ -2128,6 +2179,7 @@ sk-SK:
   date:
     formats:
       long_with_abbr_day_name: "%a, %d, %b, %Y"
+    first_day_of_week: ~
   datepicker:
     days:
       sunday: Nedeľa
@@ -2187,6 +2239,7 @@ sk-SK:
       short: "%b %e, %Y o %H:%M"
       shorter: "%b %e o %H:%M"
       short_date: "%e %b, %Y"
+      hours_only: "%H:%M"
   timestamps:
     day_ago: "%{count} včera"
     days_ago: "%{count} dní dozadu"
@@ -2234,10 +2287,13 @@ sk-SK:
         other: "Rezervovaných nocí:"
       price_per_day: "Cena za deň:"
       price_per_night: "Cena za noc:"
+      price_per_hour: ~
+      price_per_unit: ~
       quantity: "Množstvo:"
       subtotal: "Medzisúčet:"
       shipping-price: "Doprava:"
       stripe-fee: ~
+      start_end_time: ~
     price_per_quantity: "Cena za %{unit_type}:"
     price: "Cena:"
     quantity: "Množstvo: %{quantity}"
@@ -2253,6 +2309,8 @@ sk-SK:
         availability:
           something_went_wrong: ~
           saving_failed: ~
+        working_hours:
+          required: ~
       pricing_units:
         piece: kus
         hour: hodina
@@ -2265,6 +2323,13 @@ sk-SK:
       confirm_discarding_unsaved_availability_changes_explanation: ~
       confirm_discarding_unsaved_availability_changes_question: ~
       edit_listing_availability: ~
+      working_hours:
+        default_schedule: ~
+        i_am_available_on: ~
+        start_time: ~
+        end_time: ~
+        add_another_time_slot: ~
+        save: ~
     no_listings:
       sorry: ~
       try_other_search_terms: ~
@@ -2319,6 +2384,10 @@ sk-SK:
         other: "Nájdených <b>all&nbsp;%{count}</b> %{model}"
       multi_page: "Nájdený %{model} %{from} - %{to} z %{count} celkovo"
       multi_page_html: "Nájdený %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> z <b>%{count}</b> celkovo"
+    person:
+      community_members_entries_info:
+        multi_page: ~
+        multi_page_html: ~
   stripe_accounts:
     admin_account_not_connected: ~
     contact_admin_link_text: ~
@@ -2380,6 +2449,13 @@ sk-SK:
       document: ~
       send_verification: ~
       need_verification: ~
+    form_pin:
+      social_insurance_number: ~
+      social_security_number: ~
+      hong_kong_identity_card: ~
+      singapore_identity_card: ~
+      messages:
+        social_insurance_number: ~
   payment_settings:
     title: ~
     bank_account: ~

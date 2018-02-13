@@ -197,8 +197,10 @@ class PersonMailer < ActionMailer::Base
     @invitation_code_required = invitation.community.join_with_invite_only
     set_up_layout_variables(nil, invitation.community)
     @url_params[:locale] = mail_locale
+    @url_params[:code] = invitation.code
+    @invitation_community = invitation.community.full_name_with_separator(invitation.inviter.locale)
     with_locale(mail_locale, invitation.community.locales.map(&:to_sym), invitation.community.id) do
-      subject = t("emails.invitation_to_kassi.you_have_been_invited_to_kassi", :inviter => PersonViewUtils.person_display_name(invitation.inviter, invitation.community), :community => invitation.community.full_name_with_separator(invitation.inviter.locale))
+      subject = t("emails.invitation_to_kassi.you_have_been_invited_to_kassi", :inviter => PersonViewUtils.person_display_name(invitation.inviter, invitation.community), :community => @invitation_community)
       premailer_mail(:to => invitation.email,
                      :from => community_specific_sender(invitation.community),
                      :subject => subject,
@@ -338,10 +340,17 @@ class PersonMailer < ActionMailer::Base
   end
 
   # A message from the community admin to a community member
-  def self.community_member_email_from_admin(sender, recipient, community, email_subject, email_content, email_locale)
+  def self.community_member_email_from_admin(sender, recipient, community, email_content, email_locale, test = false)
     if recipient.should_receive?("email_from_admins") && (email_locale.eql?("any") || recipient.locale.eql?(email_locale))
+      subject = I18n.t('admin.emails.new.email_subject_text',
+                       :service_name => community.name(email_locale), :locale => recipient.locale)
+      subject = "[TEST] #{subject}" if test
+      content_hello = I18n.t('admin.emails.new.hello_firstname_text',
+                             :person => PersonViewUtils.person_display_name_for_type(recipient, "first_name_only"),
+                             :locale => recipient.locale)
+      content = "#{content_hello}<BR />\n #{email_content}"
       begin
-        MailCarrier.deliver_now(community_member_email(sender, recipient, email_subject, email_content, community))
+        MailCarrier.deliver_now(community_member_email(sender, recipient, subject, content, community))
       rescue => e
         # Catch the exception and continue sending the emails
         ApplicationHelper.send_error_notification("Error sending email to all the members of community #{community.full_name(email_locale)}: #{e.message}", e.class)

@@ -147,7 +147,12 @@ th-TH:
         amazon_ses_notification: ~
         this_is_how_it_will_look: ~
         send_verification_button: ~
+        change_sender_email: ~
         successfully_saved: ~
+        successfully_saved_name: ~
+        set_sender_name: ~
+        change_sender_name: ~
+        change_sender_prompt: ~
         status: ~
         status_verified: ~
         status_error: ~
@@ -216,6 +221,7 @@ th-TH:
         twitter_handle: "การจัดการ Twitter (ใช้กับปุ่มทวีตในหน้ารายการ)"
         update_settings: บันทึกการตั้งค่า
         automatically_confirmed_no_escrow: ~
+        automatically_confirmed_no_escrow_stripe_info: ~
         automatic_newsletter_frequency: "ส่งจดหมายข่าวโดยอัตโนมัติ: %{frequency_dropdown}"
         newsletter_daily: รายวัน
         newsletter_weekly: รายสัปดาห์
@@ -243,7 +249,12 @@ th-TH:
         export_all_as_csv: ~
         save_user_status_error: "การบันทึกล้มเหลว โปรดรีเฟรชหน้าเว็บ และลองอีกครั้ง"
         ban_user_confirmation: "การกระทำเช่นนี้จะย้ายผู้ใช้ออกจากตลาด และป้องกันไม่ให้พวกเขาเข้าถึงเว็บไซต์ได้อีกครั้ง กับบัญชีนี้ คุณแน่ใจหรือว่าต้องการดำเนินการต่อ?"
+        unban_user_confirmation: ~
         ban_me_error: ~
+        search: ~
+        search_by_name_email: ~
+        reset_search: ~
+        for_search_terms: ~
       new_layout:
         new_layout: ~
         description_roadmap_new: ~
@@ -306,6 +317,7 @@ th-TH:
           initiated_by: ตัวเริ่ม
           other_party: กลุ่มอื่น
         status:
+          conversation: ~
           free: การสนทนา
           pending: กำลังรอดำเนินการ
           preauthorized: ให้อนุญาตมาก่อนแล้ว
@@ -341,6 +353,17 @@ th-TH:
             initiated: ~
             pending_ext: ~
         not_available: ~
+      conversations:
+        conversations: ~
+        headers:
+          started_from: ~
+          status: ~
+          started: ~
+          last_activity: ~
+          initiated_by: ~
+          other_party: ~
+        participants: ~
+        profile: ~
     custom_fields:
       edit:
         edit_listing_field: "แก้ไขข้อมูลรายการ '%{field_name}'"
@@ -419,6 +442,11 @@ th-TH:
         any_language: ภาษาใดก็ได้
         message_will_be_sent_only_to_people_with_this_language: "หมายเหตุ: อีเมล์จะถูกส่งไปยังเฉพาะผู้ใช้ที่กำลังใช้ %{service_name} ในภาษาที่คุณ เลือก"
         email_sent: ส่งอีเมล์สำเร็จแล้ว
+        to_improve_email_deliverability: ~
+        email_subject_text: ~
+        firstname_cannot_be_removed: ~
+        hello_firstname: ~
+        hello_firstname_text: ~
     left_hand_navigation:
       general: ~
       users_and_transactions: ผู้ใช้และการทำธุรกรรม
@@ -431,9 +459,11 @@ th-TH:
       read_more: ~
       read_more_availability_management: ~
       allow_providers_to_manage_availability: ~
+      per_hour_availability: ~
       per_day_availability: ~
       per_night_availability: ~
       pricing_units_disabled_info: ~
+      can_not_find_name: ~
       index:
         listing_shapes: ~
         description: ~
@@ -560,10 +590,19 @@ th-TH:
       stripe_fee: ~
       stripe_fee_notice: ~
       fee_should_be_less_than_minimum_price: ~
+      confirm_disable: ~
       stripe_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
       paypal_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
+      cannot_enable_gateway: ~
+      cannot_disable_gateway: ~
       stripe_form:
         add_your_api_keys: ~
         how_to_get_these: ~
@@ -905,7 +944,10 @@ th-TH:
       message_not_displaying_correctly: อีเมลนี้แสดงอย่างถูกต้องหรือไม่?
       view_it_in_your_browser: แสดงในเบาว์เซอร์ของคุณ
       or: หรือ
+      unsubscribe_from_these_emails_info: ~
       unsubscribe_from_these_emails: ยกเลิกการรับอีเมล์เหล่านี้
+      unsubscribe_from_invitation_emails_info: ~
+      unsubscribe_from_invitation_emails: ~
     conversation_status_changed:
       has_accepted_your_offer: "%{accepter} ได้ยอมรับข้อเสนอ %{listing} ของคุณแล้ว"
       has_accepted_your_request: "%{accepter} ได้ตอบรับออเดอร์ %{listing} ของคุณแล้ว"
@@ -940,6 +982,7 @@ th-TH:
       price_per_unit_type: ~
       quantity: ~
       you_have_received_new_payment: "คุณได้รับการชำระเงิน <b>%{payment_sum}</b> สำหรับ <b>%{listing_title}</b> จาก %{payer_full_name} นี่คือใบเสร็จรับเงินของคุณ"
+      listing_per_unit_title: ~
     payment_receipt_to_seller:
       payment_gateway_fee: ~
       shipping_total: ~
@@ -987,6 +1030,7 @@ th-TH:
       stripe_gateway_fee: ~
       paypal_gateway_fee: ~
       money_will_be_transferred: "เงินจะถูกโอนไปยัง %{recipient_name} เมื่อ ก.) คุณได้ทำเครื่องหมายให้คำขอเสร็จสมบูรณ์ หรือ ข.) คุณจ่ายเงินมาแล้ว %{automatic_confirmation_days} วัน"
+      listing_per_unit_title: ~
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name} ได้ให้ข้อเสนอแนะแก่คุณใน %{service_name}"
       you_can_give_feedback_to: "คุณยังไม่ได้ให้ข้อเสนอแนะแก่ %{name}"
@@ -1371,8 +1415,10 @@ th-TH:
       feedback_sent_to: "ข้อเสนอแนะได้ถูกส่งไปยัง%{target_person}"
       feedback_skipped: ความคิดเห็นที่ถูกข้าม
       invitation_cannot_be_sent: การเชิญไม่สามารถจัดส่งได้
+      invitation_cannot_unsubscribe: ~
       invitation_limit_reached: ~
       invitation_sent: ส่งการเชิญเรียบร้อยแล้ว
+      invitation_successfully_unsubscribed: ~
       inviting_new_users_is_not_allowed_in_this_community: "ไม่ได้รับอนุญาตให้เชิญผู้ใช้ใหม่ "
       login_again: กรุณาเข้าสู่ระบบอีกครั้ง
       login_failed: "การเข้าสู่ระบบล้มเหลว กรุณากรอกข้อมูลประจำตัวที่ถูกต้อง"
@@ -1656,6 +1702,10 @@ th-TH:
       how_paypal_works: ~
       payment_help: ~
       unable_load_availability: ~
+      booking_date: ~
+      select_one: ~
+      start_time: ~
+      end_time: ~
     new:
       listing: รายการ
       selected_category: "หมวดหมู่: %{category}"
@@ -1873,6 +1923,7 @@ th-TH:
       email_is_in_use: อีเมล์ที่คุณให้ได้ถูกใช้ไปแล้ว
       email_is_in_use_or_not_allowed: "อีเมล์นี้ไม่ได้รับอนุญาต หรือถูกใช้ไปแล้ว หากคุณไม่สามารถเข้าระบบได้ กรุณาติดต่อเรา"
       email_not_allowed: "อีเมล์นี้ไม่ได้รับอนุญาตใน %{service_name} โปรดใช้ที่อยู่อีเมลที่ได้รับอนุญาต หากคุณยังเข้าระบบไม่ได้ กรุณาติดต่อเรา"
+      invalid_username_or_email: ~
       email_restriction_instructions:
         other: "การเข้าถึงไปยัง %{service_name} ถูกจำกัด  คุณจำเป็นต้องมีที่อยู่อีเมล '%{allowed_emails}' เพื่อที่จะเข้าร่วม"
       family_name: นามสกุล
@@ -2099,6 +2150,7 @@ th-TH:
   date:
     formats:
       long_with_abbr_day_name: "%a, %b %d, %Y"
+    first_day_of_week: ~
   datepicker:
     days:
       sunday: วันอาทิตย์
@@ -2158,6 +2210,7 @@ th-TH:
       short: "%b %e, %Y เวลา %H:%M"
       shorter: "%b %e เวลา %H:%M"
       short_date: "%b %e, %Y"
+      hours_only: ~
   timestamps:
     day_ago: "%{count} วันที่แล้ว"
     days_ago: "%{count} วันที่แล้ว"
@@ -2178,10 +2231,13 @@ th-TH:
       booked_nights: ~
       price_per_day: ~
       price_per_night: ~
+      price_per_hour: ~
+      price_per_unit: ~
       quantity: ~
       subtotal: ~
       shipping-price: จัดส่ง
       stripe-fee: ~
+      start_end_time: ~
     price_per_quantity: ~
     price: ~
     quantity: ~
@@ -2197,6 +2253,8 @@ th-TH:
         availability:
           something_went_wrong: ~
           saving_failed: ~
+        working_hours:
+          required: ~
       pricing_units:
         piece: ~
         hour: ~
@@ -2209,6 +2267,13 @@ th-TH:
       confirm_discarding_unsaved_availability_changes_explanation: ~
       confirm_discarding_unsaved_availability_changes_question: ~
       edit_listing_availability: ~
+      working_hours:
+        default_schedule: ~
+        i_am_available_on: ~
+        start_time: ~
+        end_time: ~
+        add_another_time_slot: ~
+        save: ~
     no_listings:
       sorry: ~
       try_other_search_terms: ~
@@ -2257,6 +2322,10 @@ th-TH:
         other: "กำลังแสดง <b>1</b> %{model}"
       multi_page: "กำลังแสดง %{model} %{from} - %{to} จาก %{count} ของทั้งหมด"
       multi_page_html: "กำลังแสดง %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> จาก <b>%{count}</b> ของทั้งหมด"
+    person:
+      community_members_entries_info:
+        multi_page: ~
+        multi_page_html: ~
   stripe_accounts:
     admin_account_not_connected: ~
     contact_admin_link_text: ~
@@ -2318,6 +2387,13 @@ th-TH:
       document: ~
       send_verification: ~
       need_verification: ~
+    form_pin:
+      social_insurance_number: ~
+      social_security_number: ~
+      hong_kong_identity_card: ~
+      singapore_identity_card: ~
+      messages:
+        social_insurance_number: ~
   payment_settings:
     title: ~
     bank_account: ~

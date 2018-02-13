@@ -1,5 +1,7 @@
 class ListingPresenter < MemoisticPresenter
-  attr_accessor :listing, :current_community, :form_path, :params, :current_image, :prev_image_id, :next_image_id, :shape
+  include ListingAvailabilityManage
+  attr_accessor :listing, :current_community, :form_path, :params, :current_image, :prev_image_id, :next_image_id
+  attr_reader :shape
 
   def initialize(listing, current_community, params, current_user)
     @listing = listing
@@ -7,6 +9,10 @@ class ListingPresenter < MemoisticPresenter
     @current_user = current_user
     @params = params
     set_current_image
+  end
+
+  def listing_shape=(listing_shape)
+    @shape = listing_shape
   end
 
   def is_author
@@ -80,40 +86,6 @@ class ListingPresenter < MemoisticPresenter
     delivery_config(@listing.require_shipping_address, @listing.pickup_enabled, @listing.shipping_price, @listing.shipping_price_additional, @listing.currency)
   end
 
-  def availability_enabled
-    @listing.availability.to_sym == :booking
-  end
-
-  def blocked_dates_start_on
-    1.day.ago.to_date
-  end
-
-  def blocked_dates_end_on
-    if stripe_in_use
-      APP_CONFIG.stripe_max_booking_date.days.from_now.to_date
-    else
-      12.months.from_now.to_date
-    end
-  end
-
-  def blocked_dates_result
-    if availability_enabled
-
-      get_blocked_dates(
-        start_on: blocked_dates_start_on,
-        end_on: blocked_dates_end_on,
-        community: @current_community,
-        user: @current_user,
-        listing: @listing)
-    else
-      Result::Success.new([])
-    end
-  end
-
-  def blocked_dates_end_on_midnight
-    DateUtils.to_midnight_utc(blocked_dates_end_on)
-  end
-
   def listing_unit_type
     @listing.unit_type
   end
@@ -156,31 +128,6 @@ class ListingPresenter < MemoisticPresenter
       }
   end
 
-  def get_blocked_dates(start_on:, end_on:, community:, user:, listing:)
-    HarmonyClient.get(
-      :query_timeslots,
-      params: {
-        marketplaceId: community.uuid_object,
-        refId: listing.uuid_object,
-        start: start_on,
-        end: end_on
-      }
-    ).rescue {
-      Result::Error.new(nil, code: :harmony_api_error)
-    }.and_then { |res|
-      available_slots = dates_to_ts_set(
-        res[:body][:data].map { |timeslot| timeslot[:attributes][:start].to_date }
-      )
-      Result::Success.new(
-        dates_to_ts_set(start_on..end_on).subtract(available_slots)
-      )
-    }
-  end
-
-  def dates_to_ts_set(dates)
-    Set.new(dates.map { |d| DateUtils.to_midnight_utc(d) })
-  end
-
   def delivery_type
     delivery_opts.present? ? delivery_opts.first[:name].to_s : ""
   end
@@ -200,15 +147,15 @@ class ListingPresenter < MemoisticPresenter
 
   def category_tree
     CategoryViewUtils.category_tree(
-      categories: ListingService::API::Api.categories.get_all(community_id: @current_community.id)[:data],
-      shapes: shapes,
+      categories: @current_community.categories,
+      shapes: @current_community.shapes,
       locale: I18n.locale,
       all_locales: @current_community.locales
     )
   end
 
   def shapes
-    ListingShape.where(community_id: @current_community.id).for_listing_form.all
+    ListingShape.where(community_id: @current_community.id).exist_ordered.all
   end
 
   def categories
@@ -278,13 +225,13 @@ class ListingPresenter < MemoisticPresenter
   end
 
   def unit_options
-    unit_options = ListingViewUtils.unit_options(shape[:units], unit_from_listing(@listing))
+    unit_options = ListingViewUtils.unit_options(shape.units, unit_from_listing(@listing))
   end
 
   def unit_from_listing(listing)
     HashUtils.compact({
-      type: Maybe(listing.unit_type).to_sym.or_else(nil),
-      quantity_selector: Maybe(listing.quantity_selector).to_sym.or_else(nil),
+      unit_type: listing.unit_type.present? ? listing.unit_type.to_s : nil,
+      quantity_selector: listing.quantity_selector,
       unit_tr_key: listing.unit_tr_key,
       unit_selector_tr_key: listing.unit_selector_tr_key
     })
@@ -321,7 +268,7 @@ class ListingPresenter < MemoisticPresenter
   end
 
   def always_show_additional_shipping_price
-    shape && shape[:units].length == 1 && shape[:units].first[:kind] == :quantity
+    shape && shape.units.length == 1 && shape.units.first[:kind] == 'quantity'
   end
 
   def category_id
@@ -330,6 +277,10 @@ class ListingPresenter < MemoisticPresenter
 
   def subcategory_id
     @listing.category.parent_id ?  @listing.category.id : nil
+  end
+
+  def payments_enabled?
+    process == :preauthorize
   end
 
   memoize_all_reader_methods

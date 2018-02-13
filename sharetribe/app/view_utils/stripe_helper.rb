@@ -17,7 +17,7 @@ module StripeHelper
     settings = Maybe(TxApi.settings.get(community_id: community_id, payment_gateway: :stripe, payment_process: :preauthorize))
       .select { |result| result[:success] }
       .map { |result| result[:data] }
-      .or_else(nil)
+      .or_else(false)
 
     return settings && settings[:active] && settings[:api_verified]
   end
@@ -32,6 +32,15 @@ module StripeHelper
       .or_else(nil)
 
     return !!settings
+  end
+
+  def stripe_available?(community)
+    stripe_mode = StripeService::API::Api.wrapper.charges_mode(community.id)
+    MarketplaceService::AvailableCurrencies.stripe_allows_country_and_currency?(
+      community.country,
+      community.currency,
+      stripe_mode
+    )
   end
 
   def user_and_community_ready_for_payments?(person_id, community_id)

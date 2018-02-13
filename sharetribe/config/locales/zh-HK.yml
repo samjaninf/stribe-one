@@ -147,7 +147,12 @@ zh-HK:
         amazon_ses_notification: ~
         this_is_how_it_will_look: 這是預覽：
         send_verification_button: 發送驗証電郵
+        change_sender_email: ~
         successfully_saved: 已成功儲存發送者的地址。驗証電郵將很快寄出。
+        successfully_saved_name: ~
+        set_sender_name: ~
+        change_sender_name: ~
+        change_sender_prompt: ~
         status: "狀態：%{status}"
         status_verified: "已認証 – 使用中"
         status_error: 發生錯誤。請刷新這個頁面。
@@ -216,6 +221,7 @@ zh-HK:
         twitter_handle: Twitter用戶名（使用在信息頁面的tweet按鈕）
         update_settings: 保存設定
         automatically_confirmed_no_escrow: "在付款後%{days_dropdown}天內交易將被自動標記為完成。"
+        automatically_confirmed_no_escrow_stripe_info: ~
         automatic_newsletter_frequency: "自動發送電子報: %{frequency_dropdown}"
         newsletter_daily: 每日
         newsletter_weekly: 每周
@@ -243,7 +249,12 @@ zh-HK:
         export_all_as_csv: ~
         save_user_status_error: ~
         ban_user_confirmation: 這將會把用戶從集市中刪除並阻止他們使用這個帳號再次訪問該站點。你確認要繼續嗎？
+        unban_user_confirmation: ~
         ban_me_error: ~
+        search: ~
+        search_by_name_email: ~
+        reset_search: ~
+        for_search_terms: ~
       new_layout:
         new_layout: ~
         description_roadmap_new: ~
@@ -306,6 +317,7 @@ zh-HK:
           initiated_by: 發起人
           other_party: 其他參與者
         status:
+          conversation: ~
           free: 對話
           pending: 等待中
           preauthorized: 已預先授權
@@ -341,6 +353,17 @@ zh-HK:
             initiated: ~
             pending_ext: ~
         not_available: ~
+      conversations:
+        conversations: ~
+        headers:
+          started_from: ~
+          status: ~
+          started: ~
+          last_activity: ~
+          initiated_by: ~
+          other_party: ~
+        participants: ~
+        profile: ~
     custom_fields:
       edit:
         edit_listing_field: ~
@@ -419,6 +442,11 @@ zh-HK:
         any_language: 任何語言
         message_will_be_sent_only_to_people_with_this_language: "注意：電子郵件只會以你選擇的語言發送給使用%{service_name}的用戶。"
         email_sent: 郵件已發送
+        to_improve_email_deliverability: ~
+        email_subject_text: ~
+        firstname_cannot_be_removed: ~
+        hello_firstname: ~
+        hello_firstname_text: ~
     left_hand_navigation:
       general: ~
       users_and_transactions: ~
@@ -431,9 +459,11 @@ zh-HK:
       read_more: ~
       read_more_availability_management: ~
       allow_providers_to_manage_availability: ~
+      per_hour_availability: ~
       per_day_availability: ~
       per_night_availability: ~
       pricing_units_disabled_info: ~
+      can_not_find_name: ~
       index:
         listing_shapes: 交易類別
         description: 交易類型決定了網站上訂單如何處理。通過交易類型可以決定用戶可以出租或者出售，或者只是讓用戶發布一些公告然後通過免費的消息進行溝通。
@@ -564,10 +594,19 @@ zh-HK:
       stripe_fee: ~
       stripe_fee_notice: ~
       fee_should_be_less_than_minimum_price: ~
+      confirm_disable: ~
       stripe_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
       paypal_connected:
         title: ~
+        disable: ~
+        disabled: ~
+        enable: ~
+      cannot_enable_gateway: ~
+      cannot_disable_gateway: ~
       stripe_form:
         add_your_api_keys: ~
         how_to_get_these: ~
@@ -907,7 +946,10 @@ zh-HK:
       message_not_displaying_correctly: 郵件顯示正確嗎？
       view_it_in_your_browser: 在你的瀏覽器中觀看
       or: 或
+      unsubscribe_from_these_emails_info: ~
       unsubscribe_from_these_emails: 取消訂閱這些電郵
+      unsubscribe_from_invitation_emails_info: ~
+      unsubscribe_from_invitation_emails: ~
     conversation_status_changed:
       has_accepted_your_offer: "%{accepter} 已經接受了你的%{listing}"
       has_accepted_your_request: "%{accepter}已經接受了你的%{listing}"
@@ -942,6 +984,7 @@ zh-HK:
       price_per_unit_type: "每%{unit_type}的價格"
       quantity: 數量：
       you_have_received_new_payment: "你已經為<b>%{listing_title}</b>支付了<b>%{payment_sum}</b>給%{payer_full_name}。這是你的收據。"
+      listing_per_unit_title: ~
     payment_receipt_to_seller:
       payment_gateway_fee: ~
       shipping_total: ~
@@ -989,6 +1032,7 @@ zh-HK:
       stripe_gateway_fee: ~
       paypal_gateway_fee: ~
       money_will_be_transferred: "以下兩種情況發生時，款項將被轉帳至%{recipient_name}： a) 你標記請求為完成後；或 b) 在你付款%{automatic_confirmation_days}天後。"
+      listing_per_unit_title: ~
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name}已在%{service_name}對您作出評價。"
       you_can_give_feedback_to: "您還未對%{name}作出評價。"
@@ -1373,15 +1417,17 @@ zh-HK:
       feedback_sent_to: "回應已發送至%{target_person}。"
       feedback_skipped: 跳過回應
       invitation_cannot_be_sent: 未發出邀請
+      invitation_cannot_unsubscribe: ~
       invitation_limit_reached: 你發送了太多的邀請。，並已達到每日的上限。
       invitation_sent: 已成功發出邀請
+      invitation_successfully_unsubscribed: ~
       inviting_new_users_is_not_allowed_in_this_community: 不允許邀請新用戶
       login_again: 請重新登入。
       login_failed: 登入失敗。請輸入正確的用戶名稱及密碼。
       account_creation_successful: "%{person_name}，歡迎來到%{service_name}！"
       account_deleted: 你的帳戶已被删除
       login_successful: "歡迎您,%{person_name}！"
-      logout_successful: "您已退出了%{service_name}，歡迎電次使用我們的服務！"
+      logout_successful: "您已退出了%{service_name}，歡迎再次使用我們的服務！"
       news_item_created: 已建立的文章
       news_item_creation_failed: 文章建立失敗
       news_item_update_failed: 文章更新失敗
@@ -1661,6 +1707,10 @@ zh-HK:
       how_paypal_works: PayPal如何運作
       payment_help: 付款說明
       unable_load_availability: ~
+      booking_date: ~
+      select_one: ~
+      start_time: ~
+      end_time: ~
     new:
       listing: 訊息
       selected_category: "類別：%{category}"
@@ -1878,6 +1928,7 @@ zh-HK:
       email_is_in_use: 你所提供的電郵已被使用。
       email_is_in_use_or_not_allowed: 此電郵地址不允許使用或已被註冊。如果你無法註冊，請聯絡我們。
       email_not_allowed: "這電郵地址不被允許於%{service_name}中使用。請使用一個允許的電郵地址。若你預到什麼問題，請聯繫我們。"
+      invalid_username_or_email: ~
       email_restriction_instructions:
         other: "你已被限制加入%{service_name}。你需要一個有效的電郵地址以加入我們。"
       family_name: 姓
@@ -2102,6 +2153,7 @@ zh-HK:
   date:
     formats:
       long_with_abbr_day_name: ~
+    first_day_of_week: ~
   datepicker:
     days:
       sunday: ~
@@ -2161,6 +2213,7 @@ zh-HK:
       short: "%e %b %Y %I:%M%p"
       shorter: "%e %b %Ｈ:%M"
       short_date: ~
+      hours_only: "%H:%M"
   timestamps:
     day_ago: "%{count} 天前"
     days_ago: "%{count} 天前"
@@ -2181,10 +2234,13 @@ zh-HK:
       booked_nights: ~
       price_per_day: ~
       price_per_night: ~
+      price_per_hour: ~
+      price_per_unit: ~
       quantity: ~
       subtotal: ~
       shipping-price: ~
       stripe-fee: ~
+      start_end_time: ~
     price_per_quantity: ~
     price: "總共:"
     quantity: ~
@@ -2200,6 +2256,8 @@ zh-HK:
         availability:
           something_went_wrong: ~
           saving_failed: ~
+        working_hours:
+          required: ~
       pricing_units:
         piece: ~
         hour: ~
@@ -2212,6 +2270,13 @@ zh-HK:
       confirm_discarding_unsaved_availability_changes_explanation: ~
       confirm_discarding_unsaved_availability_changes_question: ~
       edit_listing_availability: ~
+      working_hours:
+        default_schedule: ~
+        i_am_available_on: ~
+        start_time: ~
+        end_time: ~
+        add_another_time_slot: ~
+        save: ~
     no_listings:
       sorry: ~
       try_other_search_terms: ~
@@ -2254,6 +2319,10 @@ zh-HK:
     page_entries_info:
       multi_page: "顯示 %{model} %{from} - %{to} 總共 %{count} 个"
       multi_page_html: "顯示 %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> 總共 <b>%{count}</b> 個"
+    person:
+      community_members_entries_info:
+        multi_page: ~
+        multi_page_html: ~
   stripe_accounts:
     admin_account_not_connected: ~
     contact_admin_link_text: ~
@@ -2315,6 +2384,13 @@ zh-HK:
       document: ~
       send_verification: ~
       need_verification: ~
+    form_pin:
+      social_insurance_number: ~
+      social_security_number: ~
+      hong_kong_identity_card: ~
+      singapore_identity_card: ~
+      messages:
+        social_insurance_number: ~
   payment_settings:
     title: ~
     bank_account: ~

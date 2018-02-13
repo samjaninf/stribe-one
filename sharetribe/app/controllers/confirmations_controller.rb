@@ -5,6 +5,10 @@ class ConfirmationsController < Devise::ConfirmationsController
               :ensure_consent_given,
               :ensure_user_belongs_to_community
 
+  before_action(only: [:create]) do |controller|
+    controller.ensure_logged_in t("layouts.notifications.you_must_log_in_to_view_this_page")
+  end
+
   # This is overridden from Devise::ConfirmationsController
   # to be able to handle better the situations of resending confirmation and
   # confirmation attemt with wrong token.
@@ -45,10 +49,10 @@ class ConfirmationsController < Devise::ConfirmationsController
       end
       flash[:notice] = t("layouts.notifications.additional_email_confirmed")
 
-      Analytics.record_event(flash, "AccountConfirmed")
+      record_event(flash, "AccountConfirmed")
 
       if @current_user && @current_user.has_admin_rights?(@current_community)
-        report_to_gtm({event: "admin_email_confirmed"})
+        record_event(flash, "admin_email_confirmed")
         redirect_to admin_getting_started_guide_path and return
       elsif @current_user # normal logged in user
         if session[:return_to]

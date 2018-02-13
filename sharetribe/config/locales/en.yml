@@ -152,7 +152,12 @@ en:
         amazon_ses_notification: "You will receive an email from %{email_sender} to confirm your e-mail address. The email subject is '%{email_subject}'. Follow the instructions to verify your email."
         this_is_how_it_will_look: "This is how it will look:"
         send_verification_button: "Send verification email"
+        change_sender_email: "change sender email"
         successfully_saved: "Sender address saved successfully. The verification email will be sent soon."
+        successfully_saved_name: "Sender name updated successfully."
+        set_sender_name: "Change sender name"
+        change_sender_name: "Change sender name"
+        change_sender_prompt: "%{change_name_link} or %{change_email_link}"
         status: "Status: %{status}"
         status_verified: "Verified - in use"
         status_error: "An error occurred. Please refresh the page."
@@ -221,6 +226,7 @@ en:
         twitter_handle: "Twitter handle (used with tweet button in listing page)"
         update_settings: "Save settings"
         automatically_confirmed_no_escrow: "Order will be automatically marked as completed %{days_dropdown} days after the payment has been made"
+        automatically_confirmed_no_escrow_stripe_info: "For transactions processed by Stripe, payments to providers are delayed until the order is marked as completed. %{learn_more}."
         automatic_newsletter_frequency: "Send automatic newsletter: %{frequency_dropdown}"
         newsletter_daily: Daily
         newsletter_weekly: Weekly
@@ -242,13 +248,18 @@ en:
         join_date: Joined
         admin: Admin
         posting_allowed: "Posting allowed"
-        ban_user: "Ban user"
+        ban_user: Ban
         saving_user_status: Saving...
         save_user_status_successful: Saved
         export_all_as_csv: "Export all as CSV"
         save_user_status_error: "Saving failed. Please refresh the page and try again."
         ban_user_confirmation: "This removes the user from the marketplace and prevents them from accessing the site again with this account. Are you sure you want to proceed?"
+        unban_user_confirmation: "This unbans the user in the marketplace and allows them to access the site again with this account. Are you sure you want to proceed?"
         ban_me_error: "You cannot ban yourself."
+        search: Search
+        search_by_name_email: "Search for a name, email or display name"
+        reset_search: "Show all"
+        for_search_terms: "for: %{terms}"
       new_layout:
         new_layout: "New layout"
         description_roadmap_new: "When new layout components are made available for your marketplace, you can choose whether you want to start using the new component or continue using the old one. You can toggle the selection at any point from this page. It's recommended to always be using the new version, as the old components might be phased out at some point. In case a component you're currently using is going to be phased out, you will be contacted in advance."
@@ -311,7 +322,8 @@ en:
           initiated_by: Starter
           other_party: "Other party"
         status:
-          free: Conversation
+          conversation: Conversation
+          free: "Free transaction"
           pending: Pending
           preauthorized: Preauthorized
           accepted: Accepted
@@ -322,7 +334,7 @@ en:
           initiated: "Waiting PayPal payment"
           pending_ext: "Waiting PayPal payment"
           none:
-            free: Conversation
+            free: "Free transaction"
           paypal:
             free: Conversation
             pending: Pending
@@ -346,6 +358,17 @@ en:
             initiated: "Waiting Stripe payment"
             pending_ext: "Waiting Stripe payment"
         not_available: "Not available"
+      conversations:
+        conversations: "View conversations"
+        headers:
+          started_from: "Started from"
+          status: Status
+          started: Started
+          last_activity: "Latest Activity"
+          initiated_by: Starter
+          other_party: "Other party"
+        participants: "Conversation: %{starter} with %{author}"
+        profile: "%{author}'s Profile"
     custom_fields:
       edit:
         edit_listing_field: "Edit listing field '%{field_name}'"
@@ -424,6 +447,11 @@ en:
         any_language: "Any language"
         message_will_be_sent_only_to_people_with_this_language: "The email will be sent only to the users who are using %{service_name} in the language you choose."
         email_sent: "Email sent."
+        to_improve_email_deliverability: "To improve email deliverability the email subject is generated automatically and cannot be changed."
+        email_subject_text: "A new message from the %{service_name} team"
+        firstname_cannot_be_removed: "\"Firstname\" cannot be removed and will be replaced by the actual first name of each recipient."
+        hello_firstname: "Hello Firstname,"
+        hello_firstname_text: "Hello %{person},"
     left_hand_navigation:
       general: General
       users_and_transactions: "Users & transactions"
@@ -436,9 +464,11 @@ en:
       read_more: "Read more about automatic availability management."
       read_more_availability_management: "Read more about availability management."
       allow_providers_to_manage_availability: "Allow providers to manage their availability from a calendar"
+      per_hour_availability: "\"Per hour\" availability"
       per_day_availability: "\"Per day\" availability"
       per_night_availability: "\"Per night\" availability"
       pricing_units_disabled_info: "Pricing units cannot be used when availability calendar is enabled."
+      can_not_find_name: "Can not find order type with given name: %{name}"
       index:
         listing_shapes: "Order types"
         description: "Order types determine how the order process works in your site. You can decide whether your users are renting or selling, or perhaps just posting announcements and communicating via direct messages."
@@ -577,10 +607,19 @@ en:
       stripe_fee: "Stripe's fees"
       stripe_fee_notice: "%{stripe_fee_link} will be deducted from the transaction fee you are charging."
       fee_should_be_less_than_minimum_price: "Minimum transaction fee must be lower than minimum transaction size"
+      confirm_disable: "Are you sure you want to disable %{gateway}? If you disable it, providers will no longer be able to receive money and buyers will no longer be able to pay through this payment method. If providers haven't configured another payment method, buyers will not be able to buy from them."
       stripe_connected:
         title: "Stripe connected"
+        disable: "Disable Stripe"
+        disabled: "Stripe disabled"
+        enable: "Enable Stripe again"
       paypal_connected:
         title: "PayPal connected"
+        disable: "Disable PayPal"
+        disabled: "PayPal disabled"
+        enable: "Enable PayPal again"
+      cannot_enable_gateway: "Cannot enable payment gateway %{gateway}."
+      cannot_disable_gateway: "Cannot disable payment gateway %{gateway}."
       stripe_form:
         add_your_api_keys: "Add your Stripe API keys"
         how_to_get_these: "How to get these?"
@@ -926,7 +965,10 @@ en:
       message_not_displaying_correctly: "Is this email not displaying correctly?"
       view_it_in_your_browser: "View it in your browser"
       or: or
+      unsubscribe_from_these_emails_info: "You have received this email because you are a member of %{service_name}."
       unsubscribe_from_these_emails: "unsubscribe from these emails"
+      unsubscribe_from_invitation_emails_info: "You have received this email because a member of %{service_name} has invited you to join them."
+      unsubscribe_from_invitation_emails: "Unsubscribe from invitation emails to join %{service_name}"
     conversation_status_changed:
       has_accepted_your_offer: "%{accepter} has accepted your offer %{listing}."
       has_accepted_your_request: "%{accepter} has accepted your request %{listing}."
@@ -942,7 +984,7 @@ en:
       remember_to_confirm: "When the order is fulfilled, remember to mark it as completed. If the order is not fulfilled your have %{days_to_automatic_confirmation} days to cancel it. Otherwise it will be automatically marked as completed."
     invitation_to_kassi:
       hi: Hi!
-      you_have_been_invited_to_kassi: "%{inviter} has invited you to %{service_name}."
+      you_have_been_invited_to_kassi: "%{inviter} has invited you to %{service_name}"
       here_is_a_message_from: "Here is a personal message from %{inviter}:"
       join_now: "Join now"
       invitation_code: "Invitation code: %{code}"
@@ -961,6 +1003,7 @@ en:
       price_per_unit_type: "Price per %{unit_type}"
       quantity: "Quantity:"
       you_have_received_new_payment: "You have been paid <b>%{payment_sum}</b> for <b>%{listing_title}</b> by %{payer_full_name}. Here is your receipt."
+      listing_per_unit_title: "%{title}, per %{unit_type}"
     payment_receipt_to_seller:
       payment_gateway_fee: "Payment processing fee:"
       shipping_total: "Shipping:"
@@ -1008,6 +1051,7 @@ en:
       stripe_gateway_fee: "Stripe's fee:"
       paypal_gateway_fee: "PayPal's fee:"
       money_will_be_transferred: "The money will be transferred to %{recipient_name} when a) you have marked the request completed or b) %{automatic_confirmation_days} days have passed since you paid."
+      listing_per_unit_title: "%{title}, per %{unit_type}"
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name} has given you feedback in %{service_name}"
       you_can_give_feedback_to: "You haven't yet given feedback to %{name}."
@@ -1392,8 +1436,10 @@ en:
       feedback_sent_to: "Feedback sent to %{target_person}."
       feedback_skipped: "Feedback skipped"
       invitation_cannot_be_sent: "Invitation could not be sent"
+      invitation_cannot_unsubscribe: "Cannot unsubscribe from invitation emails"
       invitation_limit_reached: "You were trying to send too many invitations. Daily limit reached."
       invitation_sent: "Invitation sent successfully"
+      invitation_successfully_unsubscribed: "Successfully unsubscribed from invitation emails"
       inviting_new_users_is_not_allowed_in_this_community: "Inviting new users is not allowed."
       login_again: "Please log in again."
       login_failed: "Login failed. Please enter the correct credentials."
@@ -1588,7 +1634,7 @@ en:
         mass: "piece, kg, l, m2, ..."
         time: "hour, day, month, ..."
         long_time: "week, month, ..."
-        after_service_fee_you_will_get: "After %{service_name} and a payment processor fees you will get %{sum_with_currency}"
+        after_service_fee_you_will_get: "After %{service_name} and payment processor fees you will get %{sum_with_currency}"
         no_service_fee_you_will_get_paypal_text: "%{paypal_fee_info_link} will be deducted from the price."
         no_service_fee_you_will_get_payment_text: "%{payment_fee_info_link} will be deducted from the price."
         after_service_fee_you_will_get_payment_text: "Once someone makes an order, %{service_name} fee (%{sum_with_currency}) and a %{payment_fee_info_link} will be deducted from the price."
@@ -1681,6 +1727,10 @@ en:
       how_paypal_works: "How PayPal Works"
       payment_help: "Payment help"
       unable_load_availability: "Could not load availability information. Please try again later."
+      booking_date: "Booking date"
+      select_one: "Select one"
+      start_time: "Start time"
+      end_time: "End time"
     new:
       listing: listing
       selected_category: "Category: %{category}"
@@ -1898,6 +1948,7 @@ en:
       email_is_in_use: "The email you gave is already in use."
       email_is_in_use_or_not_allowed: "This email is not allowed or it is already in use. If you can't get in, contact us."
       email_not_allowed: "This email is not allowed in %{service_name}. Please use an email address that is allowed. If you still cannot get in, contact us."
+      invalid_username_or_email: "The username or email are invalid or already in use"
       email_restriction_instructions:
         one: "The access to %{service_name} is restricted. To join you need a '%{allowed_emails}' email address."
         other: "The access to %{service_name} is restricted. You need an email address that proves that you are entitled to join."
@@ -2123,6 +2174,7 @@ en:
   date:
     formats:
       long_with_abbr_day_name: "%a, %b %d, %Y"
+    first_day_of_week: 0
   datepicker:
     days:
       sunday: Sunday
@@ -2182,6 +2234,7 @@ en:
       short: "%b %e, %Y at %H:%M"
       shorter: "%b %e at %H:%M"
       short_date: "%b %e, %Y"
+      hours_only: "%l:%M %P"
   timestamps:
     day_ago: "%{count} day ago"
     days_ago: "%{count} days ago"
@@ -2220,12 +2273,21 @@ en:
       booked_nights_label:
         one: "Booked night:"
         other: "Booked nights:"
+      booked_hours_label:
+        one: "Booked hour:"
+        other: "Booked hours:"
       price_per_day: "Price per day:"
       price_per_night: "Price per night:"
+      price_per_hour: "Price per hour:"
+      price_per_unit: "Price per unit:"
       quantity: "Quantity:"
       subtotal: "Subtotal:"
       shipping-price: "Shipping:"
       stripe-fee: "Stripe Fee (estimated):"
+      duration_in_hours:
+        one: "(1 hour)"
+        other: "(%{count} hours)"
+      start_end_time: "%{start_time} to %{end_time}"
     price_per_quantity: "Price per %{unit_type}:"
     price: "Price:"
     quantity: "Quantity: %{quantity}"
@@ -2241,6 +2303,8 @@ en:
         availability:
           something_went_wrong: "We're not able to display availability information. Try to reload the page."
           saving_failed: "We're not able to save availability changes. Try to reload the page."
+        working_hours:
+          required: required
       pricing_units:
         piece: piece
         hour: hour
@@ -2253,6 +2317,13 @@ en:
       confirm_discarding_unsaved_availability_changes_explanation: "You have unsaved changes to your availability information. If you proceed, these changes will be lost."
       confirm_discarding_unsaved_availability_changes_question: "Are you sure you want to discard your changes?"
       edit_listing_availability: "Edit listing availability"
+      working_hours:
+        default_schedule: "Default schedule"
+        i_am_available_on: "I'm available on..."
+        start_time: "Start time"
+        end_time: "End time"
+        add_another_time_slot: "+ Add another time slot"
+        save: Save
     no_listings:
       sorry: "Sorry, no listings could be found for your search criteria."
       try_other_search_terms: "Maybe try other search terms?"
@@ -2310,6 +2381,18 @@ en:
         other: "Displaying <b>all&nbsp;%{count}</b> %{model}"
       multi_page: "Displaying %{model} %{from} - %{to} of %{count} in total"
       multi_page_html: "Displaying %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> in total"
+    person:
+      community_members_entries_info:
+        single_page:
+          zero: "No %{model} found"
+          one: "Displaying %{accepted_count} accepted %{accepted_model} and %{banned_count} banned %{banned_model}"
+          other: "Displaying %{accepted_count} accepted %{accepted_model} and %{banned_count} banned %{banned_model}"
+        single_page_html:
+          zero: "No %{model} found"
+          one: "Displaying <b>%{accepted_count}</b> accepted %{accepted_model} and %{banned_count} banned %{banned_model}"
+          other: "Displaying <b>%{accepted_count}</b> accepted %{accepted_model} and %{banned_count} banned %{banned_model}"
+        multi_page: "Displaying %{model} %{from} - %{to} of %{accepted_count} accepted %{accepted_model} and %{banned_count} banned %{banned_model}"
+        multi_page_html: "Displaying %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{accepted_count}</b> accepted %{accepted_model} and %{banned_count} banned %{banned_model}"
   stripe_accounts:
     admin_account_not_connected: "Using %{service_name}'s payment system in order to receive payments is not possible since payments have not been set up. Please %{contact_admin_link} for details."
     contact_admin_link_text: "contact the %{service_name} team"
@@ -2367,10 +2450,17 @@ en:
         digits: digits
         digits_or_chars: "digits or A-Z chars"
     form_verification:
-      personal_id_number: "Personal ID number"
+      personal_id_number: "Personal ID Number"
       document: "Verification document"
       send_verification: "Send Verification"
       need_verification: "Need additional verification"
+    form_pin:
+      social_insurance_number: "Social Insurance Number (SIN)"
+      social_security_number: "Social Security Number (SSN)"
+      hong_kong_identity_card: "Hong Kong Identity Card Number (HKID)"
+      singapore_identity_card: "National Registration Identity Card (NRIC) or Foreign Identification Number (FIN)"
+      messages:
+        social_insurance_number: "must be valid Social Insurance Number (SIN)"
   payment_settings:
     title: "Payout preferences"
     bank_account: "Bank account"

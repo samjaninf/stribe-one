@@ -52,6 +52,11 @@ Rails.application.routes.draw do
   namespace :int_api do
     post "/create_trial_marketplace" => "marketplaces#create"
     post "/prospect_emails" => "marketplaces#create_prospect_email"
+    resources :listings, only: [], defaults: { format: :json } do
+      member do
+        post :update_working_time_slots
+      end
+    end
   end
 
   # Harmony Proxy
@@ -168,8 +173,16 @@ Rails.application.routes.draw do
       get '' => "getting_started_guide#index"
       
       # Payments
-      get  "/payment_preferences"                     => "payment_preferences#index"
-      put  "/payment_preferences"                     => "payment_preferences#update"
+      resources :payment_preferences, only: [:index], param: :payment_gateway do
+        collection do
+          put :common_update
+          put :update_stripe_keys
+        end
+        member do
+          get :disable
+          get :enable
+        end
+      end
       # PayPal Connect
       get  "/paypal_preferences" => redirect("/%{locale}/admin/payment_preferences")
       get  "/paypal_preferences/account_create"       => "paypal_preferences#account_create"
@@ -254,10 +267,12 @@ Rails.application.routes.draw do
 
         end
         resources :transactions, controller: :community_transactions, only: :index
+        resources :conversations, controller: :community_conversations, only: [:index, :show]
         resources :emails
         resources :community_memberships do
           member do
             put :ban
+            put :unban
           end
           collection do
             post :promote_admin
@@ -309,7 +324,11 @@ Rails.application.routes.draw do
       resource :plan, only: [:show]
     end
 
-    resources :invitations
+    resources :invitations, only: [:new, :create ] do
+      collection do
+        get :unsubscribe
+      end
+    end
     resources :user_feedbacks, :controller => :feedbacks
     resources :homepage do
       collection do

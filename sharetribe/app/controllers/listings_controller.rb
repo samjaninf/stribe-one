@@ -49,7 +49,7 @@ class ListingsController < ApplicationController
       end
 
       format.atom do
-        @feed_presenter = ListingsFeedPresenter.new(@current_community, get_shapes, get_processes, params)
+        @feed_presenter = ListingsFeedPresenter.new(@current_community, @current_community.shapes, @current_community.transaction_processes, params)
         render layout: false
       end
     end
@@ -90,7 +90,7 @@ class ListingsController < ApplicationController
     make_listing_presenter
     @listing_presenter.form_path = new_transaction_path(listing_id: @listing.id)
 
-    Analytics.record_event(
+    record_event(
       flash.now,
       "ListingViewed",
       { listing_id: @listing.id,
@@ -149,8 +149,9 @@ class ListingsController < ApplicationController
         @listing.reorder_listing_images(params, @current_user.id)
         notify_about_new_listing
 
-        if shape[:availability] == :booking
-          redirect_to listing_path(@listing, anchor: 'manage-availability'), status: 303
+        if shape.booking?
+          anchor = availability_per_hour_enabled && shape.booking_per_hour? ? 'manage-working-hours' : 'manage-availability'
+          redirect_to listing_path(@listing, anchor: anchor, listing_just_created: true), status: 303
         else
           redirect_to @listing, status: 303
         end
@@ -174,8 +175,8 @@ class ListingsController < ApplicationController
     @custom_field_questions = @listing.category.custom_fields.where(community_id: @current_community.id)
     @numeric_field_ids = numeric_field_ids(@custom_field_questions)
 
-    shape = select_shape(get_shapes, @listing.listing_shape_id)
-    if shape
+    shape = select_shape(@current_community.shapes, @listing)
+    if shape[:id]
       @listing.listing_shape_id = shape[:id]
     end
     render locals: { form_content: form_locals(shape) }
@@ -299,16 +300,18 @@ class ListingsController < ApplicationController
     end
   end
 
-  def select_shape(shapes, id)
-    if shapes.size == 1
+  def select_shape(shapes, listing)
+    if listing.listing_shape_id.nil?
+      ListingShape.new(transaction_process_id: listing.transaction_process_id)
+    elsif shapes.size == 1
       shapes.first
     else
-      shapes.find { |shape| shape[:id] == id }
+      shapes.find { |shape| shape[:id] == listing.listing_shape_id }
     end
   end
 
   def form_locals(shape)
-    @listing_presenter.shape = shape
+    @listing_presenter.listing_shape = shape
     {shape: shape}
   end
 
@@ -431,31 +434,8 @@ class ListingsController < ApplicationController
     end
   end
 
-  def get_shapes
-    @shapes ||= ListingService::API::Api.shapes.get(community_id: @current_community.id).maybe.or_else(nil).tap { |shapes|
-      raise ArgumentError.new("Cannot find any listing shape for community #{@current_community.id}") if shapes.nil?
-    }
-  end
-
-  def get_processes
-    @processes ||= TransactionService::API::Api.processes.get(community_id: @current_community.id).maybe.or_else(nil).tap { |processes|
-      raise ArgumentError.new("Cannot find any transaction process for community #{@current_community.id}") if processes.nil?
-    }
-  end
-
   def get_shape(listing_shape_id)
-    shape_find_opts = {
-      community_id: @current_community.id,
-      listing_shape_id: listing_shape_id
-    }
-
-    shape_res = ListingService::API::Api.shapes.get(shape_find_opts)
-
-    if shape_res.success
-      shape_res.data
-    else
-      raise ArgumentError.new(shape_res.error_msg)
-    end
+    @current_community.shapes.find(listing_shape_id)
   end
 
   # Create image sizes that might be missing
@@ -485,16 +465,27 @@ class ListingsController < ApplicationController
     state_changed = Admin::OnboardingWizard.new(@current_community.id)
       .update_from_event(:listing_created, @listing)
     if state_changed
-      report_to_gtm({event: "km_record", km_event: "Onboarding listing created"})
+      record_event(flash, "km_record", {km_event: "Onboarding listing created"}, AnalyticService::EVENT_LISTING_CREATED)
+
       flash[:show_onboarding_popup] = true
     end
   end
 
   def create_booking(shape, listing_uuid)
-    if shape.present? && shape[:availability] == :booking
-      create_bookable(@current_community.uuid_object, listing_uuid, @current_user.uuid_object).success
+    if shape.present?
+      if availability_per_hour_enabled && shape.booking_per_hour?
+        true
+      elsif APP_CONFIG.harmony_api_in_use && shape.booking?
+        create_bookable(@current_community.uuid_object, listing_uuid, @current_user.uuid_object).success
+      else
+        true
+      end
     else
       true
     end
+  end
+
+  def availability_per_hour_enabled
+    FeatureFlagHelper.feature_enabled?(:availability_per_hour)
   end
 end

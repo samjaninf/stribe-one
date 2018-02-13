@@ -107,7 +107,7 @@ FactoryGirl.define do
     description("test")
     build_association(:author)
     category { TestHelpers::find_or_build_category("item") }
-    valid_until 3.months.from_now
+    valid_until { Time.current + 3.months }
     times_viewed 0
     privacy "public"
     listing_shape_id 123
@@ -360,5 +360,96 @@ FactoryGirl.define do
   factory :follower_relationship do
     build_association(:person)
     build_association(:follower)
+  end
+
+  factory :marketplace_sender_email do
+    name 'Edna'
+    email 'edna@mail.com'
+  end
+
+  factory :transaction_process do
+    process          'preauthorize'
+    author_is_seller true
+  end
+
+  factory :payment_settings do
+    community_id                      1
+    active                            true
+    payment_gateway                   'paypal'
+    payment_process                   'preauthorize'
+    commission_from_seller            11
+    minimum_price_cents               100
+    minimum_price_currency            'EUR'
+    minimum_transaction_fee_cents     10
+    minimum_transaction_fee_currency  'EUR'
+    confirmation_after_days           14
+  end
+
+  factory :order_permission do
+    request_token       'ABC'
+    paypal_username_to  'mildred@example.com'
+    scope               "EXPRESS_CHECKOUT,REFUND,AUTH_CAPTURE,TRANSACTION_DETAILS,REFERENCE_TRANSACTION,RECURRING_PAYMENTS,SETTLEMENT_REPORTING,RECURRING_PAYMENT_REPORT,ACCESS_BASIC_PERSONAL_DATA"
+    verification_code   'DEF'
+    build_association(:paypal_account)
+  end
+
+  factory :paypal_account do
+    person_id nil
+    community_id 123
+    email 'mildred@example.com'
+    payer_id 'ABC'
+    active true
+  end
+
+  factory :listing_shape do
+    community_id           123
+    transaction_process_id 1
+    price_enabled          false
+    shipping_enabled       false
+    name                   'Selling'
+    name_tr_key            'unit.day'
+    action_button_tr_key   'unit.days'
+    sort_priority          0
+  end
+
+  factory :listing_unit do
+    unit_type           'hour'
+    quantity_selector   'number'
+    kind                'time'
+    name_tr_key         nil
+    selector_tr_key     nil
+    listing_shape_id    123
+  end
+
+  factory :invitation_unsubscribe, class: 'Invitation::Unsubscribe' do
+    build_association(:community)
+    email 'sherry@example.com'
+  end
+
+  factory :paypal_ipn_message do
+    body       { { abc: 123 } }
+    status     nil
+  end
+
+  factory :paypal_payment do
+    community_id      123
+    transaction_id    321
+    payer_id          'ABC'
+    receiver_id       'DEF'
+    merchant_id       'ZZZ'
+    currency          'EUR'
+    payment_status    'pending'
+    commission_status 'pending'
+  end
+
+  factory :listing_working_time_slot, class: 'Listing::WorkingTimeSlot' do
+    listing_id 123
+  end
+
+  factory :billing_agreement do
+    build_association(:paypal_account)
+    billing_agreement_id  'zzz'
+    paypal_username_to    'eloise.smith'
+    request_token         'ddd'
   end
 end

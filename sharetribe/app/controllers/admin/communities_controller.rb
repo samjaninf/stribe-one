@@ -47,6 +47,15 @@ class Admin::CommunitiesController < Admin::AdminBaseController
   end
 
   def create_sender_address
+    user_defined_address = EmailService::API::Api.addresses.get_user_defined(community_id: @current_community.id).data
+
+    if user_defined_address && user_defined_address[:email] == params[:email].to_s.downcase.strip
+      EmailService::API::Api.addresses.update(community_id: @current_community.id, id: user_defined_address[:id], name: params[:name])
+      flash[:notice] = t("admin.communities.outgoing_email.successfully_saved_name")
+      redirect_to action: :edit_welcome_email
+      return
+    end
+
     res = EmailService::API::Api.addresses.create(
       community_id: @current_community.id,
       address: {
@@ -261,6 +270,7 @@ class Admin::CommunitiesController < Admin::AdminBaseController
   def update_look_and_feel
     @community = @current_community
     @selected_left_navi_link = "tribe_look_and_feel"
+    analytic = AnalyticService::CommunityLookAndFeel.new(user: @current_user, community: @current_community)
 
     params[:community][:custom_color1] = nil if params[:community][:custom_color1] == ""
     params[:community][:custom_color2] = nil if params[:community][:custom_color2] == ""
@@ -273,18 +283,19 @@ class Admin::CommunitiesController < Admin::AdminBaseController
     ]
     permitted_params << :custom_head_script
     community_params = params.require(:community).permit(*permitted_params)
+    analytic.process(@current_community, community_params)
 
     update(@current_community,
            community_params,
            admin_look_and_feel_edit_path,
            :edit_look_and_feel) { |community|
       flash[:notice] = t("layouts.notifications.images_are_processing") if images_changed?(params)
+      analytic.send_properties
       # Onboarding wizard step recording
       state_changed = Admin::OnboardingWizard.new(community.id)
         .update_from_event(:community_updated, community)
       if state_changed
-        report_to_gtm({event: "km_record", km_event: "Onboarding cover photo uploaded"})
-
+        record_event(flash, "km_record", {km_event: "Onboarding cover photo uploaded"})
         flash[:show_onboarding_popup] = true
       end
     }
