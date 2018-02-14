@@ -97,7 +97,6 @@ COPY scripts/docker-entrypoint.sh /
 RUN chown app:app -R /opt/app;chown app:app /docker-entrypoint.sh;chmod +x /docker-entrypoint.sh
 
 COPY scripts/stribe.conf /stribe.conf.pkgr
-COPY scripts/database.yml.pkgr /database.yml.pkgr
 
 RUN apt-get autoremove -y && \
     apt-get clean -y&& \
